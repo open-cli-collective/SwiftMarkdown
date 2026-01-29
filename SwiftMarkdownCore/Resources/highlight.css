@@ -1,0 +1,67 @@
+/* SwiftMarkdown Syntax Highlighting Styles */
+
+/* Code block styling */
+pre {
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    pre {
+        background-color: #1e1e1e;
+    }
+}
+
+code {
+    font-family: inherit;
+}
+
+/* Syntax token colors - light theme (default) */
+:root {
+    --syntax-keyword: #af00db;
+    --syntax-string: #a31515;
+    --syntax-comment: #008000;
+    --syntax-number: #098658;
+    --syntax-function: #795e26;
+    --syntax-type: #267f99;
+    --syntax-variable: #001080;
+    --syntax-operator: #000000;
+    --syntax-punctuation: #000000;
+    --syntax-property: #001080;
+    --syntax-attribute: #795e26;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --syntax-keyword: #c586c0;
+        --syntax-string: #ce9178;
+        --syntax-comment: #6a9955;
+        --syntax-number: #b5cea8;
+        --syntax-function: #dcdcaa;
+        --syntax-type: #4ec9b0;
+        --syntax-variable: #9cdcfe;
+        --syntax-operator: #d4d4d4;
+        --syntax-punctuation: #d4d4d4;
+        --syntax-property: #9cdcfe;
+        --syntax-attribute: #dcdcaa;
+    }
+}
+
+/* Token classes */
+.token-keyword { color: var(--syntax-keyword); }
+.token-string { color: var(--syntax-string); }
+.token-comment { color: var(--syntax-comment); font-style: italic; }
+.token-number { color: var(--syntax-number); }
+.token-function { color: var(--syntax-function); }
+.token-type { color: var(--syntax-type); }
+.token-variable { color: var(--syntax-variable); }
+.token-operator { color: var(--syntax-operator); }
+.token-punctuation { color: var(--syntax-punctuation); }
+.token-property { color: var(--syntax-property); }
+.token-attribute { color: var(--syntax-attribute); }

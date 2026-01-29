@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00293CBBC4C6FE8A96200412 /* TreeSitterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AEE67E32DEF8BDAD82D22C87 /* TreeSitterSwift */; };
+		0E5BC65A4C34D2C20A13C184 /* SyntaxTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D864EB38F9DA2270E06F31 /* SyntaxTheme.swift */; };
 		1046C44370268572EE44F2BA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */; };
 		1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */; };
 		497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */; };
@@ -15,6 +16,7 @@
 		4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */; };
 		54F77ED86A73956332B1BD16 /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F16278E86C893DE1324F /* ImageValidator.swift */; };
 		5DEBE8F448112FD03EE248BD /* TreeSitterHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD889C6D996E0721E08B1 /* TreeSitterHighlighter.swift */; };
+		6369C1964EA36F2BFAD11691 /* highlight.css in Resources */ = {isa = PBXBuildFile; fileRef = 42761C721193A258C1ABC5E4 /* highlight.css */; };
 		670291E5C7A987E8FBECBC5B /* SwiftTreeSitter in Frameworks */ = {isa = PBXBuildFile; productRef = 49FDA8082BBBFFD3378F9F36 /* SwiftTreeSitter */; };
 		6F1693EF64350907439D32E1 /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C7E294336DAA8FA4C403E /* MarkdownRenderer.swift */; };
 		7E4E0ADB9F632919888A92E7 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -23,6 +25,7 @@
 		9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */; };
 		9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */; };
 		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+		B6BAEE9D266B0B4E25F36503 /* SyntaxThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */; };
 		BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */; };
 		BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
 		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
@@ -86,6 +89,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		01D864EB38F9DA2270E06F31 /* SyntaxTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxTheme.swift; sourceTree = "<group>"; };
 		0870ADD570D5EF2C00DA1C40 /* SyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighter.swift; sourceTree = "<group>"; };
 		09AA4F3A79326A0FCC93CA54 /* PlainTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextRenderer.swift; sourceTree = "<group>"; };
 		1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,7 +98,9 @@
 		3780132CA9FEA0CDFEEA695B /* SwiftMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BC2CEE945099FDCED3EEFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E01F16278E86C893DE1324F /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
+		42761C721193A258C1ABC5E4 /* highlight.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = highlight.css; sourceTree = "<group>"; };
 		586261D1054B4DCE992C88D3 /* SwiftMarkdownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMarkdownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxThemeTests.swift; sourceTree = "<group>"; };
 		6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftMarkdownQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftMarkdown.entitlements; sourceTree = "<group>"; };
 		7896D51841ECD93C0A8119A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -184,6 +190,14 @@
 			path = Rendering;
 			sourceTree = "<group>";
 		};
+		7EC75CB94AF4E588B3655B20 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				42761C721193A258C1ABC5E4 /* highlight.css */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		9AA6EB949A275C4B3F588ECD /* SwiftMarkdown */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,9 +227,19 @@
 				327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */,
 				EC8D33E3CF310183FC6EBC29 /* ImageValidation */,
 				6CF0A81CBFB87846AF2CCB79 /* Rendering */,
+				7EC75CB94AF4E588B3655B20 /* Resources */,
 				AF34805A2D1689DE9AEA6290 /* SyntaxHighlighting */,
+				CAEF476CC89E8866F9857693 /* Themes */,
 			);
 			path = SwiftMarkdownCore;
+			sourceTree = "<group>";
+		};
+		CAEF476CC89E8866F9857693 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				01D864EB38F9DA2270E06F31 /* SyntaxTheme.swift */,
+			);
+			path = Themes;
 			sourceTree = "<group>";
 		};
 		D5DEA205A88634C80F940D38 /* Products */ = {
@@ -247,6 +271,7 @@
 				AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */,
 				D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */,
 				C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */,
+				5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */,
 			);
 			path = SwiftMarkdownTests;
 			sourceTree = "<group>";
@@ -279,6 +304,7 @@
 			buildConfigurationList = 92B1E38E48D7406D45C89E1F /* Build configuration list for PBXNativeTarget "SwiftMarkdownCore" */;
 			buildPhases = (
 				A6B532E7CCE286A4EAFCFCC9 /* Sources */,
+				EEB9343DBE02440F75190D6A /* Resources */,
 				DDA593888ADCD89036A7A925 /* Frameworks */,
 			);
 			buildRules = (
@@ -382,6 +408,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EEB9343DBE02440F75190D6A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6369C1964EA36F2BFAD11691 /* highlight.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -404,6 +438,7 @@
 				497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */,
 				8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */,
 				9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */,
+				B6BAEE9D266B0B4E25F36503 /* SyntaxThemeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +453,7 @@
 				F6E7533793D2B14E0BD4DF7F /* PlainTextRenderer.swift in Sources */,
 				1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */,
 				F3C0DBD72E43F100AE91CECE /* SyntaxHighlighter.swift in Sources */,
+				0E5BC65A4C34D2C20A13C184 /* SyntaxTheme.swift in Sources */,
 				5DEBE8F448112FD03EE248BD /* TreeSitterHighlighter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
