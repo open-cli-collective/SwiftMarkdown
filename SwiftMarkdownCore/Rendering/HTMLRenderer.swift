@@ -26,20 +26,30 @@ public final class HTMLRenderer: HTMLMarkdownRenderer {
     /// Optional syntax highlighter for code blocks.
     public var syntaxHighlighter: (any HTMLSyntaxHighlighter)?
 
+    /// Whether to validate data URI images by checking magic bytes.
+    /// When enabled, images with mismatched MIME types get an `invalid-image` class.
+    public var validateImages: Bool
+
     /// Creates a new HTML renderer.
     /// - Parameters:
     ///   - wrapInDocument: Whether to wrap output in a complete HTML document. Defaults to `false`.
     ///   - syntaxHighlighter: Optional syntax highlighter for code blocks.
-    public init(wrapInDocument: Bool = false, syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil) {
+    ///   - validateImages: Whether to validate data URI images. Defaults to `false`.
+    public init(
+        wrapInDocument: Bool = false,
+        syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil,
+        validateImages: Bool = false
+    ) {
         self.wrapInDocument = wrapInDocument
         self.syntaxHighlighter = syntaxHighlighter
+        self.validateImages = validateImages
     }
 
     /// Renders a Markdown document to HTML.
     /// - Parameter document: The parsed Markdown document.
     /// - Returns: The rendered HTML string.
     public func render(_ document: Document) -> String {
-        var walker = HTMLWalker(syntaxHighlighter: syntaxHighlighter)
+        var walker = HTMLWalker(syntaxHighlighter: syntaxHighlighter, validateImages: validateImages)
         walker.visit(document)
 
         if wrapInDocument {
@@ -69,9 +79,11 @@ public final class HTMLRenderer: HTMLMarkdownRenderer {
 struct HTMLWalker: MarkupWalker {
     var result = ""
     let syntaxHighlighter: (any HTMLSyntaxHighlighter)?
+    let validateImages: Bool
 
-    init(syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil) {
+    init(syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil, validateImages: Bool = false) {
         self.syntaxHighlighter = syntaxHighlighter
+        self.validateImages = validateImages
     }
 
     mutating func visitDocument(_ document: Document) {
@@ -162,7 +174,25 @@ struct HTMLWalker: MarkupWalker {
     mutating func visitImage(_ image: Image) {
         let src = image.source ?? ""
         let alt = image.plainText
-        result += "<img src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+
+        var cssClass: String?
+
+        // Validate data URI images if enabled
+        if validateImages && ImageValidator.isDataURI(src) {
+            let validationResult = ImageValidator.validate(dataURI: src)
+            switch validationResult {
+            case .valid:
+                break // Image is valid, no special class needed
+            case .mismatch, .unrecognized, .invalidData:
+                cssClass = "invalid-image"
+            }
+        }
+
+        if let cls = cssClass {
+            result += "<img class=\"\(cls)\" src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+        } else {
+            result += "<img src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+        }
     }
 
     mutating func visitUnorderedList(_ unorderedList: UnorderedList) {
