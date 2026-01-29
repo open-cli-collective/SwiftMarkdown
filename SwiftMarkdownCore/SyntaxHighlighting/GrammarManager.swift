@@ -77,10 +77,7 @@ public actor GrammarManager {
     /// - Returns: The loaded grammar, or nil if not available.
     /// - Throws: GrammarError if download or loading fails.
     public func grammar(for language: String) async throws -> LoadedGrammar? {
-        // Load manifest if needed
-        if manifest == nil {
-            manifest = try await loadManifest()
-        }
+        try await ensureManifestOrThrow()
 
         guard let manifest = manifest,
               let canonical = manifest.canonicalName(for: language) else {
@@ -114,17 +111,13 @@ public actor GrammarManager {
 
     /// Checks if a grammar is available (in manifest).
     public func supportsLanguage(_ language: String) async -> Bool {
-        if manifest == nil {
-            manifest = try? await loadManifest()
-        }
+        await ensureManifest()
         return manifest?.canonicalName(for: language) != nil
     }
 
     /// Gets the list of all supported languages.
     public func supportedLanguages() async -> [String] {
-        if manifest == nil {
-            manifest = try? await loadManifest()
-        }
+        await ensureManifest()
         return manifest?.supportedLanguages ?? []
     }
 
@@ -148,9 +141,7 @@ public actor GrammarManager {
 
     /// Returns the cached manifest, loading it if necessary.
     public func getManifest() async -> GrammarManifest? {
-        if manifest == nil {
-            manifest = try? await loadManifest()
-        }
+        await ensureManifest()
         return manifest
     }
 
@@ -201,9 +192,7 @@ public actor GrammarManager {
     /// - Parameter language: The language to download.
     /// - Throws: GrammarError if download fails.
     public func downloadGrammarOnly(_ language: String) async throws {
-        if manifest == nil {
-            manifest = try await loadManifest()
-        }
+        try await ensureManifestOrThrow()
 
         guard let manifest = manifest,
               let canonical = manifest.canonicalName(for: language) else {
@@ -220,6 +209,20 @@ public actor GrammarManager {
     }
 
     // MARK: - Private Implementation
+
+    /// Ensures the manifest is loaded, loading it if necessary.
+    private func ensureManifest() async {
+        if manifest == nil {
+            manifest = try? await loadManifest()
+        }
+    }
+
+    /// Ensures the manifest is loaded, throwing on failure.
+    private func ensureManifestOrThrow() async throws {
+        if manifest == nil {
+            manifest = try await loadManifest()
+        }
+    }
 
     private func loadManifest() async throws -> GrammarManifest {
         // Try cached manifest first
