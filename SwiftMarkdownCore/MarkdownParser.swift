@@ -58,6 +58,17 @@ public struct MarkdownParser {
         return renderer.render(document)
     }
 
+    /// Parse markdown to HTML with syntax highlighting for code blocks.
+    /// - Parameters:
+    ///   - markdown: The markdown string to parse.
+    ///   - options: Parsing options (default: .default).
+    /// - Returns: HTML string with syntax-highlighted code blocks.
+    public static func parseWithHighlighting(_ markdown: String, options: Options = .default) -> String {
+        let highlighter = TreeSitterHighlighter()
+        let renderer = HTMLRenderer(syntaxHighlighter: highlighter)
+        return parse(markdown, renderer: renderer, options: options)
+    }
+
     /// Parse markdown and return the document AST for inspection.
     /// - Parameters:
     ///   - markdown: The markdown string to parse.
