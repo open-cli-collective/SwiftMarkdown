@@ -1,0 +1,210 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (e.g., v0.1.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+env:
+  APP_NAME: SwiftMarkdown
+  SCHEME: SwiftMarkdown
+
+jobs:
+  build:
+    runs-on: macos-14
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.tag }}"
+          else
+            VERSION="${GITHUB_REF#refs/tags/}"
+          fi
+          # Remove 'v' prefix for version number
+          VERSION_NUM="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_num=$VERSION_NUM" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.2.app/Contents/Developer
+
+      - name: Update version in project
+        run: |
+          # Update version in Info.plist files
+          VERSION_NUM="${{ steps.version.outputs.version_num }}"
+          find . -name "Info.plist" -exec /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION_NUM" {} \; 2>/dev/null || true
+
+      - name: Build archive
+        run: |
+          xcodebuild archive \
+            -scheme ${{ env.SCHEME }} \
+            -destination 'generic/platform=macOS' \
+            -archivePath build/${{ env.APP_NAME }}.xcarchive \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Export app
+        run: |
+          # Create export options plist
+          cat > ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>mac-application</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+          </dict>
+          </plist>
+          EOF
+
+          # Export the app (ad-hoc, no signing)
+          xcodebuild -exportArchive \
+            -archivePath build/${{ env.APP_NAME }}.xcarchive \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/export \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO || {
+            # If export fails, manually copy the app bundle
+            mkdir -p build/export
+            cp -R "build/${{ env.APP_NAME }}.xcarchive/Products/Applications/${{ env.APP_NAME }}.app" build/export/
+          }
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-bundle
+          path: build/export/${{ env.APP_NAME }}.app
+          retention-days: 1
+
+  package:
+    needs: build
+    runs-on: macos-14
+    outputs:
+      dmg_name: ${{ steps.dmg.outputs.dmg_name }}
+      sha256: ${{ steps.dmg.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download app artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-bundle
+          path: build/${{ env.APP_NAME }}.app
+
+      - name: Create DMG
+        id: dmg
+        run: |
+          VERSION="${{ needs.build.outputs.version }}"
+          VERSION_NUM="${VERSION#v}"
+          DMG_NAME="${{ env.APP_NAME }}-${VERSION_NUM}.dmg"
+
+          # Create a temporary directory for DMG contents
+          mkdir -p dmg-contents
+          cp -R "build/${{ env.APP_NAME }}.app" dmg-contents/
+
+          # Create symlink to Applications folder
+          ln -s /Applications dmg-contents/Applications
+
+          # Create the DMG
+          hdiutil create \
+            -volname "${{ env.APP_NAME }}" \
+            -srcfolder dmg-contents \
+            -ov \
+            -format UDZO \
+            "build/${DMG_NAME}"
+
+          # Calculate SHA256
+          SHA256=$(shasum -a 256 "build/${DMG_NAME}" | awk '{print $1}')
+
+          echo "dmg_name=${DMG_NAME}" >> $GITHUB_OUTPUT
+          echo "sha256=${SHA256}" >> $GITHUB_OUTPUT
+          echo "Created DMG: ${DMG_NAME}"
+          echo "SHA256: ${SHA256}"
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dmg
+          path: build/${{ steps.dmg.outputs.dmg_name }}
+          retention-days: 1
+
+  release:
+    needs: [build, package]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download DMG artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dmg
+          path: release-assets
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.build.outputs.version }}
+          name: ${{ env.APP_NAME }} ${{ needs.build.outputs.version }}
+          body: |
+            ## ${{ env.APP_NAME }} ${{ needs.build.outputs.version }}
+
+            ### Installation
+
+            **Homebrew (recommended):**
+            ```bash
+            brew install --cask open-cli-collective/tap/swiftmarkdown
+            ```
+
+            **Manual:**
+            1. Download `${{ needs.package.outputs.dmg_name }}`
+            2. Open the DMG and drag SwiftMarkdown to Applications
+            3. Run: `xattr -cr /Applications/SwiftMarkdown.app`
+
+            ### Checksums
+            | File | SHA256 |
+            |------|--------|
+            | ${{ needs.package.outputs.dmg_name }} | `${{ needs.package.outputs.sha256 }}` |
+          files: |
+            release-assets/${{ needs.package.outputs.dmg_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  homebrew:
+    needs: [build, package, release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update Homebrew Cask
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TAP_GITHUB_TOKEN }}
+          repository: open-cli-collective/homebrew-tap
+          event-type: update-cask
+          client-payload: |
+            {
+              "cask": "swiftmarkdown",
+              "version": "${{ needs.build.outputs.version }}",
+              "version_num": "${{ needs.build.outputs.version }}",
+              "sha256": "${{ needs.package.outputs.sha256 }}",
+              "url": "https://github.com/open-cli-collective/SwiftMarkdown/releases/download/${{ needs.build.outputs.version }}/${{ needs.package.outputs.dmg_name }}"
+            }
