@@ -65,6 +65,9 @@ targets:
     platform: macOS
     sources:
       - SwiftMarkdownCore
+    resources:
+      - path: SwiftMarkdownCore/Resources
+        buildPhase: resources
     dependencies:
       - package: swift-markdown
         product: Markdown

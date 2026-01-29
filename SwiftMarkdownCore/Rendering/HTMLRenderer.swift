@@ -15,9 +15,15 @@ import Markdown
 /// ```
 public final class HTMLRenderer: HTMLMarkdownRenderer {
     /// CSS styles to include with rendered HTML.
-    /// Currently returns empty string; will be populated when themes are added.
+    /// Returns the bundled highlight.css, or falls back to generated CSS if unavailable.
     public var cssStyles: String {
-        return ""
+        // Try to load bundled CSS from framework resources
+        if let url = Bundle(for: HTMLRenderer.self).url(forResource: "highlight", withExtension: "css"),
+           let css = try? String(contentsOf: url) {
+            return css
+        }
+        // Fallback to generated CSS from default theme
+        return SyntaxTheme.default.generateCSS()
     }
 
     /// Whether to wrap output in a complete HTML document.
