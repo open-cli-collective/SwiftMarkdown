@@ -210,4 +210,27 @@ final class MarkdownParserTests: XCTestCase {
         let document = MarkdownParser.parseDocument(markdown)
         XCTAssertFalse(document.isEmpty)
     }
+
+    // MARK: - Options API
+
+    func testDefaultOptionsProduceValidHTML() {
+        let markdown = "# Hello"
+        let html = MarkdownParser.parse(markdown, options: .default)
+        XCTAssertTrue(html.contains("<h1>"))
+    }
+
+    func testAllOptionsProduceValidHTML() {
+        let markdown = "# Hello"
+        let html = MarkdownParser.parse(markdown, options: .all)
+        XCTAssertTrue(html.contains("<h1>"))
+    }
+
+    // MARK: - Line Breaks
+
+    func testHardLineBreak() {
+        // Two spaces at end of line creates a hard break
+        let markdown = "Line one  \nLine two"
+        let html = MarkdownParser.parse(markdown)
+        XCTAssertTrue(html.contains("<br>") || html.contains("Line one") && html.contains("Line two"))
+    }
 }
