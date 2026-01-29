@@ -16,6 +16,9 @@ packages:
   tree-sitter-swift:
     url: https://github.com/alex-pinkus/tree-sitter-swift
     branch: with-generated-files
+  FileType:
+    url: https://github.com/velocityzen/FileType
+    from: "1.0.3"
 
 settings:
   base:
@@ -69,6 +72,8 @@ targets:
         product: SwiftTreeSitter
       - package: tree-sitter-swift
         product: TreeSitterSwift
+      - package: FileType
+        product: FileType
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdownCore
