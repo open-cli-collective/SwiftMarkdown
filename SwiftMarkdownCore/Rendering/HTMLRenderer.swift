@@ -1,0 +1,247 @@
+import Foundation
+import Markdown
+
+/// A renderer that converts Markdown documents to HTML.
+///
+/// This renderer produces HTML fragment strings by default. Set `wrapInDocument`
+/// to `true` to produce complete HTML documents with DOCTYPE and head/body elements.
+///
+/// ## Example
+/// ```swift
+/// let renderer = HTMLRenderer()
+/// let document = MarkdownParser.parseDocument("# Hello")
+/// let html = renderer.render(document)
+/// // "<h1>Hello</h1>\n"
+/// ```
+public final class HTMLRenderer: HTMLMarkdownRenderer {
+    /// CSS styles to include with rendered HTML.
+    /// Currently returns empty string; will be populated when themes are added.
+    public var cssStyles: String {
+        return ""
+    }
+
+    /// Whether to wrap output in a complete HTML document.
+    public var wrapInDocument: Bool
+
+    /// Creates a new HTML renderer.
+    /// - Parameter wrapInDocument: Whether to wrap output in a complete HTML document. Defaults to `false`.
+    public init(wrapInDocument: Bool = false) {
+        self.wrapInDocument = wrapInDocument
+    }
+
+    /// Renders a Markdown document to HTML.
+    /// - Parameter document: The parsed Markdown document.
+    /// - Returns: The rendered HTML string.
+    public func render(_ document: Document) -> String {
+        var walker = HTMLWalker()
+        walker.visit(document)
+
+        if wrapInDocument {
+            return wrapHTML(walker.result)
+        }
+        return walker.result
+    }
+
+    private func wrapHTML(_ content: String) -> String {
+        """
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="utf-8">
+        <style>\(cssStyles)</style>
+        </head>
+        <body>
+        \(content)
+        </body>
+        </html>
+        """
+    }
+}
+
+// MARK: - HTML Walker
+
+struct HTMLWalker: MarkupWalker {
+    var result = ""
+
+    mutating func visitDocument(_ document: Document) {
+        for child in document.children {
+            visit(child)
+        }
+    }
+
+    mutating func visitHeading(_ heading: Heading) {
+        let level = heading.level
+        result += "<h\(level)>"
+        for child in heading.children {
+            visit(child)
+        }
+        result += "</h\(level)>\n"
+    }
+
+    mutating func visitParagraph(_ paragraph: Paragraph) {
+        result += "<p>"
+        for child in paragraph.children {
+            visit(child)
+        }
+        result += "</p>\n"
+    }
+
+    mutating func visitText(_ text: Text) {
+        result += escapeHTML(text.string)
+    }
+
+    mutating func visitEmphasis(_ emphasis: Emphasis) {
+        result += "<em>"
+        for child in emphasis.children {
+            visit(child)
+        }
+        result += "</em>"
+    }
+
+    mutating func visitStrong(_ strong: Strong) {
+        result += "<strong>"
+        for child in strong.children {
+            visit(child)
+        }
+        result += "</strong>"
+    }
+
+    mutating func visitStrikethrough(_ strikethrough: Strikethrough) {
+        result += "<del>"
+        for child in strikethrough.children {
+            visit(child)
+        }
+        result += "</del>"
+    }
+
+    mutating func visitInlineCode(_ inlineCode: InlineCode) {
+        result += "<code>\(escapeHTML(inlineCode.code))</code>"
+    }
+
+    mutating func visitCodeBlock(_ codeBlock: CodeBlock) {
+        if let language = codeBlock.language, !language.isEmpty {
+            result += "<pre><code class=\"language-\(escapeHTML(language))\">"
+        } else {
+            result += "<pre><code>"
+        }
+        result += escapeHTML(codeBlock.code)
+        result += "</code></pre>\n"
+    }
+
+    mutating func visitLink(_ link: Link) {
+        let href = link.destination ?? ""
+        result += "<a href=\"\(escapeHTML(href))\">"
+        for child in link.children {
+            visit(child)
+        }
+        result += "</a>"
+    }
+
+    mutating func visitImage(_ image: Image) {
+        let src = image.source ?? ""
+        let alt = image.plainText
+        result += "<img src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+    }
+
+    mutating func visitUnorderedList(_ unorderedList: UnorderedList) {
+        result += "<ul>\n"
+        for child in unorderedList.children {
+            visit(child)
+        }
+        result += "</ul>\n"
+    }
+
+    mutating func visitOrderedList(_ orderedList: OrderedList) {
+        result += "<ol>\n"
+        for child in orderedList.children {
+            visit(child)
+        }
+        result += "</ol>\n"
+    }
+
+    mutating func visitListItem(_ listItem: ListItem) {
+        if let checkbox = listItem.checkbox {
+            let checked = checkbox == .checked ? " checked" : ""
+            result += "<li><input type=\"checkbox\" disabled\(checked)> "
+        } else {
+            result += "<li>"
+        }
+        for child in listItem.children {
+            visitListItemChild(child)
+        }
+        result += "</li>\n"
+    }
+
+    private mutating func visitListItemChild(_ markup: Markup) {
+        if let paragraph = markup as? Paragraph {
+            for child in paragraph.children {
+                visit(child)
+            }
+        } else {
+            visit(markup)
+        }
+    }
+
+    mutating func visitBlockQuote(_ blockQuote: BlockQuote) {
+        result += "<blockquote>\n"
+        for child in blockQuote.children {
+            visit(child)
+        }
+        result += "</blockquote>\n"
+    }
+
+    mutating func visitThematicBreak(_ thematicBreak: ThematicBreak) {
+        result += "<hr>\n"
+    }
+
+    mutating func visitTable(_ table: Table) {
+        result += "<table>\n"
+        let head = table.head
+        result += "<thead>\n<tr>\n"
+        for cell in head.cells {
+            result += "<th>"
+            for child in cell.children {
+                visit(child)
+            }
+            result += "</th>\n"
+        }
+        result += "</tr>\n</thead>\n"
+        result += "<tbody>\n"
+        for row in table.body.rows {
+            result += "<tr>\n"
+            for cell in row.cells {
+                result += "<td>"
+                for child in cell.children {
+                    visit(child)
+                }
+                result += "</td>\n"
+            }
+            result += "</tr>\n"
+        }
+        result += "</tbody>\n</table>\n"
+    }
+
+    mutating func visitLineBreak(_ lineBreak: LineBreak) {
+        result += "<br>\n"
+    }
+
+    mutating func visitSoftBreak(_ softBreak: SoftBreak) {
+        result += "\n"
+    }
+
+    mutating func visitHTMLBlock(_ html: HTMLBlock) {
+        result += html.rawHTML
+    }
+
+    mutating func visitInlineHTML(_ html: InlineHTML) {
+        result += html.rawHTML
+    }
+
+    private func escapeHTML(_ string: String) -> String {
+        string
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+    }
+}
