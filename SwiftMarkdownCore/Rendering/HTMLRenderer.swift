@@ -64,6 +64,25 @@ public final class HTMLRenderer: HTMLMarkdownRenderer {
         return walker.result
     }
 
+    /// Renders a Markdown document to HTML with lazy-loaded syntax highlighting.
+    ///
+    /// Use this method when you need syntax highlighting for languages other than Swift.
+    /// The highlighter will download grammars on first use and cache them permanently.
+    ///
+    /// - Parameters:
+    ///   - document: The parsed Markdown document.
+    ///   - highlighter: A lazy highlighter that can download grammars on demand.
+    /// - Returns: The rendered HTML string.
+    public func renderAsync(_ document: Document, highlighter: LazyTreeSitterHighlighter) async -> String {
+        var walker = AsyncHTMLWalker(highlighter: highlighter, validateImages: validateImages)
+        await walker.visit(document)
+
+        if wrapInDocument {
+            return wrapHTML(walker.result)
+        }
+        return walker.result
+    }
+
     private func wrapHTML(_ content: String) -> String {
         """
         <!DOCTYPE html>
