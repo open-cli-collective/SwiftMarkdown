@@ -155,4 +155,101 @@ final class GrammarManagerTests: XCTestCase {
         // Full integration testing requires actual grammars
         XCTAssertTrue(queriesURL.lastPathComponent == "highlights.scm")
     }
+
+    // MARK: - Installed Grammars Tests
+
+    func testInstalledGrammarsEmptyCache() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("empty-cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        let installed = await manager.installedGrammars()
+        XCTAssertTrue(installed.isEmpty)
+    }
+
+    func testInstalledGrammarsWithCachedGrammars() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        // Create fake grammar directories with dylib files
+        let jsDir = cacheDir.appendingPathComponent("javascript")
+        try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
+        try "fake".write(to: jsDir.appendingPathComponent("javascript.dylib"), atomically: true, encoding: .utf8)
+
+        let pyDir = cacheDir.appendingPathComponent("python")
+        try FileManager.default.createDirectory(at: pyDir, withIntermediateDirectories: true)
+        try "fake".write(to: pyDir.appendingPathComponent("python.dylib"), atomically: true, encoding: .utf8)
+
+        let installed = await manager.installedGrammars()
+        XCTAssertEqual(installed, ["javascript", "python"])
+    }
+
+    func testInstalledGrammarsIgnoresDirectoriesWithoutDylib() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        // Create a directory without dylib
+        let emptyDir = cacheDir.appendingPathComponent("empty")
+        try FileManager.default.createDirectory(at: emptyDir, withIntermediateDirectories: true)
+
+        // Create a directory with dylib
+        let jsDir = cacheDir.appendingPathComponent("javascript")
+        try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
+        try "fake".write(to: jsDir.appendingPathComponent("javascript.dylib"), atomically: true, encoding: .utf8)
+
+        let installed = await manager.installedGrammars()
+        XCTAssertEqual(installed, ["javascript"])
+    }
+
+    // MARK: - Is Grammar Installed Tests
+
+    func testIsGrammarInstalledTrue() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        let jsDir = cacheDir.appendingPathComponent("javascript")
+        try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
+        try "fake".write(to: jsDir.appendingPathComponent("javascript.dylib"), atomically: true, encoding: .utf8)
+
+        let isInstalled = await manager.isGrammarInstalled("javascript")
+        XCTAssertTrue(isInstalled)
+    }
+
+    func testIsGrammarInstalledFalse() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        let isInstalled = await manager.isGrammarInstalled("javascript")
+        XCTAssertFalse(isInstalled)
+    }
+
+    // MARK: - Cache Size Tests
+
+    func testCacheSizeEmptyCache() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("empty-cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        let size = await manager.cacheSize()
+        XCTAssertEqual(size, 0)
+    }
+
+    func testCacheSizeWithFiles() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let manager = GrammarManager(cacheURL: cacheDir)
+
+        try FileManager.default.createDirectory(at: cacheDir, withIntermediateDirectories: true)
+
+        // Create a file with known content
+        let testData = String(repeating: "x", count: 1000)
+        try testData.write(to: cacheDir.appendingPathComponent("test.txt"), atomically: true, encoding: .utf8)
+
+        let size = await manager.cacheSize()
+        XCTAssertGreaterThan(size, 0)
+    }
 }

@@ -7,5 +7,9 @@ struct SwiftMarkdownApp: App {
         WindowGroup {
             ContentView()
         }
+
+        Settings {
+            LanguagesSettingsView()
+        }
     }
 }
