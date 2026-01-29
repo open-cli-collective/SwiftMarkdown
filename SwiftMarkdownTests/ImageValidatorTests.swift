@@ -154,6 +154,32 @@ final class ImageValidatorTests: XCTestCase {
         }
     }
 
+    // MARK: - isValid Property
+
+    func testIsValidPropertyForValidResult() {
+        let pngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+        let dataURI = "data:image/png;base64,\(pngBase64)"
+        let result = ImageValidator.validate(dataURI: dataURI)
+        XCTAssertTrue(result.isValid)
+    }
+
+    func testIsValidPropertyForMismatch() {
+        let pngBase64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+        let dataURI = "data:image/jpeg;base64,\(pngBase64)"
+        let result = ImageValidator.validate(dataURI: dataURI)
+        XCTAssertFalse(result.isValid)
+    }
+
+    func testIsValidPropertyForUnrecognized() {
+        let result = ImageValidationResult.unrecognized
+        XCTAssertFalse(result.isValid)
+    }
+
+    func testIsValidPropertyForInvalidData() {
+        let result = ImageValidationResult.invalidData
+        XCTAssertFalse(result.isValid)
+    }
+
     // MARK: - HTMLRenderer Integration
 
     func testHTMLRendererWithValidationDisabled() {

@@ -11,6 +11,12 @@ public enum ImageValidationResult: Equatable {
     case unrecognized
     /// The data could not be decoded (e.g., invalid base64).
     case invalidData
+
+    /// Returns true if the validation result indicates a valid image.
+    public var isValid: Bool {
+        if case .valid = self { return true }
+        return false
+    }
 }
 
 /// Validates embedded images in data URIs by checking magic bytes.
