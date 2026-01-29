@@ -112,7 +112,7 @@ struct AsyncHTMLWalker {
     }
 
     private mutating func visitText(_ text: Text) {
-        result += escapeHTML(text.string)
+        result += text.string.htmlEscaped
     }
 
     private mutating func visitEmphasis(_ emphasis: Emphasis) {
@@ -140,14 +140,14 @@ struct AsyncHTMLWalker {
     }
 
     private mutating func visitInlineCode(_ inlineCode: InlineCode) {
-        result += "<code>\(escapeHTML(inlineCode.code))</code>"
+        result += "<code>\(inlineCode.code.htmlEscaped)</code>"
     }
 
     private mutating func visitCodeBlock(_ codeBlock: CodeBlock) async {
         let language = codeBlock.language ?? ""
 
         if !language.isEmpty {
-            result += "<pre><code class=\"language-\(escapeHTML(language))\">"
+            result += "<pre><code class=\"language-\(language.htmlEscaped)\">"
         } else {
             result += "<pre><code>"
         }
@@ -156,7 +156,7 @@ struct AsyncHTMLWalker {
             let highlighted = await highlighter.highlightToHTMLAsync(code: codeBlock.code, language: language)
             result += highlighted
         } else {
-            result += escapeHTML(codeBlock.code)
+            result += codeBlock.code.htmlEscaped
         }
 
         result += "</code></pre>\n"
@@ -164,7 +164,7 @@ struct AsyncHTMLWalker {
 
     private mutating func visitLink(_ link: Link) {
         let href = link.destination ?? ""
-        result += "<a href=\"\(escapeHTML(href))\">"
+        result += "<a href=\"\(href.htmlEscaped)\">"
         for child in link.children {
             visitInlineMarkup(child)
         }
@@ -188,9 +188,9 @@ struct AsyncHTMLWalker {
         }
 
         if let cls = cssClass {
-            result += "<img class=\"\(cls)\" src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+            result += "<img class=\"\(cls)\" src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
         } else {
-            result += "<img src=\"\(escapeHTML(src))\" alt=\"\(escapeHTML(alt))\">"
+            result += "<img src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
         }
     }
 
@@ -282,13 +282,5 @@ struct AsyncHTMLWalker {
 
     private mutating func visitInlineHTML(_ html: InlineHTML) {
         result += html.rawHTML
-    }
-
-    private func escapeHTML(_ string: String) -> String {
-        string
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
     }
 }
