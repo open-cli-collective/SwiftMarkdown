@@ -69,6 +69,22 @@ public struct MarkdownParser {
         return parse(markdown, renderer: renderer, options: options)
     }
 
+    /// Parse markdown to HTML with lazy-loaded syntax highlighting.
+    ///
+    /// This async method supports highlighting for 35+ languages by downloading
+    /// grammars on first use. Swift highlighting is always available immediately.
+    ///
+    /// - Parameters:
+    ///   - markdown: The markdown string to parse.
+    ///   - options: Parsing options (default: .default).
+    /// - Returns: HTML string with syntax-highlighted code blocks.
+    public static func parseWithHighlightingAsync(_ markdown: String, options: Options = .default) async -> String {
+        let document = parseDocument(markdown, options: options)
+        let highlighter = LazyTreeSitterHighlighter()
+        let renderer = HTMLRenderer()
+        return await renderer.renderAsync(document, highlighter: highlighter)
+    }
+
     /// Parse markdown and return the document AST for inspection.
     /// - Parameters:
     ///   - markdown: The markdown string to parse.
