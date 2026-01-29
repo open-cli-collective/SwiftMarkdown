@@ -23,17 +23,23 @@ public final class HTMLRenderer: HTMLMarkdownRenderer {
     /// Whether to wrap output in a complete HTML document.
     public var wrapInDocument: Bool
 
+    /// Optional syntax highlighter for code blocks.
+    public var syntaxHighlighter: (any HTMLSyntaxHighlighter)?
+
     /// Creates a new HTML renderer.
-    /// - Parameter wrapInDocument: Whether to wrap output in a complete HTML document. Defaults to `false`.
-    public init(wrapInDocument: Bool = false) {
+    /// - Parameters:
+    ///   - wrapInDocument: Whether to wrap output in a complete HTML document. Defaults to `false`.
+    ///   - syntaxHighlighter: Optional syntax highlighter for code blocks.
+    public init(wrapInDocument: Bool = false, syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil) {
         self.wrapInDocument = wrapInDocument
+        self.syntaxHighlighter = syntaxHighlighter
     }
 
     /// Renders a Markdown document to HTML.
     /// - Parameter document: The parsed Markdown document.
     /// - Returns: The rendered HTML string.
     public func render(_ document: Document) -> String {
-        var walker = HTMLWalker()
+        var walker = HTMLWalker(syntaxHighlighter: syntaxHighlighter)
         walker.visit(document)
 
         if wrapInDocument {
@@ -62,6 +68,11 @@ public final class HTMLRenderer: HTMLMarkdownRenderer {
 
 struct HTMLWalker: MarkupWalker {
     var result = ""
+    let syntaxHighlighter: (any HTMLSyntaxHighlighter)?
+
+    init(syntaxHighlighter: (any HTMLSyntaxHighlighter)? = nil) {
+        self.syntaxHighlighter = syntaxHighlighter
+    }
 
     mutating func visitDocument(_ document: Document) {
         for child in document.children {
@@ -119,12 +130,23 @@ struct HTMLWalker: MarkupWalker {
     }
 
     mutating func visitCodeBlock(_ codeBlock: CodeBlock) {
-        if let language = codeBlock.language, !language.isEmpty {
+        let language = codeBlock.language ?? ""
+
+        if !language.isEmpty {
             result += "<pre><code class=\"language-\(escapeHTML(language))\">"
         } else {
             result += "<pre><code>"
         }
-        result += escapeHTML(codeBlock.code)
+
+        // Use syntax highlighter if available and language is supported
+        if let highlighter = syntaxHighlighter,
+           !language.isEmpty,
+           highlighter.supportsLanguage(language) {
+            result += highlighter.highlightToHTML(code: codeBlock.code, language: language)
+        } else {
+            result += escapeHTML(codeBlock.code)
+        }
+
         result += "</code></pre>\n"
     }
 
