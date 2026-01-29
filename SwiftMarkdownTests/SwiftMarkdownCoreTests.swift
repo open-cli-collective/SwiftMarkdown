@@ -11,11 +11,4 @@ final class SwiftMarkdownCoreTests: XCTestCase {
         let components = SwiftMarkdownCore.version.split(separator: ".")
         XCTAssertEqual(components.count, 3)
     }
-
-    func testParseReturnsInput() {
-        // Placeholder test - parse currently returns input unchanged
-        let input = "# Hello World"
-        let output = SwiftMarkdownCore.parse(input)
-        XCTAssertEqual(output, input)
-    }
 }

@@ -11,10 +11,13 @@
 		1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */; };
 		7E4E0ADB9F632919888A92E7 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */; };
+		89FEE35070D2A1C17AB6421A /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = F10350C361C31733946A2AFA /* Markdown */; };
+		9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */; };
 		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
 		BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */; };
 		BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
 		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
+		C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */; };
 		CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */; };
 		D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F74070484EECFB2EC5C787D6 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
@@ -84,6 +87,8 @@
 		9B786F7F67635FFA4DB2D52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B5BB6B52D45ED0A11407D90A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCoreTests.swift; sourceTree = "<group>"; };
+		D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParserTests.swift; sourceTree = "<group>"; };
+		DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +106,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDA593888ADCD89036A7A925 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89FEE35070D2A1C17AB6421A /* Markdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				7896D51841ECD93C0A8119A0 /* Info.plist */,
+				DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */,
 				327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */,
 			);
 			path = SwiftMarkdownCore;
@@ -171,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				9B786F7F67635FFA4DB2D52B /* Info.plist */,
+				D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */,
 				D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */,
 			);
 			path = SwiftMarkdownTests;
@@ -204,6 +219,7 @@
 			buildConfigurationList = 92B1E38E48D7406D45C89E1F /* Build configuration list for PBXNativeTarget "SwiftMarkdownCore" */;
 			buildPhases = (
 				A6B532E7CCE286A4EAFCFCC9 /* Sources */,
+				DDA593888ADCD89036A7A925 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -211,6 +227,7 @@
 			);
 			name = SwiftMarkdownCore;
 			packageProductDependencies = (
+				F10350C361C31733946A2AFA /* Markdown */,
 			);
 			productName = SwiftMarkdownCore;
 			productReference = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */;
@@ -275,6 +292,9 @@
 			);
 			mainGroup = 1A3364A97FAE0960421FF3F0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FC56BA5904EBB6373B36382C /* XCRemoteSwiftPackageReference "swift-markdown" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -312,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */,
 				8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */,
 				1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,6 +697,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FC56BA5904EBB6373B36382C /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftlang/swift-markdown";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F10350C361C31733946A2AFA /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC56BA5904EBB6373B36382C /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6D684C0DBF64172F57BB69B6 /* Project object */;
 }
