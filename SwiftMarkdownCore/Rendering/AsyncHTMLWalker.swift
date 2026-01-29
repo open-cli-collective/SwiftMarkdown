@@ -178,11 +178,7 @@ struct AsyncHTMLWalker {
         var cssClass: String?
 
         if validateImages && ImageValidator.isDataURI(src) {
-            let validationResult = ImageValidator.validate(dataURI: src)
-            switch validationResult {
-            case .valid:
-                break
-            case .mismatch, .unrecognized, .invalidData:
+            if !ImageValidator.validate(dataURI: src).isValid {
                 cssClass = "invalid-image"
             }
         }

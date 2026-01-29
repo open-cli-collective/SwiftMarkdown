@@ -204,11 +204,7 @@ struct HTMLWalker: MarkupWalker {
 
         // Validate data URI images if enabled
         if validateImages && ImageValidator.isDataURI(src) {
-            let validationResult = ImageValidator.validate(dataURI: src)
-            switch validationResult {
-            case .valid:
-                break // Image is valid, no special class needed
-            case .mismatch, .unrecognized, .invalidData:
+            if !ImageValidator.validate(dataURI: src).isValid {
                 cssClass = "invalid-image"
             }
         }
