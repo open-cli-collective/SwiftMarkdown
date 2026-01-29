@@ -49,12 +49,13 @@ jobs:
           VERSION_NUM="${{ steps.version.outputs.version_num }}"
           find . -name "Info.plist" -exec /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION_NUM" {} \; 2>/dev/null || true
 
-      - name: Build archive
+      - name: Build archive (Universal)
         run: |
           xcodebuild archive \
             -scheme ${{ env.SCHEME }} \
             -destination 'generic/platform=macOS' \
             -archivePath build/${{ env.APP_NAME }}.xcarchive \
+            ONLY_ACTIVE_ARCH=NO \
             CODE_SIGN_IDENTITY="-" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
@@ -166,6 +167,8 @@ jobs:
           name: ${{ env.APP_NAME }} ${{ needs.build.outputs.version }}
           body: |
             ## ${{ env.APP_NAME }} ${{ needs.build.outputs.version }}
+
+            Universal binary (Apple Silicon + Intel)
 
             ### Installation
 
