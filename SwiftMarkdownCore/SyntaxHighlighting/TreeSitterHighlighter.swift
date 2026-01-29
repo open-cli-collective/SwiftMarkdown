@@ -56,12 +56,12 @@ public final class TreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked Send
 
     public func highlightToHTML(code: String, language: String) -> String {
         guard supportsLanguage(language) else {
-            return escapeHTML(code)
+            return code.htmlEscaped
         }
 
         let tokens = highlight(code: code, language: language)
         guard !tokens.isEmpty else {
-            return escapeHTML(code)
+            return code.htmlEscaped
         }
 
         return renderTokensToHTML(code: code, tokens: tokens)
@@ -171,17 +171,17 @@ public final class TreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked Send
         for token in tokens {
             // Add any unhighlighted text before this token
             if currentIndex < token.range.lowerBound {
-                result += escapeHTML(String(code[currentIndex..<token.range.lowerBound]))
+                result += String(code[currentIndex..<token.range.lowerBound]).htmlEscaped
             }
 
             // Add the highlighted token
             let tokenText = String(code[token.range])
             if token.tokenType != .plain {
                 result += "<span class=\"token-\(token.tokenType.rawValue)\">"
-                result += escapeHTML(tokenText)
+                result += tokenText.htmlEscaped
                 result += "</span>"
             } else {
-                result += escapeHTML(tokenText)
+                result += tokenText.htmlEscaped
             }
 
             currentIndex = token.range.upperBound
@@ -189,17 +189,9 @@ public final class TreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked Send
 
         // Add any remaining text after the last token
         if currentIndex < code.endIndex {
-            result += escapeHTML(String(code[currentIndex...]))
+            result += String(code[currentIndex...]).htmlEscaped
         }
 
         return result
-    }
-
-    private func escapeHTML(_ string: String) -> String {
-        string
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
     }
 }

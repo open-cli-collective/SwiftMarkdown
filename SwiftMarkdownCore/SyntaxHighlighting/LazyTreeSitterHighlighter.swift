@@ -84,12 +84,12 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
     public func highlightToHTML(code: String, language: String) -> String {
         // Synchronous method only works for Swift
         guard language.lowercased() == "swift" else {
-            return escapeHTML(code)
+            return code.htmlEscaped
         }
 
         let tokens = highlight(code: code, language: language)
         guard !tokens.isEmpty else {
-            return escapeHTML(code)
+            return code.htmlEscaped
         }
 
         return renderTokensToHTML(code: code, tokens: tokens)
@@ -143,7 +143,7 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
     public func highlightToHTMLAsync(code: String, language: String) async -> String {
         let tokens = await highlightAsync(code: code, language: language)
         guard !tokens.isEmpty else {
-            return escapeHTML(code)
+            return code.htmlEscaped
         }
         return renderTokensToHTML(code: code, tokens: tokens)
     }
@@ -284,33 +284,25 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
 
         for token in tokens {
             if currentIndex < token.range.lowerBound {
-                result += escapeHTML(String(code[currentIndex..<token.range.lowerBound]))
+                result += String(code[currentIndex..<token.range.lowerBound]).htmlEscaped
             }
 
             let tokenText = String(code[token.range])
             if token.tokenType != .plain {
                 result += "<span class=\"token-\(token.tokenType.rawValue)\">"
-                result += escapeHTML(tokenText)
+                result += tokenText.htmlEscaped
                 result += "</span>"
             } else {
-                result += escapeHTML(tokenText)
+                result += tokenText.htmlEscaped
             }
 
             currentIndex = token.range.upperBound
         }
 
         if currentIndex < code.endIndex {
-            result += escapeHTML(String(code[currentIndex...]))
+            result += String(code[currentIndex...]).htmlEscaped
         }
 
         return result
-    }
-
-    private func escapeHTML(_ string: String) -> String {
-        string
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
     }
 }

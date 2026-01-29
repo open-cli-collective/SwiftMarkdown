@@ -12,6 +12,7 @@
 		1046C44370268572EE44F2BA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */; };
 		1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */; };
 		1D4D4F6C986946DEFDBEE790 /* GrammarManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B063556DF68B1428DE338C6 /* GrammarManagerTests.swift */; };
+		2502100E7B8A3D970D3847E7 /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87150C18803EF1451036BBE8 /* String+HTML.swift */; };
 		497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */; };
 		4AD0857EDCD7170E75955150 /* HTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92EEC01DFECF39F9FD67D25 /* HTMLRenderer.swift */; };
 		4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */; };
@@ -32,6 +33,7 @@
 		9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */; };
 		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
 		B6BAEE9D266B0B4E25F36503 /* SyntaxThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */; };
+		B92C700D2386D46D2189E346 /* StringHTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA59B73EF3AAC7F3AF2274 /* StringHTMLTests.swift */; };
 		BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */; };
 		BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
 		BD9282D7285DD285D40B7411 /* GrammarError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5441AA30AEECE5EDC9A59126 /* GrammarError.swift */; };
@@ -119,12 +121,14 @@
 		7B063556DF68B1428DE338C6 /* GrammarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarManagerTests.swift; sourceTree = "<group>"; };
 		8241641705639E7415FA4283 /* GrammarManifestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarManifestTests.swift; sourceTree = "<group>"; };
 		83CD477C1EE8C81739449627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		87150C18803EF1451036BBE8 /* String+HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+HTML.swift"; sourceTree = "<group>"; };
 		95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMarkdownCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B786F7F67635FFA4DB2D52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextRendererTests.swift; sourceTree = "<group>"; };
 		B5BB6B52D45ED0A11407D90A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BCAAFBA7E1B67A000AC2B618 /* GrammarManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarManifest.swift; sourceTree = "<group>"; };
 		C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxHighlighterTests.swift; sourceTree = "<group>"; };
+		C6BA59B73EF3AAC7F3AF2274 /* StringHTMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHTMLTests.swift; sourceTree = "<group>"; };
 		C92EEC01DFECF39F9FD67D25 /* HTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLRenderer.swift; sourceTree = "<group>"; };
 		CC0732F7FFFF2CB2CA3AAF34 /* HTMLRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLRendererTests.swift; sourceTree = "<group>"; };
 		CC3C7E294336DAA8FA4C403E /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRenderer.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 				7EC75CB94AF4E588B3655B20 /* Resources */,
 				AF34805A2D1689DE9AEA6290 /* SyntaxHighlighting */,
 				CAEF476CC89E8866F9857693 /* Themes */,
+				F84C4F8533DF1CF71F946E4A /* Utilities */,
 			);
 			path = SwiftMarkdownCore;
 			sourceTree = "<group>";
@@ -304,11 +309,20 @@
 				9B786F7F67635FFA4DB2D52B /* Info.plist */,
 				D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */,
 				AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */,
+				C6BA59B73EF3AAC7F3AF2274 /* StringHTMLTests.swift */,
 				D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */,
 				C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */,
 				5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */,
 			);
 			path = SwiftMarkdownTests;
+			sourceTree = "<group>";
+		};
+		F84C4F8533DF1CF71F946E4A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				87150C18803EF1451036BBE8 /* String+HTML.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -475,6 +489,7 @@
 				4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */,
 				C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */,
 				497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */,
+				B92C700D2386D46D2189E346 /* StringHTMLTests.swift in Sources */,
 				8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */,
 				9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */,
 				B6BAEE9D266B0B4E25F36503 /* SyntaxThemeTests.swift in Sources */,
@@ -495,6 +510,7 @@
 				9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */,
 				6F1693EF64350907439D32E1 /* MarkdownRenderer.swift in Sources */,
 				F6E7533793D2B14E0BD4DF7F /* PlainTextRenderer.swift in Sources */,
+				2502100E7B8A3D970D3847E7 /* String+HTML.swift in Sources */,
 				1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */,
 				F3C0DBD72E43F100AE91CECE /* SyntaxHighlighter.swift in Sources */,
 				0E5BC65A4C34D2C20A13C184 /* SyntaxTheme.swift in Sources */,
