@@ -64,21 +64,19 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
         }
 
         configLock.lock()
+        defer { configLock.unlock() }
+
         do {
             try parser.setLanguage(config.language)
         } catch {
-            configLock.unlock()
             return []
         }
 
         guard let tree = parser.parse(code) else {
-            configLock.unlock()
             return []
         }
 
-        let tokens = extractTokens(from: tree, code: code, query: query)
-        configLock.unlock()
-        return tokens
+        return extractTokens(from: tree, code: code, query: query)
     }
 
     public func highlightToHTML(code: String, language: String) -> String {
