@@ -144,6 +144,81 @@ public actor GrammarManager {
         cacheURL
     }
 
+    // MARK: - UI Support API
+
+    /// Returns the cached manifest, loading it if necessary.
+    public func getManifest() async -> GrammarManifest? {
+        if manifest == nil {
+            manifest = try? await loadManifest()
+        }
+        return manifest
+    }
+
+    /// Returns the list of installed (cached) grammar names.
+    public func installedGrammars() -> [String] {
+        guard FileManager.default.fileExists(atPath: cacheURL.path) else {
+            return []
+        }
+
+        let contents = (try? FileManager.default.contentsOfDirectory(atPath: cacheURL.path)) ?? []
+        return contents.filter { name in
+            let grammarDir = cacheURL.appendingPathComponent(name)
+            let dylibPath = grammarDir.appendingPathComponent("\(name).dylib").path
+            return FileManager.default.fileExists(atPath: dylibPath)
+        }.sorted()
+    }
+
+    /// Checks if a specific grammar is installed (cached).
+    public func isGrammarInstalled(_ name: String) -> Bool {
+        let grammarDir = cacheURL.appendingPathComponent(name)
+        let dylibPath = grammarDir.appendingPathComponent("\(name).dylib").path
+        return FileManager.default.fileExists(atPath: dylibPath)
+    }
+
+    /// Returns the total cache size in bytes.
+    public func cacheSize() -> Int64 {
+        guard FileManager.default.fileExists(atPath: cacheURL.path) else {
+            return 0
+        }
+
+        var totalSize: Int64 = 0
+        let enumerator = FileManager.default.enumerator(atPath: cacheURL.path)
+
+        while let file = enumerator?.nextObject() as? String {
+            let filePath = cacheURL.appendingPathComponent(file).path
+            if let attrs = try? FileManager.default.attributesOfItem(atPath: filePath),
+               let size = attrs[.size] as? Int64 {
+                totalSize += size
+            }
+        }
+
+        return totalSize
+    }
+
+    /// Downloads a grammar without loading it into memory.
+    ///
+    /// Use this to pre-download grammars for offline use.
+    /// - Parameter language: The language to download.
+    /// - Throws: GrammarError if download fails.
+    public func downloadGrammarOnly(_ language: String) async throws {
+        if manifest == nil {
+            manifest = try await loadManifest()
+        }
+
+        guard let manifest = manifest,
+              let canonical = manifest.canonicalName(for: language) else {
+            throw GrammarError.unknownGrammar(language)
+        }
+
+        // Skip if already cached
+        if isGrammarInstalled(canonical) {
+            return
+        }
+
+        let grammarDir = cacheURL.appendingPathComponent(canonical)
+        try await downloadGrammar(canonical, to: grammarDir)
+    }
+
     // MARK: - Private Implementation
 
     private func loadManifest() async throws -> GrammarManifest {
