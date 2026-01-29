@@ -1,0 +1,680 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1046C44370268572EE44F2BA /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */; };
+		1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */; };
+		7E4E0ADB9F632919888A92E7 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */; };
+		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+		BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */; };
+		BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
+		CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */; };
+		D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F74070484EECFB2EC5C787D6 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B5306F5AEC1365BC18A5D106 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B676B813F4457767303D496;
+			remoteInfo = SwiftMarkdownCore;
+		};
+		CF119784FCE18A5539994EFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B676B813F4457767303D496;
+			remoteInfo = SwiftMarkdownCore;
+		};
+		D3CDB38F47B967389B640BA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B676B813F4457767303D496;
+			remoteInfo = SwiftMarkdownCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2ED1816DFEE37359E61C6044 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C07F1C10741F8ED3EC68ACCE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7E4E0ADB9F632919888A92E7 /* SwiftMarkdownCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCore.swift; sourceTree = "<group>"; };
+		3780132CA9FEA0CDFEEA695B /* SwiftMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BC2CEE945099FDCED3EEFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		586261D1054B4DCE992C88D3 /* SwiftMarkdownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMarkdownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftMarkdownQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftMarkdown.entitlements; sourceTree = "<group>"; };
+		7896D51841ECD93C0A8119A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		83CD477C1EE8C81739449627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftMarkdownCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B786F7F67635FFA4DB2D52B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B5BB6B52D45ED0A11407D90A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCoreTests.swift; sourceTree = "<group>"; };
+		DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		57EDBB9729EF5272E8135C65 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD02521113B76E787C8AED62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F78548C902DC62FDF7E23A54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F74070484EECFB2EC5C787D6 /* SwiftMarkdownCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A3364A97FAE0960421FF3F0 = {
+			isa = PBXGroup;
+			children = (
+				9AA6EB949A275C4B3F588ECD /* SwiftMarkdown */,
+				C180C18664E0BEDFF8E6FC94 /* SwiftMarkdownCore */,
+				479CC66ADDAD0CCC549BD837 /* SwiftMarkdownQuickLook */,
+				EE46B3B0894560244A3035ED /* SwiftMarkdownTests */,
+				D5DEA205A88634C80F940D38 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		479CC66ADDAD0CCC549BD837 /* SwiftMarkdownQuickLook */ = {
+			isa = PBXGroup;
+			children = (
+				83CD477C1EE8C81739449627 /* Info.plist */,
+				31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */,
+			);
+			path = SwiftMarkdownQuickLook;
+			sourceTree = "<group>";
+		};
+		9AA6EB949A275C4B3F588ECD /* SwiftMarkdown */ = {
+			isa = PBXGroup;
+			children = (
+				1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */,
+				B5BB6B52D45ED0A11407D90A /* ContentView.swift */,
+				3BC2CEE945099FDCED3EEFCD /* Info.plist */,
+				7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */,
+				DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */,
+			);
+			path = SwiftMarkdown;
+			sourceTree = "<group>";
+		};
+		C180C18664E0BEDFF8E6FC94 /* SwiftMarkdownCore */ = {
+			isa = PBXGroup;
+			children = (
+				7896D51841ECD93C0A8119A0 /* Info.plist */,
+				327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */,
+			);
+			path = SwiftMarkdownCore;
+			sourceTree = "<group>";
+		};
+		D5DEA205A88634C80F940D38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3780132CA9FEA0CDFEEA695B /* SwiftMarkdown.app */,
+				95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */,
+				6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */,
+				586261D1054B4DCE992C88D3 /* SwiftMarkdownTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EE46B3B0894560244A3035ED /* SwiftMarkdownTests */ = {
+			isa = PBXGroup;
+			children = (
+				9B786F7F67635FFA4DB2D52B /* Info.plist */,
+				D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */,
+			);
+			path = SwiftMarkdownTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8F94EE24F1993EB642D1E5B9 /* SwiftMarkdownTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E08241276D2E8439C455497B /* Build configuration list for PBXNativeTarget "SwiftMarkdownTests" */;
+			buildPhases = (
+				13FE42BBDA78AE1E34244BC0 /* Sources */,
+				57EDBB9729EF5272E8135C65 /* Frameworks */,
+				C07F1C10741F8ED3EC68ACCE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7035492EAD6CC87EA38A7441 /* PBXTargetDependency */,
+			);
+			name = SwiftMarkdownTests;
+			packageProductDependencies = (
+			);
+			productName = SwiftMarkdownTests;
+			productReference = 586261D1054B4DCE992C88D3 /* SwiftMarkdownTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9B676B813F4457767303D496 /* SwiftMarkdownCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92B1E38E48D7406D45C89E1F /* Build configuration list for PBXNativeTarget "SwiftMarkdownCore" */;
+			buildPhases = (
+				A6B532E7CCE286A4EAFCFCC9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftMarkdownCore;
+			packageProductDependencies = (
+			);
+			productName = SwiftMarkdownCore;
+			productReference = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C0F52A4134B7C5A59539CAF4 /* SwiftMarkdownQuickLook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6644E02A2E90F6DC2F342DD8 /* Build configuration list for PBXNativeTarget "SwiftMarkdownQuickLook" */;
+			buildPhases = (
+				EF967B501279B378B4E8E744 /* Sources */,
+				F78548C902DC62FDF7E23A54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				13210B2798AEAF91B6821FAD /* PBXTargetDependency */,
+			);
+			name = SwiftMarkdownQuickLook;
+			packageProductDependencies = (
+			);
+			productName = SwiftMarkdownQuickLook;
+			productReference = 6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C4D64C271ABD6F2AB6DF7788 /* SwiftMarkdown */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC1DA0CD7895D09228B66F78 /* Build configuration list for PBXNativeTarget "SwiftMarkdown" */;
+			buildPhases = (
+				06120886B79EE447F8382747 /* Sources */,
+				3C8E2BF224107CC807CA6980 /* Resources */,
+				AD02521113B76E787C8AED62 /* Frameworks */,
+				2ED1816DFEE37359E61C6044 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ED11D4D3C2F82C824A355F38 /* PBXTargetDependency */,
+			);
+			name = SwiftMarkdown;
+			packageProductDependencies = (
+			);
+			productName = SwiftMarkdown;
+			productReference = 3780132CA9FEA0CDFEEA695B /* SwiftMarkdown.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6D684C0DBF64172F57BB69B6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = A1B9F363C1D13478AD6ACAC9 /* Build configuration list for PBXProject "SwiftMarkdown" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1A3364A97FAE0960421FF3F0;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C4D64C271ABD6F2AB6DF7788 /* SwiftMarkdown */,
+				9B676B813F4457767303D496 /* SwiftMarkdownCore */,
+				C0F52A4134B7C5A59539CAF4 /* SwiftMarkdownQuickLook */,
+				8F94EE24F1993EB642D1E5B9 /* SwiftMarkdownTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3C8E2BF224107CC807CA6980 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		06120886B79EE447F8382747 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3B167FD38C733B112E277FF /* ContentView.swift in Sources */,
+				BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13FE42BBDA78AE1E34244BC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6B532E7CCE286A4EAFCFCC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ADF709C413D3EF737BD00D6 /* SwiftMarkdownCore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF967B501279B378B4E8E744 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1046C44370268572EE44F2BA /* PreviewViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		13210B2798AEAF91B6821FAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B676B813F4457767303D496 /* SwiftMarkdownCore */;
+			targetProxy = B5306F5AEC1365BC18A5D106 /* PBXContainerItemProxy */;
+		};
+		7035492EAD6CC87EA38A7441 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B676B813F4457767303D496 /* SwiftMarkdownCore */;
+			targetProxy = CF119784FCE18A5539994EFD /* PBXContainerItemProxy */;
+		};
+		ED11D4D3C2F82C824A355F38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B676B813F4457767303D496 /* SwiftMarkdownCore */;
+			targetProxy = D3CDB38F47B967389B640BA8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		048BE6FBAB07ABF7DDB66B4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		0AC0A2AD769628D6822A07BF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SwiftMarkdownCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownCore";
+				PRODUCT_NAME = SwiftMarkdownCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		647707AEAA4629BE3E2F6416 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = SwiftMarkdownCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownCore";
+				PRODUCT_NAME = SwiftMarkdownCore;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		988CD170C8D2EEA38CC05A54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdownTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownTests";
+				PRODUCT_NAME = SwiftMarkdownTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A1CB7F399BEF9A65418FA1FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SwiftMarkdown/SwiftMarkdown.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdown/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdown";
+				PRODUCT_NAME = SwiftMarkdown;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A21C2ED2264F643F7BE9FFF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdownQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdown.QuickLook";
+				PRODUCT_NAME = SwiftMarkdownQuickLook;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C533D549CA91563BD4D88152 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		CFC5368E81A42AD902825694 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdownQuickLook/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdown.QuickLook";
+				PRODUCT_NAME = SwiftMarkdownQuickLook;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E12391E82EC24A9B46202244 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SwiftMarkdown/SwiftMarkdown.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdown/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdown";
+				PRODUCT_NAME = SwiftMarkdown;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ECA1866F8D614C4348C09DA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftMarkdownTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownTests";
+				PRODUCT_NAME = SwiftMarkdownTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6644E02A2E90F6DC2F342DD8 /* Build configuration list for PBXNativeTarget "SwiftMarkdownQuickLook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFC5368E81A42AD902825694 /* Debug */,
+				A21C2ED2264F643F7BE9FFF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		92B1E38E48D7406D45C89E1F /* Build configuration list for PBXNativeTarget "SwiftMarkdownCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AC0A2AD769628D6822A07BF /* Debug */,
+				647707AEAA4629BE3E2F6416 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A1B9F363C1D13478AD6ACAC9 /* Build configuration list for PBXProject "SwiftMarkdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C533D549CA91563BD4D88152 /* Debug */,
+				048BE6FBAB07ABF7DDB66B4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E08241276D2E8439C455497B /* Build configuration list for PBXNativeTarget "SwiftMarkdownTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ECA1866F8D614C4348C09DA0 /* Debug */,
+				988CD170C8D2EEA38CC05A54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EC1DA0CD7895D09228B66F78 /* Build configuration list for PBXNativeTarget "SwiftMarkdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1CB7F399BEF9A65418FA1FF /* Debug */,
+				E12391E82EC24A9B46202244 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6D684C0DBF64172F57BB69B6 /* Project object */;
+}

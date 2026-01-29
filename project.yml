@@ -1,0 +1,142 @@
+name: SwiftMarkdown
+options:
+  bundleIdPrefix: com.open-cli-collective
+  deploymentTarget:
+    macOS: "13.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGNING_REQUIRED: "NO"
+    CODE_SIGN_ENTITLEMENTS: ""
+
+targets:
+  SwiftMarkdown:
+    type: application
+    platform: macOS
+    sources:
+      - SwiftMarkdown
+    dependencies:
+      - target: SwiftMarkdownCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdown
+        INFOPLIST_FILE: SwiftMarkdown/Info.plist
+        PRODUCT_NAME: SwiftMarkdown
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: SwiftMarkdown/Info.plist
+      properties:
+        CFBundleName: SwiftMarkdown
+        CFBundleDisplayName: SwiftMarkdown
+        CFBundleIdentifier: com.open-cli-collective.SwiftMarkdown
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "0.1.0"
+        CFBundlePackageType: APPL
+        CFBundleExecutable: SwiftMarkdown
+        LSMinimumSystemVersion: "13.0"
+        NSHighResolutionCapable: true
+        NSPrincipalClass: NSApplication
+    entitlements:
+      path: SwiftMarkdown/SwiftMarkdown.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+
+  SwiftMarkdownCore:
+    type: framework
+    platform: macOS
+    sources:
+      - SwiftMarkdownCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdownCore
+        INFOPLIST_FILE: SwiftMarkdownCore/Info.plist
+        PRODUCT_NAME: SwiftMarkdownCore
+        DEFINES_MODULE: YES
+    info:
+      path: SwiftMarkdownCore/Info.plist
+      properties:
+        CFBundleName: SwiftMarkdownCore
+        CFBundleIdentifier: com.open-cli-collective.SwiftMarkdownCore
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "0.1.0"
+        CFBundlePackageType: FMWK
+        CFBundleExecutable: SwiftMarkdownCore
+
+  SwiftMarkdownTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - SwiftMarkdownTests
+    dependencies:
+      - target: SwiftMarkdownCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdownTests
+        INFOPLIST_FILE: SwiftMarkdownTests/Info.plist
+        PRODUCT_NAME: SwiftMarkdownTests
+    info:
+      path: SwiftMarkdownTests/Info.plist
+      properties:
+        CFBundleName: SwiftMarkdownTests
+        CFBundleIdentifier: com.open-cli-collective.SwiftMarkdownTests
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "0.1.0"
+        CFBundlePackageType: BNDL
+
+  SwiftMarkdownQuickLook:
+    type: app-extension
+    platform: macOS
+    sources:
+      - SwiftMarkdownQuickLook
+    dependencies:
+      - target: SwiftMarkdownCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdown.QuickLook
+        INFOPLIST_FILE: SwiftMarkdownQuickLook/Info.plist
+        PRODUCT_NAME: SwiftMarkdownQuickLook
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/../Frameworks"
+          - "@loader_path/../Frameworks"
+    info:
+      path: SwiftMarkdownQuickLook/Info.plist
+      properties:
+        CFBundleName: SwiftMarkdownQuickLook
+        CFBundleDisplayName: SwiftMarkdown Quick Look
+        CFBundleIdentifier: com.open-cli-collective.SwiftMarkdown.QuickLook
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "0.1.0"
+        CFBundlePackageType: XPC!
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.quicklook.preview
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).PreviewViewController"
+        QLSupportedContentTypes:
+          - net.daringfireball.markdown
+          - public.plain-text
+        QLSupportsSearchableItems: false
+
+schemes:
+  SwiftMarkdown:
+    build:
+      targets:
+        SwiftMarkdown: all
+        SwiftMarkdownCore: all
+        SwiftMarkdownQuickLook: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SwiftMarkdownTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
