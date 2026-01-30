@@ -66,7 +66,9 @@ public actor GrammarManager {
     /// Returns the Homebrew grammars directory if it exists.
     /// Checks both Apple Silicon (/opt/homebrew) and Intel (/usr/local) prefixes.
     /// If an override URL was provided in the initializer, uses that instead.
-    private var homebrewGrammarsURL: URL? {
+    ///
+    /// This is `nonisolated` because it only accesses immutable `let` properties and the file system.
+    private nonisolated var homebrewGrammarsURL: URL? {
         // If override is set, use it (allows tests to disable Homebrew discovery)
         if let override = overrideHomebrewURL {
             return FileManager.default.fileExists(atPath: override.path) ? override : nil
@@ -185,7 +187,7 @@ public actor GrammarManager {
     }
 
     /// Returns the cache directory URL.
-    public var cacheDirectory: URL {
+    public nonisolated var cacheDirectory: URL {
         cacheURL
     }
 
@@ -201,7 +203,10 @@ public actor GrammarManager {
     }
 
     /// Returns the list of installed grammar names from all sources (Homebrew + cache).
-    public func installedGrammars() -> [String] {
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and the file system,
+    /// enabling synchronous calls from highlighters.
+    public nonisolated func installedGrammars() -> [String] {
         var grammars = Set<String>()
 
         // Check Homebrew directory
@@ -230,12 +235,18 @@ public actor GrammarManager {
     }
 
     /// Checks if a specific grammar is installed (in Homebrew or cache).
-    public func isGrammarInstalled(_ name: String) -> Bool {
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and the file system,
+    /// enabling synchronous calls from highlighters.
+    public nonisolated func isGrammarInstalled(_ name: String) -> Bool {
         grammarSource(name) != .notInstalled
     }
 
     /// Returns the source of a grammar (Homebrew, cached, or not installed).
-    public func grammarSource(_ name: String) -> GrammarSource {
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and the file system,
+    /// enabling synchronous calls from highlighters.
+    public nonisolated func grammarSource(_ name: String) -> GrammarSource {
         // Check Homebrew first
         if let homebrewURL = homebrewGrammarsURL {
             let dylibPath = homebrewURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
@@ -254,7 +265,9 @@ public actor GrammarManager {
     }
 
     /// Returns the total cache size in bytes.
-    public func cacheSize() -> Int64 {
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and the file system.
+    public nonisolated func cacheSize() -> Int64 {
         guard FileManager.default.fileExists(atPath: cacheURL.path) else {
             return 0
         }

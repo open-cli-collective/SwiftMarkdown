@@ -2,9 +2,15 @@ import XCTest
 @testable import SwiftMarkdownCore
 
 final class SyntaxHighlighterTests: XCTestCase {
+    // Helper to check if Swift grammar is available (via Homebrew or cache)
+    private var isSwiftGrammarInstalled: Bool {
+        GrammarManager.shared.isGrammarInstalled("swift")
+    }
+
     // MARK: - TreeSitterHighlighter Basic Tests
 
-    func testSupportsSwiftLanguage() {
+    func testSupportsSwiftLanguage() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         XCTAssertTrue(highlighter.supportsLanguage("swift"))
         XCTAssertTrue(highlighter.supportsLanguage("Swift"))
@@ -18,14 +24,16 @@ final class SyntaxHighlighterTests: XCTestCase {
         XCTAssertFalse(highlighter.supportsLanguage(""))
     }
 
-    func testSupportedLanguagesList() {
+    func testSupportedLanguagesList() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         XCTAssertTrue(highlighter.supportedLanguages.contains("swift"))
     }
 
     // MARK: - Token Extraction Tests
 
-    func testSwiftHighlightingProducesTokens() {
+    func testSwiftHighlightingProducesTokens() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let tokens = highlighter.highlight(code: "let x = 1", language: "swift")
 
@@ -33,7 +41,8 @@ final class SyntaxHighlighterTests: XCTestCase {
         XCTAssertFalse(tokens.isEmpty, "Should produce tokens for valid Swift code")
     }
 
-    func testSwiftHighlightingIdentifiesKeyword() {
+    func testSwiftHighlightingIdentifiesKeyword() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let tokens = highlighter.highlight(code: "let x = 1", language: "swift")
 
@@ -49,7 +58,8 @@ final class SyntaxHighlighterTests: XCTestCase {
         XCTAssertTrue(tokens.isEmpty, "Should return empty tokens for unsupported language")
     }
 
-    func testEmptyCodeReturnsEmptyTokens() {
+    func testEmptyCodeReturnsEmptyTokens() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let tokens = highlighter.highlight(code: "", language: "swift")
 
@@ -58,7 +68,8 @@ final class SyntaxHighlighterTests: XCTestCase {
 
     // MARK: - HTML Output Tests
 
-    func testHighlightToHTMLProducesSpanElements() {
+    func testHighlightToHTMLProducesSpanElements() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let html = highlighter.highlightToHTML(code: "let x = 1", language: "swift")
 
@@ -66,14 +77,16 @@ final class SyntaxHighlighterTests: XCTestCase {
         XCTAssertTrue(html.contains("<span class=\"token-"), "Should contain token span elements")
     }
 
-    func testHighlightToHTMLContainsKeywordSpan() {
+    func testHighlightToHTMLContainsKeywordSpan() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let html = highlighter.highlightToHTML(code: "let x = 1", language: "swift")
 
         XCTAssertTrue(html.contains("token-keyword"), "Should contain keyword token class")
     }
 
-    func testHighlightToHTMLEscapesSpecialCharacters() {
+    func testHighlightToHTMLEscapesSpecialCharacters() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let html = highlighter.highlightToHTML(code: "let x = \"<script>\"", language: "swift")
 
@@ -95,7 +108,8 @@ final class SyntaxHighlighterTests: XCTestCase {
 
     // MARK: - HTMLRenderer Integration Tests
 
-    func testHTMLRendererWithHighlighter() {
+    func testHTMLRendererWithHighlighter() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let renderer = HTMLRenderer(syntaxHighlighter: highlighter)
         let document = MarkdownParser.parseDocument("""
@@ -135,14 +149,18 @@ final class SyntaxHighlighterTests: XCTestCase {
 
         let html = renderer.render(document)
 
-        // Should render code but without highlighting (Python not yet supported)
+        // Should render code but without highlighting (if Python not installed)
         XCTAssertTrue(html.contains("language-python"), "Should have language class")
-        XCTAssertFalse(html.contains("token-"), "Should not have token spans for unsupported language")
+        // Only check for no tokens if Python is not installed
+        if !GrammarManager.shared.isGrammarInstalled("python") {
+            XCTAssertFalse(html.contains("token-"), "Should not have token spans for unsupported language")
+        }
     }
 
     // MARK: - MarkdownParser Integration Tests
 
-    func testParseWithHighlighting() {
+    func testParseWithHighlighting() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let md = """
             # Code Example
 
@@ -157,7 +175,8 @@ final class SyntaxHighlighterTests: XCTestCase {
         XCTAssertTrue(html.contains("token-keyword"), "Should have highlighted keywords")
     }
 
-    func testParseWithHighlightingMixedContent() {
+    func testParseWithHighlightingMixedContent() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let md = """
             Some text with `inline code` and:
 
@@ -204,7 +223,8 @@ final class SyntaxHighlighterTests: XCTestCase {
 
     // MARK: - Complex Swift Code Tests
 
-    func testComplexSwiftCodeHighlighting() {
+    func testComplexSwiftCodeHighlighting() throws {
+        try XCTSkipUnless(isSwiftGrammarInstalled, "Swift grammar not installed")
         let highlighter = TreeSitterHighlighter()
         let code = """
             struct Person {
