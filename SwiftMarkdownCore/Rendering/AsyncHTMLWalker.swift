@@ -95,62 +95,56 @@ struct AsyncHTMLWalker {
     // swiftlint:enable cyclomatic_complexity
 
     private mutating func visitHeading(_ heading: Heading) async {
-        let level = heading.level
-        result += "<h\(level)>"
+        result += HTMLElementRenderer.openHeading(level: heading.level)
         for child in heading.children {
             await visitMarkup(child)
         }
-        result += "</h\(level)>\n"
+        result += HTMLElementRenderer.closeHeading(level: heading.level)
     }
 
     private mutating func visitParagraph(_ paragraph: Paragraph) {
-        result += "<p>"
+        result += HTMLElementRenderer.openTag("p")
         for child in paragraph.children {
             visitInlineMarkup(child)
         }
-        result += "</p>\n"
+        result += HTMLElementRenderer.closeTagWithNewline("p")
     }
 
     private mutating func visitText(_ text: Text) {
-        result += text.string.htmlEscaped
+        result += HTMLElementRenderer.renderText(text)
     }
 
     private mutating func visitEmphasis(_ emphasis: Emphasis) {
-        result += "<em>"
+        result += HTMLElementRenderer.openTag("em")
         for child in emphasis.children {
             visitInlineMarkup(child)
         }
-        result += "</em>"
+        result += HTMLElementRenderer.closeTag("em")
     }
 
     private mutating func visitStrong(_ strong: Strong) {
-        result += "<strong>"
+        result += HTMLElementRenderer.openTag("strong")
         for child in strong.children {
             visitInlineMarkup(child)
         }
-        result += "</strong>"
+        result += HTMLElementRenderer.closeTag("strong")
     }
 
     private mutating func visitStrikethrough(_ strikethrough: Strikethrough) {
-        result += "<del>"
+        result += HTMLElementRenderer.openTag("del")
         for child in strikethrough.children {
             visitInlineMarkup(child)
         }
-        result += "</del>"
+        result += HTMLElementRenderer.closeTag("del")
     }
 
     private mutating func visitInlineCode(_ inlineCode: InlineCode) {
-        result += "<code>\(inlineCode.code.htmlEscaped)</code>"
+        result += HTMLElementRenderer.renderInlineCode(inlineCode)
     }
 
     private mutating func visitCodeBlock(_ codeBlock: CodeBlock) async {
         let language = codeBlock.language ?? ""
-
-        if !language.isEmpty {
-            result += "<pre><code class=\"language-\(language.htmlEscaped)\">"
-        } else {
-            result += "<pre><code>"
-        }
+        result += HTMLElementRenderer.openCodeBlock(language: language)
 
         if !language.isEmpty {
             let highlighted = await highlighter.highlightToHTMLAsync(code: codeBlock.code, language: language)
@@ -159,60 +153,39 @@ struct AsyncHTMLWalker {
             result += codeBlock.code.htmlEscaped
         }
 
-        result += "</code></pre>\n"
+        result += HTMLElementRenderer.closeCodeBlock()
     }
 
     private mutating func visitLink(_ link: Link) {
-        let href = link.destination ?? ""
-        result += "<a href=\"\(href.htmlEscaped)\">"
+        result += HTMLElementRenderer.openLink(link)
         for child in link.children {
             visitInlineMarkup(child)
         }
-        result += "</a>"
+        result += HTMLElementRenderer.closeLink()
     }
 
     private mutating func visitImage(_ image: Image) {
-        let src = image.source ?? ""
-        let alt = image.plainText
-
-        var cssClass: String?
-
-        if validateImages && ImageValidator.isDataURI(src) {
-            if !ImageValidator.validate(dataURI: src).isValid {
-                cssClass = "invalid-image"
-            }
-        }
-
-        if let cls = cssClass {
-            result += "<img class=\"\(cls)\" src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
-        } else {
-            result += "<img src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
-        }
+        result += HTMLElementRenderer.renderImage(image, validateImages: validateImages)
     }
 
     private mutating func visitUnorderedList(_ unorderedList: UnorderedList) async {
-        result += "<ul>\n"
+        result += HTMLElementRenderer.openTagWithNewline("ul")
         for child in unorderedList.children {
             await visitMarkup(child)
         }
-        result += "</ul>\n"
+        result += HTMLElementRenderer.closeTagWithNewline("ul")
     }
 
     private mutating func visitOrderedList(_ orderedList: OrderedList) async {
-        result += "<ol>\n"
+        result += HTMLElementRenderer.openTagWithNewline("ol")
         for child in orderedList.children {
             await visitMarkup(child)
         }
-        result += "</ol>\n"
+        result += HTMLElementRenderer.closeTagWithNewline("ol")
     }
 
     private mutating func visitListItem(_ listItem: ListItem) {
-        if let checkbox = listItem.checkbox {
-            let checked = checkbox == .checked ? " checked" : ""
-            result += "<li><input type=\"checkbox\" disabled\(checked)> "
-        } else {
-            result += "<li>"
-        }
+        result += HTMLElementRenderer.openListItem(listItem)
         for child in listItem.children {
             if let paragraph = child as? Paragraph {
                 for inlineChild in paragraph.children {
@@ -222,61 +195,59 @@ struct AsyncHTMLWalker {
                 visitInlineMarkup(child)
             }
         }
-        result += "</li>\n"
+        result += HTMLElementRenderer.closeListItem()
     }
 
     private mutating func visitBlockQuote(_ blockQuote: BlockQuote) async {
-        result += "<blockquote>\n"
+        result += HTMLElementRenderer.openTagWithNewline("blockquote")
         for child in blockQuote.children {
             await visitMarkup(child)
         }
-        result += "</blockquote>\n"
+        result += HTMLElementRenderer.closeTagWithNewline("blockquote")
     }
 
     private mutating func visitThematicBreak(_ thematicBreak: ThematicBreak) {
-        result += "<hr>\n"
+        result += HTMLElementRenderer.renderThematicBreak()
     }
 
     private mutating func visitTable(_ table: Table) {
-        result += "<table>\n"
-        let head = table.head
-        result += "<thead>\n<tr>\n"
-        for cell in head.cells {
-            result += "<th>"
+        result += HTMLElementRenderer.openTable()
+        result += HTMLElementRenderer.openTableHead()
+        for cell in table.head.cells {
+            result += HTMLElementRenderer.openTableHeader()
             for child in cell.children {
                 visitInlineMarkup(child)
             }
-            result += "</th>\n"
+            result += HTMLElementRenderer.closeTableHeader()
         }
-        result += "</tr>\n</thead>\n"
-        result += "<tbody>\n"
+        result += HTMLElementRenderer.closeTableHead()
         for row in table.body.rows {
-            result += "<tr>\n"
+            result += HTMLElementRenderer.openTableRow()
             for cell in row.cells {
-                result += "<td>"
+                result += HTMLElementRenderer.openTableCell()
                 for child in cell.children {
                     visitInlineMarkup(child)
                 }
-                result += "</td>\n"
+                result += HTMLElementRenderer.closeTableCell()
             }
-            result += "</tr>\n"
+            result += HTMLElementRenderer.closeTableRow()
         }
-        result += "</tbody>\n</table>\n"
+        result += HTMLElementRenderer.closeTable()
     }
 
     private mutating func visitLineBreak(_ lineBreak: LineBreak) {
-        result += "<br>\n"
+        result += HTMLElementRenderer.renderLineBreak()
     }
 
     private mutating func visitSoftBreak(_ softBreak: SoftBreak) {
-        result += "\n"
+        result += HTMLElementRenderer.renderSoftBreak()
     }
 
     private mutating func visitHTMLBlock(_ html: HTMLBlock) {
-        result += html.rawHTML
+        result += HTMLElementRenderer.renderHTMLBlock(html)
     }
 
     private mutating func visitInlineHTML(_ html: InlineHTML) {
-        result += html.rawHTML
+        result += HTMLElementRenderer.renderInlineHTML(html)
     }
 }
