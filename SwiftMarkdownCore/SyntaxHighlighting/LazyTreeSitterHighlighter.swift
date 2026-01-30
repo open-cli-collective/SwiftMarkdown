@@ -143,7 +143,7 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
             return cached
         }
 
-        guard let grammar = loadGrammarSync(language) else {
+        guard let grammar = GrammarLoader.loadGrammarSync(language, cacheURL: grammarManager.cacheDirectory) else {
             return nil
         }
 
@@ -163,61 +163,6 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
         } catch {
             return nil
         }
-    }
-
-    /// Synchronously loads a grammar from Homebrew or cache.
-    private func loadGrammarSync(_ name: String) -> LoadedGrammar? {
-        // Check Homebrew directories
-        let homebrewPrefixes = ["/opt/homebrew", "/usr/local"]
-        for prefix in homebrewPrefixes {
-            let homebrewURL = URL(fileURLWithPath: "\(prefix)/share/swiftmarkdown-grammars")
-            let grammarDir = homebrewURL.appendingPathComponent(name)
-            let dylibURL = grammarDir.appendingPathComponent("\(name).dylib")
-            let queriesURL = grammarDir.appendingPathComponent("queries").appendingPathComponent("highlights.scm")
-
-            if FileManager.default.fileExists(atPath: dylibURL.path) {
-                if let grammar = loadFromDisk(name: name, dylibURL: dylibURL, queriesURL: queriesURL) {
-                    return grammar
-                }
-            }
-        }
-
-        // Check cache directory
-        // swiftlint:disable:next force_unwrapping
-        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let cacheURL = appSupport.appendingPathComponent("SwiftMarkdown").appendingPathComponent("Grammars")
-        let cacheGrammarDir = cacheURL.appendingPathComponent(name)
-        let cacheDylibURL = cacheGrammarDir.appendingPathComponent("\(name).dylib")
-        let cacheQueriesURL = cacheGrammarDir.appendingPathComponent("queries").appendingPathComponent("highlights.scm")
-
-        if FileManager.default.fileExists(atPath: cacheDylibURL.path) {
-            return loadFromDisk(name: name, dylibURL: cacheDylibURL, queriesURL: cacheQueriesURL)
-        }
-
-        return nil
-    }
-
-    private func loadFromDisk(name: String, dylibURL: URL, queriesURL: URL) -> LoadedGrammar? {
-        guard let handle = dlopen(dylibURL.path, RTLD_NOW) else {
-            return nil
-        }
-
-        let symbolName = "tree_sitter_\(name)"
-        guard let symbol = dlsym(handle, symbolName) else {
-            return nil
-        }
-
-        typealias LanguageFunc = @convention(c) () -> OpaquePointer
-        let languageFunc = unsafeBitCast(symbol, to: LanguageFunc.self)
-        let languagePtr = languageFunc()
-
-        let language = Language(language: languagePtr)
-
-        return LoadedGrammar(
-            language: language,
-            queriesURL: queriesURL,
-            name: name
-        )
     }
 
     private func highlightWithGrammar(code: String, grammar: LoadedGrammar) async -> [HighlightToken] {

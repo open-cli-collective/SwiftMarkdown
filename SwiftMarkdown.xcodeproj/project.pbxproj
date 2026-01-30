@@ -42,6 +42,7 @@
 		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
 		C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */; };
 		CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */; };
+		CE41789129144C3BD9A4413F /* GrammarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F436562B096EB84F996FEC /* GrammarLoader.swift */; };
 		D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DCA77A3E20FB950CDEBA1EAE /* LanguagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */; };
 		E7D3884E4639CDCC92F60336 /* TreeSitterTokenProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */; };
@@ -139,6 +140,7 @@
 		DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownApp.swift; sourceTree = "<group>"; };
 		E0CDD889C6D996E0721E08B1 /* TreeSitterHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSitterHighlighter.swift; sourceTree = "<group>"; };
+		E7F436562B096EB84F996FEC /* GrammarLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarLoader.swift; sourceTree = "<group>"; };
 		E8CB32C563CC962698340BF8 /* LazyTreeSitterHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTreeSitterHighlighter.swift; sourceTree = "<group>"; };
 		F043600A2711212BC9399F70 /* HTMLElementRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLElementRenderer.swift; sourceTree = "<group>"; };
 		F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesViewModel.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				5441AA30AEECE5EDC9A59126 /* GrammarError.swift */,
+				E7F436562B096EB84F996FEC /* GrammarLoader.swift */,
 				CD3CDE3FFECEED6781027B84 /* GrammarManager.swift */,
 				BCAAFBA7E1B67A000AC2B618 /* GrammarManifest.swift */,
 				E8CB32C563CC962698340BF8 /* LazyTreeSitterHighlighter.swift */,
@@ -504,6 +507,7 @@
 			files = (
 				BFA78EFE0811FC9BB1CCA532 /* AsyncHTMLWalker.swift in Sources */,
 				BD9282D7285DD285D40B7411 /* GrammarError.swift in Sources */,
+				CE41789129144C3BD9A4413F /* GrammarLoader.swift in Sources */,
 				91AE9B4B84FEDF679211AC2C /* GrammarManager.swift in Sources */,
 				8EC47975A4146FA9820BE9C6 /* GrammarManifest.swift in Sources */,
 				2A2BE085D8889759487C9567 /* HTMLElementRenderer.swift in Sources */,
