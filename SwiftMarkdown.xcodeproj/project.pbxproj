@@ -44,6 +44,7 @@
 		CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */; };
 		D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DCA77A3E20FB950CDEBA1EAE /* LanguagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */; };
+		E7D3884E4639CDCC92F60336 /* TreeSitterTokenProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */; };
 		EDB84B1B268301165FBDCB45 /* HTMLRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0732F7FFFF2CB2CA3AAF34 /* HTMLRendererTests.swift */; };
 		F3C0DBD72E43F100AE91CECE /* SyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0870ADD570D5EF2C00DA1C40 /* SyntaxHighlighter.swift */; };
 		F6E7533793D2B14E0BD4DF7F /* PlainTextRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AA4F3A79326A0FCC93CA54 /* PlainTextRenderer.swift */; };
@@ -141,6 +142,7 @@
 		E8CB32C563CC962698340BF8 /* LazyTreeSitterHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTreeSitterHighlighter.swift; sourceTree = "<group>"; };
 		F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesViewModel.swift; sourceTree = "<group>"; };
 		F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidatorTests.swift; sourceTree = "<group>"; };
+		FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSitterTokenProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 				E8CB32C563CC962698340BF8 /* LazyTreeSitterHighlighter.swift */,
 				0870ADD570D5EF2C00DA1C40 /* SyntaxHighlighter.swift */,
 				E0CDD889C6D996E0721E08B1 /* TreeSitterHighlighter.swift */,
+				FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */,
 			);
 			path = SyntaxHighlighting;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				F3C0DBD72E43F100AE91CECE /* SyntaxHighlighter.swift in Sources */,
 				0E5BC65A4C34D2C20A13C184 /* SyntaxTheme.swift in Sources */,
 				5DEBE8F448112FD03EE248BD /* TreeSitterHighlighter.swift in Sources */,
+				E7D3884E4639CDCC92F60336 /* TreeSitterTokenProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
