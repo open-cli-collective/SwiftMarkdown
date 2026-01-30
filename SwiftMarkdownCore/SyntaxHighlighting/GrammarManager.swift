@@ -18,6 +18,18 @@ public struct LoadedGrammar: Sendable {
 /// Grammars are downloaded from GitHub releases on first use and cached
 /// permanently in `~/Library/Application Support/SwiftMarkdown/Grammars/`.
 ///
+/// ## Error Handling
+///
+/// This class follows a consistent error handling strategy:
+///
+/// - **Query methods** (`supportsLanguage`, `supportedLanguages`, `getManifest`,
+///   `installedGrammars`, `isGrammarInstalled`, `cacheSize`) return optional values
+///   or empty collections on failure. They never throw, making them safe for UI code.
+///
+/// - **Action methods** (`grammar(for:)`, `downloadGrammarOnly`, `clearCache`)
+///   throw errors that callers should handle. These are used when the caller needs
+///   to know about and respond to failures.
+///
 /// ## Example
 /// ```swift
 /// let manager = GrammarManager.shared
@@ -110,12 +122,18 @@ public actor GrammarManager {
     }
 
     /// Checks if a grammar is available (in manifest).
+    ///
+    /// This is a query method that never throws. Returns `false` if the manifest
+    /// cannot be loaded (e.g., no network and no cache).
     public func supportsLanguage(_ language: String) async -> Bool {
         await ensureManifest()
         return manifest?.canonicalName(for: language) != nil
     }
 
     /// Gets the list of all supported languages.
+    ///
+    /// This is a query method that never throws. Returns an empty array if the manifest
+    /// cannot be loaded.
     public func supportedLanguages() async -> [String] {
         await ensureManifest()
         return manifest?.supportedLanguages ?? []
@@ -140,6 +158,9 @@ public actor GrammarManager {
     // MARK: - UI Support API
 
     /// Returns the cached manifest, loading it if necessary.
+    ///
+    /// This is a query method that never throws. Returns `nil` if the manifest
+    /// cannot be loaded.
     public func getManifest() async -> GrammarManifest? {
         await ensureManifest()
         return manifest
