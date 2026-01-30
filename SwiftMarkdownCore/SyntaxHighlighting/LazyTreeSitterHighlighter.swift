@@ -8,6 +8,21 @@ import TreeSitterSwift
 /// grammars from GitHub releases. Swift is always available (bundled),
 /// while other languages are downloaded on first use.
 ///
+/// ## Swift Special-Casing
+///
+/// Swift receives special handling throughout this class because it's the only
+/// bundled grammar that works offline without downloads. This enables:
+///
+/// - **Synchronous API** (`highlight`, `highlightToHTML`) - Only supports Swift
+///   because other grammars require async network operations
+/// - **Immediate availability** - Swift highlighting works on first use without
+///   waiting for downloads
+/// - **Offline support** - Swift always works, even without network access
+///
+/// This intentional design means Swift checks appear in multiple methods. While
+/// this could be abstracted with a "bundled grammar" concept, the explicit checks
+/// are clearer about the behavior and avoid over-engineering for a single grammar.
+///
 /// ## Example
 /// ```swift
 /// let highlighter = LazyTreeSitterHighlighter()
