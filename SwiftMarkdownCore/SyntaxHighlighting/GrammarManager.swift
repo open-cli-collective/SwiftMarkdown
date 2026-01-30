@@ -1,6 +1,16 @@
 import Foundation
 import SwiftTreeSitter
 
+/// Indicates where a grammar was loaded from.
+public enum GrammarSource: Equatable, Sendable {
+    /// Installed via Homebrew formula.
+    case homebrew
+    /// Downloaded and cached by the app.
+    case cached
+    /// Not installed locally.
+    case notInstalled
+}
+
 /// A loaded grammar ready for use with tree-sitter.
 public struct LoadedGrammar: Sendable {
     /// The tree-sitter language pointer.
@@ -51,6 +61,26 @@ public actor GrammarManager {
     private let cacheURL: URL
     private let releaseBaseURL: URL
     private let urlSession: URLSession
+    private let overrideHomebrewURL: URL?
+
+    /// Returns the Homebrew grammars directory if it exists.
+    /// Checks both Apple Silicon (/opt/homebrew) and Intel (/usr/local) prefixes.
+    /// If an override URL was provided in the initializer, uses that instead.
+    private var homebrewGrammarsURL: URL? {
+        // If override is set, use it (allows tests to disable Homebrew discovery)
+        if let override = overrideHomebrewURL {
+            return FileManager.default.fileExists(atPath: override.path) ? override : nil
+        }
+
+        let prefixes = ["/opt/homebrew", "/usr/local"]
+        for prefix in prefixes {
+            let url = URL(fileURLWithPath: "\(prefix)/share/swiftmarkdown-grammars")
+            if FileManager.default.fileExists(atPath: url.path) {
+                return url
+            }
+        }
+        return nil
+    }
 
     private var manifest: GrammarManifest?
     private var loadedGrammars: [String: LoadedGrammar] = [:]
@@ -62,13 +92,17 @@ public actor GrammarManager {
     ///   - cacheURL: Directory for cached grammars. Defaults to Application Support.
     ///   - releaseBaseURL: Base URL for downloading grammars.
     ///   - urlSession: URLSession for network requests.
+    ///   - homebrewURL: Override for Homebrew grammars directory. Pass a non-existent path to disable
+    ///                  Homebrew discovery (useful for testing). Defaults to nil (auto-detect).
     public init(
         cacheURL: URL? = nil,
         releaseBaseURL: URL = GrammarManager.defaultReleaseBaseURL,
-        urlSession: URLSession = .shared
+        urlSession: URLSession = .shared,
+        homebrewURL: URL? = nil
     ) {
         self.releaseBaseURL = releaseBaseURL
         self.urlSession = urlSession
+        self.overrideHomebrewURL = homebrewURL
 
         if let cacheURL = cacheURL {
             self.cacheURL = cacheURL
@@ -166,25 +200,57 @@ public actor GrammarManager {
         return manifest
     }
 
-    /// Returns the list of installed (cached) grammar names.
+    /// Returns the list of installed grammar names from all sources (Homebrew + cache).
     public func installedGrammars() -> [String] {
-        guard FileManager.default.fileExists(atPath: cacheURL.path) else {
-            return []
+        var grammars = Set<String>()
+
+        // Check Homebrew directory
+        if let homebrewURL = homebrewGrammarsURL {
+            let contents = (try? FileManager.default.contentsOfDirectory(atPath: homebrewURL.path)) ?? []
+            for name in contents {
+                let dylibPath = homebrewURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
+                if FileManager.default.fileExists(atPath: dylibPath) {
+                    grammars.insert(name)
+                }
+            }
         }
 
-        let contents = (try? FileManager.default.contentsOfDirectory(atPath: cacheURL.path)) ?? []
-        return contents.filter { name in
-            let grammarDir = cacheURL.appendingPathComponent(name)
-            let dylibPath = grammarDir.appendingPathComponent("\(name).dylib").path
-            return FileManager.default.fileExists(atPath: dylibPath)
-        }.sorted()
+        // Check cache directory
+        if FileManager.default.fileExists(atPath: cacheURL.path) {
+            let contents = (try? FileManager.default.contentsOfDirectory(atPath: cacheURL.path)) ?? []
+            for name in contents {
+                let dylibPath = cacheURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
+                if FileManager.default.fileExists(atPath: dylibPath) {
+                    grammars.insert(name)
+                }
+            }
+        }
+
+        return grammars.sorted()
     }
 
-    /// Checks if a specific grammar is installed (cached).
+    /// Checks if a specific grammar is installed (in Homebrew or cache).
     public func isGrammarInstalled(_ name: String) -> Bool {
-        let grammarDir = cacheURL.appendingPathComponent(name)
-        let dylibPath = grammarDir.appendingPathComponent("\(name).dylib").path
-        return FileManager.default.fileExists(atPath: dylibPath)
+        grammarSource(name) != .notInstalled
+    }
+
+    /// Returns the source of a grammar (Homebrew, cached, or not installed).
+    public func grammarSource(_ name: String) -> GrammarSource {
+        // Check Homebrew first
+        if let homebrewURL = homebrewGrammarsURL {
+            let dylibPath = homebrewURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
+            if FileManager.default.fileExists(atPath: dylibPath) {
+                return .homebrew
+            }
+        }
+
+        // Check cache
+        let cachedDylibPath = cacheURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
+        if FileManager.default.fileExists(atPath: cachedDylibPath) {
+            return .cached
+        }
+
+        return .notInstalled
     }
 
     /// Returns the total cache size in bytes.
@@ -273,19 +339,30 @@ public actor GrammarManager {
     }
 
     private func loadGrammar(_ name: String) async throws -> LoadedGrammar? {
-        let grammarDir = cacheURL.appendingPathComponent(name)
-        let dylibURL = grammarDir.appendingPathComponent("\(name).dylib")
-        let queriesURL = grammarDir.appendingPathComponent("queries").appendingPathComponent("highlights.scm")
+        // Check Homebrew directory first
+        if let homebrewURL = homebrewGrammarsURL {
+            let homebrewGrammarDir = homebrewURL.appendingPathComponent(name)
+            let homebrewDylibURL = homebrewGrammarDir.appendingPathComponent("\(name).dylib")
+            let homebrewQueriesURL = homebrewGrammarDir.appendingPathComponent("queries").appendingPathComponent("highlights.scm")
 
-        // Check cache
-        if FileManager.default.fileExists(atPath: dylibURL.path) {
-            return try loadFromCache(name: name, dylibURL: dylibURL, queriesURL: queriesURL)
+            if FileManager.default.fileExists(atPath: homebrewDylibURL.path) {
+                return try loadFromDisk(name: name, dylibURL: homebrewDylibURL, queriesURL: homebrewQueriesURL)
+            }
         }
 
-        // Download
-        try await downloadGrammar(name, to: grammarDir)
+        // Check cache directory
+        let cacheGrammarDir = cacheURL.appendingPathComponent(name)
+        let cacheDylibURL = cacheGrammarDir.appendingPathComponent("\(name).dylib")
+        let cacheQueriesURL = cacheGrammarDir.appendingPathComponent("queries").appendingPathComponent("highlights.scm")
 
-        return try loadFromCache(name: name, dylibURL: dylibURL, queriesURL: queriesURL)
+        if FileManager.default.fileExists(atPath: cacheDylibURL.path) {
+            return try loadFromDisk(name: name, dylibURL: cacheDylibURL, queriesURL: cacheQueriesURL)
+        }
+
+        // Download to cache
+        try await downloadGrammar(name, to: cacheGrammarDir)
+
+        return try loadFromDisk(name: name, dylibURL: cacheDylibURL, queriesURL: cacheQueriesURL)
     }
 
     private func downloadGrammar(_ name: String, to directory: URL) async throws {
@@ -317,7 +394,7 @@ public actor GrammarManager {
         try? FileManager.default.removeItem(at: tempURL)
     }
 
-    private func loadFromCache(name: String, dylibURL: URL, queriesURL: URL) throws -> LoadedGrammar {
+    private func loadFromDisk(name: String, dylibURL: URL, queriesURL: URL) throws -> LoadedGrammar {
         guard let handle = dlopen(dylibURL.path, RTLD_NOW) else {
             let error = String(cString: dlerror())
             throw GrammarError.loadFailed(name, error)

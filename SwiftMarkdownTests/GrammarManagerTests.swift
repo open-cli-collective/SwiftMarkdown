@@ -161,7 +161,9 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsEmptyCache() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("empty-cache")
-        let manager = GrammarManager(cacheURL: cacheDir)
+        // Pass non-existent homebrewURL to disable Homebrew discovery
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
 
         let installed = await manager.installedGrammars()
         XCTAssertTrue(installed.isEmpty)
@@ -170,7 +172,9 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsWithCachedGrammars() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        let manager = GrammarManager(cacheURL: cacheDir)
+        // Pass non-existent homebrewURL to disable Homebrew discovery
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
 
         // Create fake grammar directories with dylib files
         let jsDir = cacheDir.appendingPathComponent("javascript")
@@ -188,7 +192,9 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsIgnoresDirectoriesWithoutDylib() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        let manager = GrammarManager(cacheURL: cacheDir)
+        // Pass non-existent homebrewURL to disable Homebrew discovery
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
 
         // Create a directory without dylib
         let emptyDir = cacheDir.appendingPathComponent("empty")
@@ -208,7 +214,9 @@ final class GrammarManagerTests: XCTestCase {
     func testIsGrammarInstalledTrue() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        let manager = GrammarManager(cacheURL: cacheDir)
+        // Pass non-existent homebrewURL to disable Homebrew discovery
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
 
         let jsDir = cacheDir.appendingPathComponent("javascript")
         try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
@@ -221,10 +229,112 @@ final class GrammarManagerTests: XCTestCase {
     func testIsGrammarInstalledFalse() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        let manager = GrammarManager(cacheURL: cacheDir)
+        // Pass non-existent homebrewURL to disable Homebrew discovery
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
 
         let isInstalled = await manager.isGrammarInstalled("javascript")
         XCTAssertFalse(isInstalled)
+    }
+
+    // MARK: - Homebrew Discovery Tests
+
+    func testInstalledGrammarsWithHomebrewGrammars() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+
+        // Create fake Homebrew grammar
+        let swiftDir = homebrewDir.appendingPathComponent("swift")
+        try FileManager.default.createDirectory(at: swiftDir, withIntermediateDirectories: true)
+        try "fake".write(to: swiftDir.appendingPathComponent("swift.dylib"), atomically: true, encoding: .utf8)
+
+        let installed = await manager.installedGrammars()
+        XCTAssertEqual(installed, ["swift"])
+    }
+
+    func testInstalledGrammarsCombinesHomebrewAndCache() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+
+        // Create Homebrew grammar
+        let swiftDir = homebrewDir.appendingPathComponent("swift")
+        try FileManager.default.createDirectory(at: swiftDir, withIntermediateDirectories: true)
+        try "fake".write(to: swiftDir.appendingPathComponent("swift.dylib"), atomically: true, encoding: .utf8)
+
+        // Create cached grammar
+        let jsDir = cacheDir.appendingPathComponent("javascript")
+        try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
+        try "fake".write(to: jsDir.appendingPathComponent("javascript.dylib"), atomically: true, encoding: .utf8)
+
+        let installed = await manager.installedGrammars()
+        XCTAssertEqual(installed, ["javascript", "swift"])
+    }
+
+    // MARK: - Grammar Source Tests
+
+    func testGrammarSourceHomebrew() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+
+        // Create Homebrew grammar
+        let swiftDir = homebrewDir.appendingPathComponent("swift")
+        try FileManager.default.createDirectory(at: swiftDir, withIntermediateDirectories: true)
+        try "fake".write(to: swiftDir.appendingPathComponent("swift.dylib"), atomically: true, encoding: .utf8)
+
+        let source = await manager.grammarSource("swift")
+        XCTAssertEqual(source, .homebrew)
+    }
+
+    func testGrammarSourceCached() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
+        try FileManager.default.createDirectory(at: homebrewDir, withIntermediateDirectories: true)
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+
+        // Create cached grammar (not in Homebrew)
+        let jsDir = cacheDir.appendingPathComponent("javascript")
+        try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
+        try "fake".write(to: jsDir.appendingPathComponent("javascript.dylib"), atomically: true, encoding: .utf8)
+
+        let source = await manager.grammarSource("javascript")
+        XCTAssertEqual(source, .cached)
+    }
+
+    func testGrammarSourceNotInstalled() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+
+        let source = await manager.grammarSource("nonexistent")
+        XCTAssertEqual(source, .notInstalled)
+    }
+
+    func testGrammarSourcePrefersHomebrew() async throws {
+        let dir = try XCTUnwrap(tempDir)
+        let cacheDir = dir.appendingPathComponent("cache")
+        let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
+        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+
+        // Create same grammar in both locations
+        let homebrewSwiftDir = homebrewDir.appendingPathComponent("swift")
+        try FileManager.default.createDirectory(at: homebrewSwiftDir, withIntermediateDirectories: true)
+        try "homebrew".write(to: homebrewSwiftDir.appendingPathComponent("swift.dylib"), atomically: true, encoding: .utf8)
+
+        let cacheSwiftDir = cacheDir.appendingPathComponent("swift")
+        try FileManager.default.createDirectory(at: cacheSwiftDir, withIntermediateDirectories: true)
+        try "cached".write(to: cacheSwiftDir.appendingPathComponent("swift.dylib"), atomically: true, encoding: .utf8)
+
+        // Should report as Homebrew since that's checked first
+        let source = await manager.grammarSource("swift")
+        XCTAssertEqual(source, .homebrew)
     }
 
     // MARK: - Cache Size Tests
