@@ -64,10 +64,22 @@ targets:
     type: framework
     platform: macOS
     sources:
-      - SwiftMarkdownCore
+      - path: SwiftMarkdownCore
+        excludes:
+          - "Resources/Grammars/**"
     resources:
-      - path: SwiftMarkdownCore/Resources
+      - path: SwiftMarkdownCore/Resources/highlight.css
         buildPhase: resources
+    postBuildScripts:
+      - script: |
+          # Copy Grammars folder preserving directory structure
+          GRAMMARS_SRC="${SRCROOT}/SwiftMarkdownCore/Resources/Grammars"
+          GRAMMARS_DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Grammars"
+          if [ -d "$GRAMMARS_SRC" ]; then
+            rm -rf "$GRAMMARS_DST"
+            cp -R "$GRAMMARS_SRC" "$GRAMMARS_DST"
+          fi
+        name: Copy Grammars
     dependencies:
       - package: swift-markdown
         product: Markdown

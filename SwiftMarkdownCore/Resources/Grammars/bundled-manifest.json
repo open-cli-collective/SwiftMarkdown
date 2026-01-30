@@ -1,0 +1,411 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-01-30T12:04:14Z",
+  "grammars": {
+    "javascript": {
+      "displayName": "JavaScript",
+      "version": "v0.23.1",
+      "license": "MIT",
+      "aliases": ["js","jsx","mjs","cjs"],
+      "checksum": "4fbf12bc34e58fbcafe81586788ce4dc92389d89fe505ccab3bf7b8333fa3c8e",
+      "size": 791664
+    }
+,
+    "python": {
+      "displayName": "Python",
+      "version": "v0.23.6",
+      "license": "MIT",
+      "aliases": ["py"],
+      "checksum": "e9bc45dca970a6e0f8cdb5bb03055ed6723e80dd01bdfc95d33f4bdfe78d0db9",
+      "size": 972416
+    }
+,
+    "html": {
+      "displayName": "HTML",
+      "version": "v0.23.2",
+      "license": "MIT",
+      "aliases": ["htm"],
+      "checksum": "b73ccf8a99599fbcf14d844e63d11c9c943d96df51ea6c338dfa16571587cf30",
+      "size": 100880
+    }
+,
+    "css": {
+      "displayName": "CSS",
+      "version": "v0.25.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "26f1034c30cf258652a378102257aa9d997430df35fd70f74832b69056c8cb96",
+      "size": 282160
+    }
+,
+    "json": {
+      "displayName": "JSON",
+      "version": "v0.24.8",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "27a4fe7fa987826e2abe1d58e53f37db099b1e219950a527596aa0dbeb5d4d7f",
+      "size": 66768
+    }
+,
+    "typescript": {
+      "displayName": "TypeScript",
+      "version": "v0.23.2",
+      "license": "MIT",
+      "aliases": ["ts"],
+      "checksum": "03960e0be4554ffd1c969e2e180ba316acab132f0e35dc7120f6f1aae0351561",
+      "size": 2897056
+    }
+,
+    "tsx": {
+      "displayName": "TSX",
+      "version": "v0.23.2",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "a6aaaa272b7373add1d0f0364b579c75eb7b4744d4743f5531a2c18e137813be",
+      "size": 2979328
+    }
+,
+    "yaml": {
+      "displayName": "YAML",
+      "version": "v0.7.2",
+      "license": "MIT",
+      "aliases": ["yml"],
+      "checksum": "038a1c3298223455a30ef2ba4758c4190446851c17a9c861446a546e432c8b8f",
+      "size": 429824
+    }
+,
+    "xml": {
+      "displayName": "XML",
+      "version": "v0.7.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "c7089ab3a22e066e54b1ebe7453904d60d8463d5cccc069c90805b49175c7dd6",
+      "size": 134000
+    }
+,
+    "markdown": {
+      "displayName": "Markdown",
+      "version": "v0.5.2",
+      "license": "MIT",
+      "aliases": ["md"],
+      "checksum": "281128bf3a38fbe6f429aaf31552e997e331886a3aa195483bd3669be75c2a0c",
+      "size": 795024
+    }
+,
+    "dockerfile": {
+      "displayName": "Dockerfile",
+      "version": "v0.2.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "043be67afb9be520b526b178c5897d7c72ab60eb9579b722e47a2b5184c9dfb1",
+      "size": 166704
+    }
+,
+    "hcl": {
+      "displayName": "HCL",
+      "version": "v1.2.0",
+      "license": "Apache-2.0",
+      "aliases": ["terraform","tf"],
+      "checksum": "e8a99f4b7ca0ff16350adcab7497b3ff814a8fa10fd704f2408948ab2b5cf8b8",
+      "size": 232912
+    }
+,
+    "make": {
+      "displayName": "Makefile",
+      "version": "v1.1.1",
+      "license": "MIT",
+      "aliases": ["makefile"],
+      "checksum": "1bd5914a1803c996315b4b6cce2489c8405ce4131ae5f70a3d8305d859e49568",
+      "size": 363776
+    }
+,
+    "c": {
+      "displayName": "C",
+      "version": "v0.24.1",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "9f4cbc2385850ee24ce363cd42d976d0f9a2aae5505a66096499b59f2e5d713a",
+      "size": 1285168
+    }
+,
+    "cpp": {
+      "displayName": "C++",
+      "version": "v0.23.4",
+      "license": "MIT",
+      "aliases": ["cc","cxx"],
+      "checksum": "0fbc311a1b1eb1e4bbe84dccececebbb8b4b894598a8781b707df9e9921f3030",
+      "size": 6929424
+    }
+,
+    "rust": {
+      "displayName": "Rust",
+      "version": "v0.24.0",
+      "license": "MIT",
+      "aliases": ["rs"],
+      "checksum": "3b0a025aad128a4f2ad76e0c03f489ada4594785165f9491450cfbf42ed5605f",
+      "size": 2305792
+    }
+,
+    "go": {
+      "displayName": "Go",
+      "version": "v0.25.0",
+      "license": "MIT",
+      "aliases": ["golang"],
+      "checksum": "843bb1f02b1eb84dde6388044bfba0056aaff9b0fb60ebfab20aad228a6079c3",
+      "size": 495072
+    }
+,
+    "zig": {
+      "displayName": "Zig",
+      "version": "v1.1.2",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "013ef24b8f652318b5da603bdc0ed6f9c34114d188eea9f5d8b0a263e096f96d",
+      "size": 1432128
+    }
+,
+    "java": {
+      "displayName": "Java",
+      "version": "v0.23.5",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "10bf58840c2f8a9d9eccf070c4bd1d2b5a8bb8a81793c3bdc9586614fa277edc",
+      "size": 889664
+    }
+,
+    "kotlin": {
+      "displayName": "Kotlin",
+      "version": "v1.1.0",
+      "license": "MIT",
+      "aliases": ["kt"],
+      "checksum": "8a24d97c1c38f5dd9b41b5b29c5d0cf9b6a9462becf7074c58e8dfae2c0f4a55",
+      "size": 6928128
+    }
+,
+    "scala": {
+      "displayName": "Scala",
+      "version": "v0.24.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "fb2ad01233cbecbb6818c36bb555a131081b1fc5cc0afcc233278151b83702cc",
+      "size": 7751040
+    }
+,
+    "c_sharp": {
+      "displayName": "C#",
+      "version": "v0.23.1",
+      "license": "MIT",
+      "aliases": ["csharp","cs"],
+      "checksum": "3eddab51e4868bcd693154d3b73f0c4a727ddf2e40fea4152009185dff846ec1",
+      "size": 11927856
+    }
+,
+    "ruby": {
+      "displayName": "Ruby",
+      "version": "v0.23.1",
+      "license": "MIT",
+      "aliases": ["rb"],
+      "checksum": "3909d0736afd5f60b2daadad530985a8f28e8431e59cb8dae846689385616f2f",
+      "size": 4263904
+    }
+,
+    "php": {
+      "displayName": "PHP",
+      "version": "v0.24.2",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "baf591316776cd04658b5c99cfdb7f4c5b66b52e971d1ce163e601718d02327a",
+      "size": 2174704
+    }
+,
+    "lua": {
+      "displayName": "Lua",
+      "version": "v0.4.1",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "6248a1e483e7c614a7b70f3f769c553c89cfa060345b4973591904626836fd18",
+      "size": 150144
+    }
+,
+    "bash": {
+      "displayName": "Bash",
+      "version": "v0.25.1",
+      "license": "MIT",
+      "aliases": ["sh","shell","zsh"],
+      "checksum": "a076e9ab9f23527428deb5527678d98fd8f77c75a28692d7f441584797413705",
+      "size": 2755472
+    }
+,
+    "haskell": {
+      "displayName": "Haskell",
+      "version": "v0.23.1",
+      "license": "MIT",
+      "aliases": ["hs"],
+      "checksum": "abc733287736afb6d5ade1a9f92a269e4136cccda175da621f137fc0fbd08387",
+      "size": 7751792
+    }
+,
+    "ocaml": {
+      "displayName": "OCaml",
+      "version": "v0.24.2",
+      "license": "MIT",
+      "aliases": ["ml"],
+      "checksum": "42f22fc0937d2e146c9a57a808f27ee9bff11bce8b512f8aae5a7b9fae19c782",
+      "size": 11212032
+    }
+,
+    "elixir": {
+      "displayName": "Elixir",
+      "version": "v0.3.4",
+      "license": "Apache-2.0",
+      "aliases": ["ex","exs"],
+      "checksum": "241a93fd86fb4dabe444c08f8f149419e2baac74e194260ac4da70f718ae0e45",
+      "size": 2865776
+    }
+,
+    "erlang": {
+      "displayName": "Erlang",
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "aliases": ["erl"],
+      "checksum": "ddccae44ac8e44ba7ecf0448bba5ee9e904c4a28181e0c1d3b8a67189b63f9ff",
+      "size": 527264
+    }
+,
+    "gleam": {
+      "displayName": "Gleam",
+      "version": "v1.1.0",
+      "license": "Apache-2.0",
+      "aliases": [],
+      "checksum": "e47b99a7df442a965f73262d65090950120c1cc9db74b442a074af0363b39ac2",
+      "size": 856816
+    }
+,
+    "commonlisp": {
+      "displayName": "Common Lisp",
+      "version": "v0.4.1",
+      "license": "MIT",
+      "aliases": ["lisp","cl"],
+      "checksum": "b248fb5ecda8a3d83f64ee05dab9abcc72e6857b6c85f03632983030e8dc7564",
+      "size": 1613936
+    }
+,
+    "swift": {
+      "displayName": "Swift",
+      "version": "0.7.1-with-generated-files",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "937a53a4d2ef4e1ad3363719a2799c8c979d5af43bd5a173605a23311d8d2590",
+      "size": 6685056
+    }
+,
+    "r": {
+      "displayName": "R",
+      "version": "v1.2.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "65a8f199ac0b743981b7ae86fb94af7f917706839edcb8784146b4a8ba6e3d85",
+      "size": 1038432
+    }
+,
+    "gdscript": {
+      "displayName": "GDScript",
+      "version": "v6.0.0",
+      "license": "MIT",
+      "aliases": ["gd"],
+      "checksum": "733195ece60cb483e439887764d443bb2ece5f87767f2c4dab1083d852a85ada",
+      "size": 528880
+    }
+,
+    "diff": {
+      "displayName": "Diff",
+      "version": "v0.1.0",
+      "license": "MIT",
+      "aliases": ["patch"],
+      "checksum": "97b180b54777277ec15ad13e98dbbaa0fc04c4e9753b30d21af198c3fa7b364c",
+      "size": 99760
+    }
+,
+    "toml": {
+      "displayName": "TOML",
+      "version": "v0.7.0",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "c19a58a62687b374d2a8ea79a79fd72c97222a3d4ba38e3c30fd573237d1c11f",
+      "size": 100240
+    }
+,
+    "fortran": {
+      "displayName": "Fortran",
+      "version": "v0.5.1",
+      "license": "MIT",
+      "aliases": ["f90","f95","f03"],
+      "checksum": "4ad9b40355c3b5634e311781a3a6ab338a50b4920b3c62ab14c400f07ccad408",
+      "size": 13247328
+    }
+,
+    "clojure": {
+      "displayName": "Clojure",
+      "version": "v0.0.13",
+      "license": "CC0-1.0",
+      "aliases": ["clj","cljs","cljc","bb"],
+      "checksum": "3dd08bc0349bdfda1c834050f091b0b87a1407bd81dcb4a4fca720f58f7315c1",
+      "size": 231216
+    }
+,
+    "perl": {
+      "displayName": "Perl",
+      "version": "ad74e6db234c",
+      "license": "MIT",
+      "aliases": ["pl","pm"],
+      "checksum": "26b5b86cd17d421b66982d6b20e3f1f34378cd69932439c3250d40e9efc122d0",
+      "size": 6008288
+    }
+,
+    "fsharp": {
+      "displayName": "F#",
+      "version": "v0.1.0",
+      "license": "MIT",
+      "aliases": ["fs"],
+      "checksum": "8bcd0e2088b55fdf7a173ceaf2ffc2e1ba2120f75e64fd77a7a6a05514e41e04",
+      "size": 10252608
+    }
+,
+    "latex": {
+      "displayName": "LaTeX",
+      "version": "v0.6.0",
+      "license": "MIT",
+      "aliases": ["tex"],
+      "checksum": "a7808e81f6495843aa34e2d25eaebb98492a40a0587d6f541b60cdde3ba87402",
+      "size": 7257776
+    }
+,
+    "sql": {
+      "displayName": "SQL",
+      "version": "v0.3.11",
+      "license": "MIT",
+      "aliases": [],
+      "checksum": "eda59875f6bc2379c8647f73022742255dfd1ce5151c5a3db8e50ebda770d4cc",
+      "size": 5020096
+    }
+,
+    "pascal": {
+      "displayName": "Pascal",
+      "version": "v0.10.2",
+      "license": "MIT",
+      "aliases": ["pas","delphi"],
+      "checksum": "2c212ad7f9edf55af840d074f5510fab3389b5ab0010538e2746f44ae9e8e8b4",
+      "size": 1482240
+    }
+,
+    "ada": {
+      "displayName": "Ada",
+      "version": "6b58259a08b1",
+      "license": "MIT",
+      "aliases": ["adb","ads"],
+      "checksum": "8b6527001b672b1da665af06658936b251a2fa73225696e6cf17ed1b5be29a14",
+      "size": 708512
+    }
+
+  }
+}

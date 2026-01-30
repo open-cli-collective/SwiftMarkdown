@@ -361,6 +361,7 @@
 				A6B532E7CCE286A4EAFCFCC9 /* Sources */,
 				EEB9343DBE02440F75190D6A /* Resources */,
 				DDA593888ADCD89036A7A925 /* Frameworks */,
+				6297FE58E0099B1BA5FA1196 /* Copy Grammars */,
 			);
 			buildRules = (
 			);
@@ -472,6 +473,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6297FE58E0099B1BA5FA1196 /* Copy Grammars */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Grammars";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Copy Grammars folder preserving directory structure\nGRAMMARS_SRC=\"${SRCROOT}/SwiftMarkdownCore/Resources/Grammars\"\nGRAMMARS_DST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Grammars\"\nif [ -d \"$GRAMMARS_SRC\" ]; then\n  rm -rf \"$GRAMMARS_DST\"\n  cp -R \"$GRAMMARS_SRC\" \"$GRAMMARS_DST\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		06120886B79EE447F8382747 /* Sources */ = {
