@@ -70,20 +70,17 @@ enum HTMLElementRenderer {
     static func renderImage(_ image: Image, validateImages: Bool) -> String {
         let src = image.source ?? ""
         let alt = image.plainText
+        let escapedSrc = src.htmlEscaped
+        let escapedAlt = alt.htmlEscaped
 
-        var cssClass: String?
+        let isInvalid = validateImages
+            && ImageValidator.isDataURI(src)
+            && !ImageValidator.validate(dataURI: src).isValid
 
-        if validateImages && ImageValidator.isDataURI(src) {
-            if !ImageValidator.validate(dataURI: src).isValid {
-                cssClass = "invalid-image"
-            }
+        if isInvalid {
+            return "<img class=\"invalid-image\" src=\"\(escapedSrc)\" alt=\"\(escapedAlt)\">"
         }
-
-        if let cls = cssClass {
-            return "<img class=\"\(cls)\" src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
-        } else {
-            return "<img src=\"\(src.htmlEscaped)\" alt=\"\(alt.htmlEscaped)\">"
-        }
+        return "<img src=\"\(escapedSrc)\" alt=\"\(escapedAlt)\">"
     }
 
     // MARK: - Headings
@@ -99,11 +96,9 @@ enum HTMLElementRenderer {
     // MARK: - Code Blocks
 
     static func openCodeBlock(language: String) -> String {
-        if !language.isEmpty {
-            return "<pre><code class=\"language-\(language.htmlEscaped)\">"
-        } else {
-            return "<pre><code>"
-        }
+        language.isEmpty
+            ? "<pre><code>"
+            : "<pre><code class=\"language-\(language.htmlEscaped)\">"
     }
 
     static func closeCodeBlock() -> String {
@@ -113,12 +108,11 @@ enum HTMLElementRenderer {
     // MARK: - List Items
 
     static func openListItem(_ listItem: ListItem) -> String {
-        if let checkbox = listItem.checkbox {
-            let checked = checkbox == .checked ? " checked" : ""
-            return "<li><input type=\"checkbox\" disabled\(checked)> "
-        } else {
+        guard let checkbox = listItem.checkbox else {
             return "<li>"
         }
+        let checked = checkbox == .checked ? " checked" : ""
+        return "<li><input type=\"checkbox\" disabled\(checked)> "
     }
 
     static func closeListItem() -> String {
