@@ -33,6 +33,8 @@ targets:
       - SwiftMarkdown
     dependencies:
       - target: SwiftMarkdownCore
+      - target: SwiftMarkdownQuickLook
+        embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdown
