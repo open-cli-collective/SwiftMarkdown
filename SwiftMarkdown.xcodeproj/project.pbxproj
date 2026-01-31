@@ -26,6 +26,7 @@
 		6F1693EF64350907439D32E1 /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C7E294336DAA8FA4C403E /* MarkdownRenderer.swift */; };
 		7E4E0ADB9F632919888A92E7 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8664876EDFD44FCB3F6F20AF /* SwiftMarkdownCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */; };
+		89384A0DDFE6F3B93B6E8983 /* SwiftMarkdownQuickLook.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89FEE35070D2A1C17AB6421A /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = F10350C361C31733946A2AFA /* Markdown */; };
 		8C3CC2C3BD9A2E3829924968 /* LanguagesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */; };
 		8EC47975A4146FA9820BE9C6 /* GrammarManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAAFBA7E1B67A000AC2B618 /* GrammarManifest.swift */; };
@@ -53,6 +54,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F58010FA1D5CB3731A23AF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C0F52A4134B7C5A59539CAF4;
+			remoteInfo = SwiftMarkdownQuickLook;
+		};
 		B5306F5AEC1365BC18A5D106 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
@@ -86,6 +94,17 @@
 				D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C0C06074F9CD8E4F9523876 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				89384A0DDFE6F3B93B6E8983 /* SwiftMarkdownQuickLook.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C07F1C10741F8ED3EC68ACCE /* Embed Frameworks */ = {
@@ -403,12 +422,14 @@
 				06120886B79EE447F8382747 /* Sources */,
 				3C8E2BF224107CC807CA6980 /* Resources */,
 				AD02521113B76E787C8AED62 /* Frameworks */,
+				3C0C06074F9CD8E4F9523876 /* Embed Foundation Extensions */,
 				2ED1816DFEE37359E61C6044 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				ED11D4D3C2F82C824A355F38 /* PBXTargetDependency */,
+				463A52CED45DB5908F2FAEE7 /* PBXTargetDependency */,
 			);
 			name = SwiftMarkdown;
 			packageProductDependencies = (
@@ -541,6 +562,11 @@
 			isa = PBXTargetDependency;
 			target = 9B676B813F4457767303D496 /* SwiftMarkdownCore */;
 			targetProxy = B5306F5AEC1365BC18A5D106 /* PBXContainerItemProxy */;
+		};
+		463A52CED45DB5908F2FAEE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C0F52A4134B7C5A59539CAF4 /* SwiftMarkdownQuickLook */;
+			targetProxy = 4F58010FA1D5CB3731A23AF5 /* PBXContainerItemProxy */;
 		};
 		7035492EAD6CC87EA38A7441 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
