@@ -18,11 +18,11 @@ final class LanguagesViewModel: ObservableObject {
         let version: String
         let license: String
         let size: Int
-        var isInstalled: Bool
+        var source: GrammarSource
         var isDownloading: Bool = false
 
-        /// Whether this is the bundled Swift grammar.
-        var isBundled: Bool { id == "swift" }
+        /// Whether the grammar is installed (from any source).
+        var isInstalled: Bool { source != .notInstalled }
     }
 
     init(grammarManager: GrammarManager = .shared) {
@@ -34,36 +34,25 @@ final class LanguagesViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        // Add bundled Swift first
-        var items: [GrammarItem] = [
-            GrammarItem(
-                id: "swift",
-                displayName: "Swift",
-                version: "bundled",
-                license: "MIT",
-                size: 0,
-                isInstalled: true
-            )
-        ]
+        var items: [GrammarItem] = []
 
-        // Get manifest and installed grammars
+        // Get manifest and build grammar list with sources
         if let manifest = await grammarManager.getManifest() {
-            let installed = await grammarManager.installedGrammars()
-
             for (name, info) in manifest.grammars.sorted(by: { $0.key < $1.key }) {
+                let source = grammarManager.grammarSource(name)
                 items.append(GrammarItem(
                     id: name,
                     displayName: info.displayName,
                     version: info.version,
                     license: info.license,
                     size: info.size,
-                    isInstalled: installed.contains(name)
+                    source: source
                 ))
             }
         }
 
         grammars = items
-        cacheSize = await grammarManager.cacheSize()
+        cacheSize = grammarManager.cacheSize()
         isLoading = false
     }
 
@@ -76,18 +65,18 @@ final class LanguagesViewModel: ObservableObject {
 
         do {
             try await grammarManager.downloadGrammarOnly(id)
-            grammars[index].isInstalled = true
+            grammars[index].source = .cached
         } catch {
             errorMessage = "Failed to download \(grammars[index].displayName): \(error.localizedDescription)"
         }
 
         grammars[index].isDownloading = false
-        cacheSize = await grammarManager.cacheSize()
+        cacheSize = grammarManager.cacheSize()
     }
 
     /// Downloads all grammars that aren't installed.
     func downloadAll() async {
-        let toDownload = grammars.filter { !$0.isInstalled && !$0.isBundled }
+        let toDownload = grammars.filter { $0.source == .notInstalled }
 
         for grammar in toDownload {
             await downloadGrammar(grammar.id)
