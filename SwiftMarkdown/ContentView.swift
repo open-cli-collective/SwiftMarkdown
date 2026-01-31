@@ -95,20 +95,9 @@ struct ContentView: View {
     }
 
     private var documentView: some View {
-        MarkdownWebView(html: viewModel.renderedHTML)
-            .overlay(
-                // Invisible drop zone that sits on top of WebView to capture drops
-                Color.clear
-                    .contentShape(Rectangle())
-                    .onDrop(of: [.fileURL], isTargeted: $isDropTargeted) { providers in
-                        handleDrop(providers: providers)
-                    }
-            )
-            .overlay(alignment: .topTrailing) {
-                if isDropTargeted {
-                    dropIndicator
-                }
-            }
+        MarkdownWebView(html: viewModel.renderedHTML) { url in
+            handleDroppedFile(url)
+        }
     }
 
     private var dropIndicator: some View {
@@ -160,6 +149,17 @@ struct ContentView: View {
     }
 
     // MARK: - Drop Handling
+
+    private func handleDroppedFile(_ url: URL) {
+        guard DocumentViewModel.isMarkdownFile(url) else {
+            viewModel.errorMessage = "Only markdown files (.md, .markdown) are supported"
+            return
+        }
+
+        Task {
+            await viewModel.loadFile(at: url)
+        }
+    }
 
     private func handleDrop(providers: [NSItemProvider]) -> Bool {
         guard let provider = providers.first else { return false }
