@@ -100,24 +100,24 @@ public struct SyntaxTheme: Equatable, Sendable {
     /// The default theme with VS Code-inspired light and dark colors.
     public static let `default` = SyntaxTheme(light: .light, dark: .dark)
 
-    /// Base document styling CSS for light/dark mode support.
+    /// Base document styling CSS for light/dark mode support (GitHub colors).
     private static let documentCSS = """
         html { color-scheme: light dark; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            font-size: 16px; line-height: 1.6; color: #24292f; background-color: #ffffff;
+            font-size: 16px; line-height: 1.6; color: #1f2328; background-color: #ffffff;
             padding: 24px 32px; max-width: 900px; margin: 0 auto;
         }
-        @media (prefers-color-scheme: dark) { body { color: #e6edf3; background-color: #0d1117; } }
+        @media (prefers-color-scheme: dark) { body { color: #d1d7e0; background-color: #212830; } }
         h1, h2, h3, h4, h5, h6 { margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
         a { color: #0969da; text-decoration: none; }
         a:hover { text-decoration: underline; }
-        @media (prefers-color-scheme: dark) { a { color: #58a6ff; } }
+        @media (prefers-color-scheme: dark) { a { color: #478be6; } }
         pre {
             background-color: #f6f8fa; border-radius: 6px; padding: 16px; overflow-x: auto;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 14px;
         }
-        @media (prefers-color-scheme: dark) { pre { background-color: #161b22; } }
+        @media (prefers-color-scheme: dark) { pre { background-color: #262c36; } }
         code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
         """
 
