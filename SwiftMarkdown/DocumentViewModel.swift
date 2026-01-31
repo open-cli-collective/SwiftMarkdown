@@ -15,19 +15,9 @@ final class DocumentViewModel: ObservableObject {
         fileURL?.lastPathComponent ?? "SwiftMarkdown"
     }
 
-    /// Supported file extensions for markdown files.
-    static let supportedExtensions: Set<String> = ["md", "markdown", "mdown", "mkdn", "mkd"]
-
-    /// Supported UTTypes for drag and drop.
-    static let supportedContentTypes: [UTType] = [
-        UTType(filenameExtension: "md") ?? .plainText,
-        UTType(filenameExtension: "markdown") ?? .plainText
-    ]
-
     /// Check if a URL points to a valid markdown file.
     nonisolated static func isMarkdownFile(_ url: URL) -> Bool {
-        let ext = url.pathExtension.lowercased()
-        return supportedExtensions.contains(ext)
+        MarkdownFileValidator.isMarkdownFile(url)
     }
 
     /// Load and render a markdown file.
