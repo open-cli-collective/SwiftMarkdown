@@ -111,6 +111,15 @@ jobs:
           name: app-bundle
           path: build/${{ env.APP_NAME }}.app
 
+      - name: Restore executable permissions
+        run: |
+          # GitHub Actions artifacts lose execute permissions
+          chmod +x "build/${{ env.APP_NAME }}.app/Contents/MacOS/${{ env.APP_NAME }}"
+          # Also fix Quick Look extension if present
+          if [ -f "build/${{ env.APP_NAME }}.app/Contents/PlugIns/SwiftMarkdownQuickLook.appex/Contents/MacOS/SwiftMarkdownQuickLook" ]; then
+            chmod +x "build/${{ env.APP_NAME }}.app/Contents/PlugIns/SwiftMarkdownQuickLook.appex/Contents/MacOS/SwiftMarkdownQuickLook"
+          fi
+
       - name: Create DMG
         id: dmg
         run: |
