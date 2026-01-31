@@ -100,46 +100,29 @@ public struct SyntaxTheme: Equatable, Sendable {
     /// The default theme with VS Code-inspired light and dark colors.
     public static let `default` = SyntaxTheme(light: .light, dark: .dark)
 
-    /// Generates CSS with custom properties for both light and dark modes.
-    ///
-    /// The generated CSS includes:
-    /// - CSS variables in `:root` for light mode (default)
-    /// - CSS variables in `@media (prefers-color-scheme: dark)` for dark mode
-    /// - Token classes that reference the CSS variables
-    ///
-    /// - Returns: A CSS string ready to be embedded in an HTML document.
-    public func generateCSS() -> String {
+    /// Base document styling CSS for light/dark mode support (GitHub colors).
+    private static let documentCSS = """
+        html { color-scheme: light dark; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 16px; line-height: 1.6; color: #1f2328; background-color: #ffffff;
+            padding: 24px 32px; max-width: 900px; margin: 0 auto;
+        }
+        @media (prefers-color-scheme: dark) { body { color: #d1d7e0; background-color: #212830; } }
+        h1, h2, h3, h4, h5, h6 { margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
+        a { color: #0969da; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        @media (prefers-color-scheme: dark) { a { color: #478be6; } }
+        pre {
+            background-color: #f6f8fa; border-radius: 6px; padding: 16px; overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 14px;
+        }
+        @media (prefers-color-scheme: dark) { pre { background-color: #262c36; } }
+        code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
         """
-        :root {
-            --syntax-keyword: \(light.keyword);
-            --syntax-string: \(light.string);
-            --syntax-comment: \(light.comment);
-            --syntax-number: \(light.number);
-            --syntax-function: \(light.function);
-            --syntax-type: \(light.type);
-            --syntax-variable: \(light.variable);
-            --syntax-operator: \(light.operator);
-            --syntax-punctuation: \(light.punctuation);
-            --syntax-property: \(light.property);
-            --syntax-attribute: \(light.attribute);
-        }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --syntax-keyword: \(dark.keyword);
-                --syntax-string: \(dark.string);
-                --syntax-comment: \(dark.comment);
-                --syntax-number: \(dark.number);
-                --syntax-function: \(dark.function);
-                --syntax-type: \(dark.type);
-                --syntax-variable: \(dark.variable);
-                --syntax-operator: \(dark.operator);
-                --syntax-punctuation: \(dark.punctuation);
-                --syntax-property: \(dark.property);
-                --syntax-attribute: \(dark.attribute);
-            }
-        }
-
+    /// Token class CSS definitions.
+    private static let tokenClassesCSS = """
         .token-keyword { color: var(--syntax-keyword); }
         .token-string { color: var(--syntax-string); }
         .token-comment { color: var(--syntax-comment); font-style: italic; }
@@ -151,6 +134,37 @@ public struct SyntaxTheme: Equatable, Sendable {
         .token-punctuation { color: var(--syntax-punctuation); }
         .token-property { color: var(--syntax-property); }
         .token-attribute { color: var(--syntax-attribute); }
+        """
+
+    /// Generates CSS with custom properties for both light and dark modes.
+    ///
+    /// The generated CSS includes:
+    /// - Document base styling (body, headings, links, etc.)
+    /// - CSS variables in `:root` for light mode (default)
+    /// - CSS variables in `@media (prefers-color-scheme: dark)` for dark mode
+    /// - Token classes that reference the CSS variables
+    ///
+    /// - Returns: A CSS string ready to be embedded in an HTML document.
+    public func generateCSS() -> String {
+        let lightVars = generateVariables(from: light)
+        let darkVars = generateVariables(from: dark)
+
+        return """
+        \(Self.documentCSS)
+        :root { \(lightVars) }
+        @media (prefers-color-scheme: dark) { :root { \(darkVars) } }
+        \(Self.tokenClassesCSS)
+        """
+    }
+
+    private func generateVariables(from colors: SyntaxColors) -> String {
+        """
+        --syntax-keyword: \(colors.keyword); --syntax-string: \(colors.string); \
+        --syntax-comment: \(colors.comment); --syntax-number: \(colors.number); \
+        --syntax-function: \(colors.function); --syntax-type: \(colors.type); \
+        --syntax-variable: \(colors.variable); --syntax-operator: \(colors.operator); \
+        --syntax-punctuation: \(colors.punctuation); --syntax-property: \(colors.property); \
+        --syntax-attribute: \(colors.attribute);
         """
     }
 }
