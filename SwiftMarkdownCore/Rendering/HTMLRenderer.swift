@@ -235,7 +235,7 @@ struct HTMLWalker: MarkupWalker {
         result += HTMLElementRenderer.closeTagWithNewline("blockquote")
     }
 
-    mutating func visitThematicBreak(_ thematicBreak: ThematicBreak) {
+    mutating func visitThematicBreak(_: ThematicBreak) {
         result += HTMLElementRenderer.renderThematicBreak()
     }
 
@@ -264,11 +264,11 @@ struct HTMLWalker: MarkupWalker {
         result += HTMLElementRenderer.closeTable()
     }
 
-    mutating func visitLineBreak(_ lineBreak: LineBreak) {
+    mutating func visitLineBreak(_: LineBreak) {
         result += HTMLElementRenderer.renderLineBreak()
     }
 
-    mutating func visitSoftBreak(_ softBreak: SoftBreak) {
+    mutating func visitSoftBreak(_: SoftBreak) {
         result += HTMLElementRenderer.renderSoftBreak()
     }
 

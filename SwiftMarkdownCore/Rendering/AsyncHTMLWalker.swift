@@ -206,7 +206,7 @@ struct AsyncHTMLWalker {
         result += HTMLElementRenderer.closeTagWithNewline("blockquote")
     }
 
-    private mutating func visitThematicBreak(_ thematicBreak: ThematicBreak) {
+    private mutating func visitThematicBreak(_: ThematicBreak) {
         result += HTMLElementRenderer.renderThematicBreak()
     }
 
@@ -235,11 +235,11 @@ struct AsyncHTMLWalker {
         result += HTMLElementRenderer.closeTable()
     }
 
-    private mutating func visitLineBreak(_ lineBreak: LineBreak) {
+    private mutating func visitLineBreak(_: LineBreak) {
         result += HTMLElementRenderer.renderLineBreak()
     }
 
-    private mutating func visitSoftBreak(_ softBreak: SoftBreak) {
+    private mutating func visitSoftBreak(_: SoftBreak) {
         result += HTMLElementRenderer.renderSoftBreak()
     }
 
