@@ -19,6 +19,16 @@ final class GrammarManagerTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Test Helpers
+
+    /// Creates a GrammarManager with optional Homebrew URL override.
+    /// By default, uses a non-existent path to disable Homebrew discovery.
+    private func makeManager(cacheDir: URL, homebrewURL: URL? = nil) -> GrammarManager {
+        // swiftlint:disable:next force_unwrapping
+        let effectiveHomebrewURL = homebrewURL ?? tempDir!.appendingPathComponent("fake-homebrew-\(UUID().uuidString)")
+        return GrammarManager(cacheURL: cacheDir, homebrewURL: effectiveHomebrewURL)
+    }
+
     // MARK: - Initialization Tests
 
     func testDefaultCacheDirectory() async {
@@ -161,9 +171,7 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsEmptyCache() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("empty-cache")
-        // Pass non-existent homebrewURL to disable Homebrew discovery
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         let installed = await manager.installedGrammars()
         XCTAssertTrue(installed.isEmpty)
@@ -172,9 +180,7 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsWithCachedGrammars() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        // Pass non-existent homebrewURL to disable Homebrew discovery
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         // Create fake grammar directories with dylib files
         let jsDir = cacheDir.appendingPathComponent("javascript")
@@ -192,9 +198,7 @@ final class GrammarManagerTests: XCTestCase {
     func testInstalledGrammarsIgnoresDirectoriesWithoutDylib() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        // Pass non-existent homebrewURL to disable Homebrew discovery
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         // Create a directory without dylib
         let emptyDir = cacheDir.appendingPathComponent("empty")
@@ -214,9 +218,7 @@ final class GrammarManagerTests: XCTestCase {
     func testIsGrammarInstalledTrue() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        // Pass non-existent homebrewURL to disable Homebrew discovery
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         let jsDir = cacheDir.appendingPathComponent("javascript")
         try FileManager.default.createDirectory(at: jsDir, withIntermediateDirectories: true)
@@ -229,9 +231,7 @@ final class GrammarManagerTests: XCTestCase {
     func testIsGrammarInstalledFalse() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        // Pass non-existent homebrewURL to disable Homebrew discovery
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         let isInstalled = await manager.isGrammarInstalled("javascript")
         XCTAssertFalse(isInstalled)
@@ -243,7 +243,7 @@ final class GrammarManagerTests: XCTestCase {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
         let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+        let manager = makeManager(cacheDir: cacheDir, homebrewURL: homebrewDir)
 
         // Create fake Homebrew grammar
         let swiftDir = homebrewDir.appendingPathComponent("swift")
@@ -258,7 +258,7 @@ final class GrammarManagerTests: XCTestCase {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
         let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+        let manager = makeManager(cacheDir: cacheDir, homebrewURL: homebrewDir)
 
         // Create Homebrew grammar
         let swiftDir = homebrewDir.appendingPathComponent("swift")
@@ -280,7 +280,7 @@ final class GrammarManagerTests: XCTestCase {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
         let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+        let manager = makeManager(cacheDir: cacheDir, homebrewURL: homebrewDir)
 
         // Create Homebrew grammar
         let swiftDir = homebrewDir.appendingPathComponent("swift")
@@ -296,7 +296,7 @@ final class GrammarManagerTests: XCTestCase {
         let cacheDir = dir.appendingPathComponent("cache")
         let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
         try FileManager.default.createDirectory(at: homebrewDir, withIntermediateDirectories: true)
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+        let manager = makeManager(cacheDir: cacheDir, homebrewURL: homebrewDir)
 
         // Create cached grammar (not in Homebrew)
         let jsDir = cacheDir.appendingPathComponent("javascript")
@@ -310,8 +310,7 @@ final class GrammarManagerTests: XCTestCase {
     func testGrammarSourceNotInstalled() async throws {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
-        let fakeHomebrewURL = dir.appendingPathComponent("fake-homebrew")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: fakeHomebrewURL)
+        let manager = makeManager(cacheDir: cacheDir)
 
         let source = await manager.grammarSource("nonexistent")
         XCTAssertEqual(source, .notInstalled)
@@ -321,7 +320,7 @@ final class GrammarManagerTests: XCTestCase {
         let dir = try XCTUnwrap(tempDir)
         let cacheDir = dir.appendingPathComponent("cache")
         let homebrewDir = dir.appendingPathComponent("homebrew-grammars")
-        let manager = GrammarManager(cacheURL: cacheDir, homebrewURL: homebrewDir)
+        let manager = makeManager(cacheDir: cacheDir, homebrewURL: homebrewDir)
 
         // Create same grammar in both locations
         let homebrewSwiftDir = homebrewDir.appendingPathComponent("swift")
