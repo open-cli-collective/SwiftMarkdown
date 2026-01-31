@@ -36,6 +36,7 @@ swiftlint lint --strict
 - **XcodeGen**: Project is defined in `project.yml`, run `xcodegen generate` after changes
 - **Targets**: App embeds Core framework; Quick Look extension also links Core
 - **Deployment**: macOS 13.0+ (Ventura), Swift 5.9+
+- **Settings**: Stored in `~/.config/swiftmarkdown/settings.json`, uses `FileSystemProtocol` for testability
 
 ## CI/CD
 
