@@ -18,7 +18,6 @@
 		497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */; };
 		4AD0857EDCD7170E75955150 /* HTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92EEC01DFECF39F9FD67D25 /* HTMLRenderer.swift */; };
 		4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */; };
-		526384DF926B06F765758C45 /* DropCapturingWebViewContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */; };
 		54F77ED86A73956332B1BD16 /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F16278E86C893DE1324F /* ImageValidator.swift */; };
 		5A3162197FD39082852C1554 /* GrammarManifestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8241641705639E7415FA4283 /* GrammarManifestTests.swift */; };
 		5DEBE8F448112FD03EE248BD /* TreeSitterHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD889C6D996E0721E08B1 /* TreeSitterHighlighter.swift */; };
@@ -144,7 +143,6 @@
 		09AA4F3A79326A0FCC93CA54 /* PlainTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextRenderer.swift; sourceTree = "<group>"; };
 		0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesSettingsView.swift; sourceTree = "<group>"; };
 		1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropCapturingWebViewContainerTests.swift; sourceTree = "<group>"; };
 		308323B184C4405BE95A6BC0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCore.swift; sourceTree = "<group>"; };
@@ -369,7 +367,6 @@
 		EE46B3B0894560244A3035ED /* SwiftMarkdownTests */ = {
 			isa = PBXGroup;
 			children = (
-				2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */,
 				7B063556DF68B1428DE338C6 /* GrammarManagerTests.swift */,
 				8241641705639E7415FA4283 /* GrammarManifestTests.swift */,
 				CC0732F7FFFF2CB2CA3AAF34 /* HTMLRendererTests.swift */,
@@ -558,7 +555,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				526384DF926B06F765758C45 /* DropCapturingWebViewContainerTests.swift in Sources */,
 				1D4D4F6C986946DEFDBEE790 /* GrammarManagerTests.swift in Sources */,
 				5A3162197FD39082852C1554 /* GrammarManifestTests.swift in Sources */,
 				EDB84B1B268301165FBDCB45 /* HTMLRendererTests.swift in Sources */,
