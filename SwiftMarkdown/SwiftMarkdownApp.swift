@@ -3,9 +3,12 @@ import SwiftMarkdownCore
 
 @main
 struct SwiftMarkdownApp: App {
+    @StateObject private var settingsManager = SettingsManager()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(colorScheme)
         }
         .commands {
             CommandGroup(after: .newItem) {
@@ -18,6 +21,18 @@ struct SwiftMarkdownApp: App {
 
         Settings {
             LanguagesSettingsView()
+        }
+    }
+
+    /// Maps the appearance mode setting to a SwiftUI ColorScheme.
+    private var colorScheme: ColorScheme? {
+        switch settingsManager.settings.appearance {
+        case .system:
+            return nil  // Follow system
+        case .light:
+            return .light
+        case .dark:
+            return .dark
         }
     }
 }
