@@ -10,6 +10,9 @@ final class DocumentViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
+    /// Current render task, used for cancellation when a new file is loaded.
+    private var renderTask: Task<Void, Never>?
+
     /// The file name to display in the title bar.
     var fileName: String {
         fileURL?.lastPathComponent ?? "SwiftMarkdown"
@@ -22,6 +25,9 @@ final class DocumentViewModel: ObservableObject {
 
     /// Load and render a markdown file.
     func loadFile(at url: URL) async {
+        // Cancel any in-flight render before starting a new one
+        renderTask?.cancel()
+
         // Validate file extension and content
         let validationResult = MarkdownFileValidator.validate(url)
         guard validationResult.isValid else {
@@ -32,20 +38,31 @@ final class DocumentViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
 
-        do {
-            // Read file on background thread to avoid blocking UI
-            let content = try await Task.detached {
-                try String(contentsOf: url, encoding: .utf8)
-            }.value
-            let html = await renderMarkdown(content)
+        renderTask = Task {
+            do {
+                try Task.checkCancellation()
 
-            fileURL = url
-            renderedHTML = html
-        } catch {
-            errorMessage = "Failed to load file: \(error.localizedDescription)"
+                // Read file on background thread to avoid blocking UI
+                let content = try await Task.detached {
+                    try String(contentsOf: url, encoding: .utf8)
+                }.value
+
+                try Task.checkCancellation()
+                let html = await renderMarkdown(content)
+
+                try Task.checkCancellation()
+                fileURL = url
+                renderedHTML = html
+            } catch is CancellationError {
+                // Silently ignore - a new file load superseded this one
+            } catch {
+                errorMessage = "Failed to load file: \(error.localizedDescription)"
+            }
+
+            isLoading = false
         }
 
-        isLoading = false
+        await renderTask?.value
     }
 
     /// Render markdown content to HTML with syntax highlighting.

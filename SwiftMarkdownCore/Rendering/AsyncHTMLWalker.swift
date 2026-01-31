@@ -14,6 +14,8 @@ struct AsyncHTMLWalker {
 
     mutating func visit(_ document: Document) async {
         for child in document.children {
+            // Early exit if task was cancelled (e.g., user opened a different file)
+            guard !Task.isCancelled else { return }
             await visitMarkup(child)
         }
     }
