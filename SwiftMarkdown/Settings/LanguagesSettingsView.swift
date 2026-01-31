@@ -90,7 +90,7 @@ struct LanguagesSettingsView: View {
                         .foregroundColor(.secondary)
                     Text(LanguagesViewModel.formatBytes(viewModel.cacheSize))
                         .font(.caption)
-                    Text("(\(viewModel.grammars.filter { $0.isInstalled && !$0.isBundled }.count) languages)")
+                    Text("(\(viewModel.grammars.filter { $0.source == .cached }.count) downloaded)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -125,8 +125,12 @@ struct GrammarRowView: View {
                 HStack {
                     Text(grammar.displayName)
                         .fontWeight(.medium)
-                    if grammar.isBundled {
-                        Text("(bundled)")
+                    if grammar.source == .homebrew {
+                        Text("(via Homebrew)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    } else if grammar.source == .cached {
+                        Text("(downloaded)")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
