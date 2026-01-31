@@ -18,6 +18,7 @@
 		497FDC1338C5EF65407603A9 /* PlainTextRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6EA9AC7D0321DC237CAA56 /* PlainTextRendererTests.swift */; };
 		4AD0857EDCD7170E75955150 /* HTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92EEC01DFECF39F9FD67D25 /* HTMLRenderer.swift */; };
 		4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */; };
+		526384DF926B06F765758C45 /* DropCapturingWebViewContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */; };
 		54F77ED86A73956332B1BD16 /* ImageValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F16278E86C893DE1324F /* ImageValidator.swift */; };
 		5A3162197FD39082852C1554 /* GrammarManifestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8241641705639E7415FA4283 /* GrammarManifestTests.swift */; };
 		5DEBE8F448112FD03EE248BD /* TreeSitterHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD889C6D996E0721E08B1 /* TreeSitterHighlighter.swift */; };
@@ -38,6 +39,7 @@
 		9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */; };
 		9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */; };
 		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+		AF8F0684CF16EC5EF970B62D /* DropCapturingWebViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401AC69BB54A1B91FB67575 /* DropCapturingWebViewContainer.swift */; };
 		B62DA1212D7023532FE54785 /* MarkdownFileValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE00EC83B9FE79ABD2F975B2 /* MarkdownFileValidator.swift */; };
 		B6BAEE9D266B0B4E25F36503 /* SyntaxThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */; };
 		B92C700D2386D46D2189E346 /* StringHTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA59B73EF3AAC7F3AF2274 /* StringHTMLTests.swift */; };
@@ -62,6 +64,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		134190C903BF47443118C006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4D64C271ABD6F2AB6DF7788;
+			remoteInfo = SwiftMarkdown;
+		};
 		4F58010FA1D5CB3731A23AF5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6D684C0DBF64172F57BB69B6 /* Project object */;
@@ -135,9 +144,11 @@
 		09AA4F3A79326A0FCC93CA54 /* PlainTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextRenderer.swift; sourceTree = "<group>"; };
 		0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesSettingsView.swift; sourceTree = "<group>"; };
 		1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropCapturingWebViewContainerTests.swift; sourceTree = "<group>"; };
 		308323B184C4405BE95A6BC0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		31F1EBA2B5AC2DA7FBD61F12 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		327502C2C9568E4497D68E2D /* SwiftMarkdownCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCore.swift; sourceTree = "<group>"; };
+		3401AC69BB54A1B91FB67575 /* DropCapturingWebViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropCapturingWebViewContainer.swift; sourceTree = "<group>"; };
 		3780132CA9FEA0CDFEEA695B /* SwiftMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BC2CEE945099FDCED3EEFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3E01F16278E86C893DE1324F /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
@@ -286,6 +297,7 @@
 				1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */,
 				B5BB6B52D45ED0A11407D90A /* ContentView.swift */,
 				FBDAD7D77917A5FE54AA5EEC /* DocumentViewModel.swift */,
+				3401AC69BB54A1B91FB67575 /* DropCapturingWebViewContainer.swift */,
 				3BC2CEE945099FDCED3EEFCD /* Info.plist */,
 				CEC8CA1672656602F42D2D15 /* MarkdownWebView.swift */,
 				7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */,
@@ -357,6 +369,7 @@
 		EE46B3B0894560244A3035ED /* SwiftMarkdownTests */ = {
 			isa = PBXGroup;
 			children = (
+				2A2B994891039440545A9F12 /* DropCapturingWebViewContainerTests.swift */,
 				7B063556DF68B1428DE338C6 /* GrammarManagerTests.swift */,
 				8241641705639E7415FA4283 /* GrammarManifestTests.swift */,
 				CC0732F7FFFF2CB2CA3AAF34 /* HTMLRendererTests.swift */,
@@ -398,6 +411,7 @@
 			);
 			dependencies = (
 				7035492EAD6CC87EA38A7441 /* PBXTargetDependency */,
+				E863955CD78A5283024A49D0 /* PBXTargetDependency */,
 			);
 			name = SwiftMarkdownTests;
 			packageProductDependencies = (
@@ -532,6 +546,7 @@
 			files = (
 				C3B167FD38C733B112E277FF /* ContentView.swift in Sources */,
 				995579FCC7904D20D478CAFE /* DocumentViewModel.swift in Sources */,
+				AF8F0684CF16EC5EF970B62D /* DropCapturingWebViewContainer.swift in Sources */,
 				8C3CC2C3BD9A2E3829924968 /* LanguagesSettingsView.swift in Sources */,
 				DCA77A3E20FB950CDEBA1EAE /* LanguagesViewModel.swift in Sources */,
 				BD1C8594B820A638E7A7CE2E /* MarkdownWebView.swift in Sources */,
@@ -543,6 +558,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526384DF926B06F765758C45 /* DropCapturingWebViewContainerTests.swift in Sources */,
 				1D4D4F6C986946DEFDBEE790 /* GrammarManagerTests.swift in Sources */,
 				5A3162197FD39082852C1554 /* GrammarManifestTests.swift in Sources */,
 				EDB84B1B268301165FBDCB45 /* HTMLRendererTests.swift in Sources */,
@@ -612,6 +628,11 @@
 			isa = PBXTargetDependency;
 			target = 9B676B813F4457767303D496 /* SwiftMarkdownCore */;
 			targetProxy = CF119784FCE18A5539994EFD /* PBXContainerItemProxy */;
+		};
+		E863955CD78A5283024A49D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4D64C271ABD6F2AB6DF7788 /* SwiftMarkdown */;
+			targetProxy = 134190C903BF47443118C006 /* PBXContainerItemProxy */;
 		};
 		ED11D4D3C2F82C824A355F38 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -742,6 +763,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownTests";
 				PRODUCT_NAME = SwiftMarkdownTests;
 				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMarkdown.app/Contents/MacOS/SwiftMarkdown";
 			};
 			name = Release;
 		};
@@ -891,6 +913,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.open-cli-collective.SwiftMarkdownTests";
 				PRODUCT_NAME = SwiftMarkdownTests;
 				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftMarkdown.app/Contents/MacOS/SwiftMarkdown";
 			};
 			name = Debug;
 		};
