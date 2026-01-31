@@ -26,6 +26,9 @@ import SwiftTreeSitter
 /// let html = highlighter.highlightToHTML(code: code, language: "python")  // Returns escaped code if not installed
 /// ```
 public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked Sendable {
+    /// Shared highlighter instance for caching grammar configurations across renders.
+    public static let shared = LazyTreeSitterHighlighter()
+
     private let parser: Parser
     private let grammarManager: GrammarManager
     private var languageConfigs: [String: LanguageConfiguration] = [:]
