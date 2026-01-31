@@ -51,9 +51,8 @@ final class DocumentViewModel: ObservableObject {
     /// Render markdown content to HTML with syntax highlighting.
     private func renderMarkdown(_ content: String) async -> String {
         let document = MarkdownParser.parseDocument(content)
-        let highlighter = LazyTreeSitterHighlighter()
         let renderer = HTMLRenderer(wrapInDocument: true)
-        return await renderer.renderAsync(document, highlighter: highlighter)
+        return await renderer.renderAsync(document, highlighter: LazyTreeSitterHighlighter.shared)
     }
 
     /// Clear the current document.
