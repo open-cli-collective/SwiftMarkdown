@@ -97,6 +97,7 @@ targets:
       - SwiftMarkdownTests
     dependencies:
       - target: SwiftMarkdownCore
+      - target: SwiftMarkdown
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.open-cli-collective.SwiftMarkdownTests
