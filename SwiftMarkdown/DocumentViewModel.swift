@@ -22,8 +22,10 @@ final class DocumentViewModel: ObservableObject {
 
     /// Load and render a markdown file.
     func loadFile(at url: URL) async {
-        guard DocumentViewModel.isMarkdownFile(url) else {
-            errorMessage = "Not a markdown file: \(url.lastPathComponent)"
+        // Validate file extension and content
+        let validationResult = MarkdownFileValidator.validate(url)
+        guard validationResult.isValid else {
+            errorMessage = validationResult.errorMessage ?? "Invalid file"
             return
         }
 
