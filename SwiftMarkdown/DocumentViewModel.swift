@@ -33,7 +33,10 @@ final class DocumentViewModel: ObservableObject {
         errorMessage = nil
 
         do {
-            let content = try String(contentsOf: url, encoding: .utf8)
+            // Read file on background thread to avoid blocking UI
+            let content = try await Task.detached {
+                try String(contentsOf: url, encoding: .utf8)
+            }.value
             let html = await renderMarkdown(content)
 
             fileURL = url
