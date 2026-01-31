@@ -31,6 +31,7 @@
 		8C3CC2C3BD9A2E3829924968 /* LanguagesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */; };
 		8EC47975A4146FA9820BE9C6 /* GrammarManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAAFBA7E1B67A000AC2B618 /* GrammarManifest.swift */; };
 		91AE9B4B84FEDF679211AC2C /* GrammarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3CDE3FFECEED6781027B84 /* GrammarManager.swift */; };
+		995579FCC7904D20D478CAFE /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBDAD7D77917A5FE54AA5EEC /* DocumentViewModel.swift */; };
 		9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */; };
 		9C2B9CA834D9FBFA2B467B8C /* SyntaxHighlighterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D9247F726F851B63E511B7 /* SyntaxHighlighterTests.swift */; };
 		A02C25D7D5EB7A7FA04FA3A2 /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
@@ -38,6 +39,7 @@
 		B92C700D2386D46D2189E346 /* StringHTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BA59B73EF3AAC7F3AF2274 /* StringHTMLTests.swift */; };
 		BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */; };
 		BB50D8E05328216766C5515F /* SwiftMarkdownCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; };
+		BD1C8594B820A638E7A7CE2E /* MarkdownWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC8CA1672656602F42D2D15 /* MarkdownWebView.swift */; };
 		BD9282D7285DD285D40B7411 /* GrammarError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5441AA30AEECE5EDC9A59126 /* GrammarError.swift */; };
 		BFA78EFE0811FC9BB1CCA532 /* AsyncHTMLWalker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60DAB9333ACF98FC398657DF /* AsyncHTMLWalker.swift */; };
 		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
@@ -154,6 +156,7 @@
 		CC0732F7FFFF2CB2CA3AAF34 /* HTMLRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLRendererTests.swift; sourceTree = "<group>"; };
 		CC3C7E294336DAA8FA4C403E /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownRenderer.swift; sourceTree = "<group>"; };
 		CD3CDE3FFECEED6781027B84 /* GrammarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarManager.swift; sourceTree = "<group>"; };
+		CEC8CA1672656602F42D2D15 /* MarkdownWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownWebView.swift; sourceTree = "<group>"; };
 		D59B743B5EFB7435B9954AAA /* SwiftMarkdownCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMarkdownCoreTests.swift; sourceTree = "<group>"; };
 		D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParserTests.swift; sourceTree = "<group>"; };
 		DACBD54BE4C8A5E5D4E205F0 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 		F043600A2711212BC9399F70 /* HTMLElementRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLElementRenderer.swift; sourceTree = "<group>"; };
 		F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesViewModel.swift; sourceTree = "<group>"; };
 		F60124B861E67B3E2919B216 /* ImageValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidatorTests.swift; sourceTree = "<group>"; };
+		FBDAD7D77917A5FE54AA5EEC /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
 		FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeSitterTokenProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -259,7 +263,9 @@
 			children = (
 				1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */,
 				B5BB6B52D45ED0A11407D90A /* ContentView.swift */,
+				FBDAD7D77917A5FE54AA5EEC /* DocumentViewModel.swift */,
 				3BC2CEE945099FDCED3EEFCD /* Info.plist */,
+				CEC8CA1672656602F42D2D15 /* MarkdownWebView.swift */,
 				7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */,
 				DC245DFE823E1914F1368A1C /* SwiftMarkdownApp.swift */,
 				628FF2421AE9F6F26C147A2D /* Settings */,
@@ -499,8 +505,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3B167FD38C733B112E277FF /* ContentView.swift in Sources */,
+				995579FCC7904D20D478CAFE /* DocumentViewModel.swift in Sources */,
 				8C3CC2C3BD9A2E3829924968 /* LanguagesSettingsView.swift in Sources */,
 				DCA77A3E20FB950CDEBA1EAE /* LanguagesViewModel.swift in Sources */,
+				BD1C8594B820A638E7A7CE2E /* MarkdownWebView.swift in Sources */,
 				BA7F9CF67F2CA0DD3BF41A89 /* SwiftMarkdownApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
