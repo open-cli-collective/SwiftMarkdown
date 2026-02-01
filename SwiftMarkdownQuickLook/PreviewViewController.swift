@@ -8,7 +8,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
 
     override func loadView() {
-        // Create a scrollable text view for markdown preview
         let scrollView = NSTextView.scrollableTextView()
         scrollView.frame = NSRect(x: 0, y: 0, width: 400, height: 300)
 
@@ -26,7 +25,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         do {
             let content = try String(contentsOf: url, encoding: .utf8)
 
-            // Parse and render markdown using native rendering
             let document = MarkdownParser.parseDocument(content)
             let renderer = DocumentRenderer()
             let theme = MarkdownTheme.default

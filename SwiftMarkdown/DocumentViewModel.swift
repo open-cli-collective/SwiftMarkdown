@@ -26,10 +26,8 @@ final class DocumentViewModel: ObservableObject {
 
     /// Load and render a markdown file.
     func loadFile(at url: URL) async {
-        // Cancel any in-flight render before starting a new one
         renderTask?.cancel()
 
-        // Validate file extension and content
         let validationResult = MarkdownFileValidator.validate(url)
         guard validationResult.isValid else {
             errorMessage = validationResult.errorMessage ?? "Invalid file"
@@ -43,14 +41,12 @@ final class DocumentViewModel: ObservableObject {
             do {
                 try Task.checkCancellation()
 
-                // Read file on background thread to avoid blocking UI
                 let content = try await Task.detached {
                     try String(contentsOf: url, encoding: .utf8)
                 }.value
 
                 try Task.checkCancellation()
 
-                // Render markdown to attributed string (synchronous, fast)
                 let attributed = renderMarkdown(content)
 
                 try Task.checkCancellation()

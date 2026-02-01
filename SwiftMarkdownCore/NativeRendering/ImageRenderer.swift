@@ -45,22 +45,17 @@ public struct ImageRenderer: MarkdownElementRenderer {
         let result = NSMutableAttributedString()
 
         if let image = input.image {
-            // Set accessibility description
             if !input.altText.isEmpty {
                 image.accessibilityDescription = input.altText
             }
 
-            // Calculate constrained size
             let constrainedSize = calculateConstrainedSize(for: image)
-
-            // Create attachment
             let attachment = NSTextAttachment()
             attachment.image = image
             attachment.bounds = NSRect(origin: .zero, size: constrainedSize)
 
             result.append(NSAttributedString(attachment: attachment))
         } else {
-            // Placeholder for missing image
             let placeholder = "[\(input.altText.isEmpty ? "Image" : input.altText)]"
             let attributes: [NSAttributedString.Key: Any] = [
                 .font: theme.bodyFont,
@@ -69,7 +64,6 @@ public struct ImageRenderer: MarkdownElementRenderer {
             result.append(NSAttributedString(string: placeholder, attributes: attributes))
         }
 
-        // Add trailing newline for block separation
         result.append(NSAttributedString(string: "\n"))
 
         return result
@@ -78,12 +72,10 @@ public struct ImageRenderer: MarkdownElementRenderer {
     private func calculateConstrainedSize(for image: NSImage) -> NSSize {
         let originalSize = image.size
 
-        // If image is smaller than max width, keep original size
         guard originalSize.width > maxWidth else {
             return originalSize
         }
 
-        // Scale down while maintaining aspect ratio
         let scale = maxWidth / originalSize.width
         return NSSize(
             width: maxWidth,

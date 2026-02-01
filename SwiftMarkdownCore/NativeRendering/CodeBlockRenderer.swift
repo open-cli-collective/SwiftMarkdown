@@ -54,7 +54,6 @@ public struct CodeBlockRenderer: MarkdownElementRenderer {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 0
 
-        // Base attributes for all code
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .font: theme.codeFont,
             .foregroundColor: theme.textColor,
@@ -62,10 +61,8 @@ public struct CodeBlockRenderer: MarkdownElementRenderer {
             .paragraphStyle: paragraphStyle
         ]
 
-        // Create the base attributed string with trailing newline
         let result = NSMutableAttributedString(string: code + "\n", attributes: baseAttributes)
 
-        // Apply syntax highlighting if available
         if let language = input.language,
            let highlighter = highlighter {
             let tokens = highlighter.highlight(code: code, language: language)
@@ -86,12 +83,10 @@ public struct CodeBlockRenderer: MarkdownElementRenderer {
                 continue
             }
 
-            // Convert String.Index range to NSRange
             let start = code.distance(from: code.startIndex, to: token.range.lowerBound)
             let length = code.distance(from: token.range.lowerBound, to: token.range.upperBound)
             let nsRange = NSRange(location: start, length: length)
 
-            // Ensure range is valid
             guard nsRange.location >= 0,
                   nsRange.location + nsRange.length <= attributedString.length else {
                 continue

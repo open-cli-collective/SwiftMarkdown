@@ -67,3 +67,15 @@ Use conventional commits:
 - **Homebrew**: `brew install --cask open-cli-collective/tap/swiftmarkdown`
 - **DMG**: Direct download from GitHub releases
 - **Signing**: Currently ad-hoc (xattr quarantine removal via Homebrew postflight)
+
+## Commenting Guidelines
+
+Comments should explain **why**, not what or how:
+
+- **Don't comment the obvious**: If code is self-explanatory, no comment needed
+- **Explain intent**: Why was this approach chosen? What trade-off was made?
+- **Non-obvious behavior**: If the "how" is unusual or surprising, explain it
+- **Delete stale comments**: Outdated comments are worse than no comments
+
+Bad: `// Create a parser` before `let parser = Parser()`
+Good: `// Use Task.detached to avoid blocking the UI thread`

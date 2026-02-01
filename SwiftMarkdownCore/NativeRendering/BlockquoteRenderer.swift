@@ -21,7 +21,7 @@ public struct BlockquoteRenderer: MarkdownElementRenderer {
     public init() {}
 
     public func render(_ input: NSAttributedString, theme: MarkdownTheme, context: RenderContext) -> NSAttributedString {
-        // Calculate indent based on nesting level (1x for level 0, 2x for level 1, etc.)
+        // Indent increases with nesting depth (1x for level 0, 2x for level 1, etc.)
         let indentMultiplier = CGFloat(context.nestingLevel + 1)
         let indent = theme.blockquoteIndent * indentMultiplier
 

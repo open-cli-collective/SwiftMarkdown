@@ -73,20 +73,15 @@ public struct ListRenderer: MarkdownElementRenderer {
     ) -> NSAttributedString {
         let result = NSMutableAttributedString()
 
-        // Calculate indentation
         let baseIndent = theme.listIndent * CGFloat(nestingLevel)
-        let bulletWidth: CGFloat = 20 // Space for bullet/number + padding
+        let bulletWidth: CGFloat = 20
 
-        // Create paragraph style with hanging indent
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = baseIndent
         paragraphStyle.headIndent = baseIndent + bulletWidth
         paragraphStyle.paragraphSpacing = theme.paragraphSpacing * 0.5
-
-        // Add tab stop for bullet-to-text alignment
         paragraphStyle.tabStops = [NSTextTab(type: .leftTabStopType, location: baseIndent + bulletWidth)]
 
-        // Create the marker (bullet or number)
         let marker: String
         if isOrdered {
             marker = "\(index + 1).\t"
@@ -101,18 +96,13 @@ public struct ListRenderer: MarkdownElementRenderer {
             .paragraphStyle: paragraphStyle
         ]
 
-        // Add marker
         result.append(NSAttributedString(string: marker, attributes: attributes))
 
-        // Add content (preserving its attributes but applying paragraph style)
         let content = NSMutableAttributedString(attributedString: item.content)
         content.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: content.length))
         result.append(content)
-
-        // Add newline
         result.append(NSAttributedString(string: "\n", attributes: attributes))
 
-        // Render children if present
         if let children = item.children, !children.isEmpty {
             let childContext = RenderContext(nestingLevel: nestingLevel + 1)
             let childInput = Input(items: children, isOrdered: item.childrenOrdered)
