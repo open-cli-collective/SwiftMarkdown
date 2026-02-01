@@ -8,22 +8,35 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
 
     override func loadView() {
-        // Create a simple text view for now
-        let textView = NSTextView(frame: NSRect(x: 0, y: 0, width: 400, height: 300))
-        textView.isEditable = false
-        textView.autoresizingMask = [.width, .height]
-        textView.backgroundColor = .textBackgroundColor
-        self.view = textView
+        // Create a scrollable text view for markdown preview
+        let scrollView = NSTextView.scrollableTextView()
+        scrollView.frame = NSRect(x: 0, y: 0, width: 400, height: 300)
+
+        if let textView = scrollView.documentView as? NSTextView {
+            textView.isEditable = false
+            textView.isSelectable = true
+            textView.backgroundColor = .textBackgroundColor
+            textView.textContainerInset = NSSize(width: 16, height: 16)
+        }
+
+        self.view = scrollView
     }
 
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
         do {
             let content = try String(contentsOf: url, encoding: .utf8)
 
+            // Parse and render markdown using native rendering
+            let document = MarkdownParser.parseDocument(content)
+            let renderer = DocumentRenderer()
+            let theme = MarkdownTheme.default
+            let context = RenderContext()
+            let attributedString = renderer.render(document, theme: theme, context: context)
+
             DispatchQueue.main.async {
-                if let textView = self.view as? NSTextView {
-                    // TODO: Parse markdown and render as attributed string
-                    textView.string = content
+                if let scrollView = self.view as? NSScrollView,
+                   let textView = scrollView.documentView as? NSTextView {
+                    textView.textStorage?.setAttributedString(attributedString)
                 }
                 handler(nil)
             }

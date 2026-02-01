@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import SwiftMarkdownCore
 import UniformTypeIdentifiers
@@ -6,7 +7,7 @@ import UniformTypeIdentifiers
 @MainActor
 final class DocumentViewModel: ObservableObject {
     @Published var fileURL: URL?
-    @Published var renderedHTML: String = ""
+    @Published var renderedContent: NSAttributedString = NSAttributedString()
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
@@ -48,11 +49,13 @@ final class DocumentViewModel: ObservableObject {
                 }.value
 
                 try Task.checkCancellation()
-                let html = await renderMarkdown(content)
+
+                // Render markdown to attributed string (synchronous, fast)
+                let attributed = renderMarkdown(content)
 
                 try Task.checkCancellation()
                 fileURL = url
-                renderedHTML = html
+                renderedContent = attributed
             } catch is CancellationError {
                 // Silently ignore - a new file load superseded this one
             } catch {
@@ -65,17 +68,19 @@ final class DocumentViewModel: ObservableObject {
         await renderTask?.value
     }
 
-    /// Render markdown content to HTML with syntax highlighting.
-    private func renderMarkdown(_ content: String) async -> String {
+    /// Render markdown content to an attributed string using native rendering.
+    private func renderMarkdown(_ content: String) -> NSAttributedString {
         let document = MarkdownParser.parseDocument(content)
-        let renderer = HTMLRenderer(wrapInDocument: true)
-        return await renderer.renderAsync(document, highlighter: LazyTreeSitterHighlighter.shared)
+        let renderer = DocumentRenderer()
+        let theme = MarkdownTheme.default
+        let context = RenderContext()
+        return renderer.render(document, theme: theme, context: context)
     }
 
     /// Clear the current document.
     func clearDocument() {
         fileURL = nil
-        renderedHTML = ""
+        renderedContent = NSAttributedString()
         errorMessage = nil
     }
 }

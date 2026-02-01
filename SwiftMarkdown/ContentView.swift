@@ -1,5 +1,6 @@
-import SwiftUI
+import AppKit
 import SwiftMarkdownCore
+import SwiftUI
 import UniformTypeIdentifiers
 
 struct ContentView: View {
@@ -25,7 +26,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.renderedHTML.isEmpty {
+            if viewModel.renderedContent.length == 0 {
                 dropZoneView
             } else {
                 documentView
@@ -95,9 +96,15 @@ struct ContentView: View {
     }
 
     private var documentView: some View {
-        MarkdownWebView(html: viewModel.renderedHTML) { url in
-            handleDroppedFile(url)
-        }
+        NativeMarkdownView(
+            attributedString: viewModel.renderedContent,
+            onLinkClick: { url in
+                NSWorkspace.shared.open(url)
+            },
+            onFileDrop: { url in
+                handleDroppedFile(url)
+            }
+        )
     }
 
     private var dropIndicator: some View {
