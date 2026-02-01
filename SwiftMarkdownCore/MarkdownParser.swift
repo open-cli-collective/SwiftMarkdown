@@ -95,6 +95,31 @@ public struct MarkdownParser {
         return Document(parsing: markdown, options: parseOptions)
     }
 
+    /// Extract all unique code block languages from a document.
+    ///
+    /// - Parameter document: The parsed markdown document.
+    /// - Returns: Set of language identifiers (lowercased) from fenced code blocks.
+    public static func extractCodeBlockLanguages(from document: Document) -> Set<String> {
+        var languages = Set<String>()
+
+        func visit(_ markup: Markup) {
+            if let codeBlock = markup as? CodeBlock,
+               let language = codeBlock.language,
+               !language.isEmpty {
+                languages.insert(language.lowercased())
+            }
+            for child in markup.children {
+                visit(child)
+            }
+        }
+
+        for child in document.children {
+            visit(child)
+        }
+
+        return languages
+    }
+
     // MARK: - Private
 
     private static func buildParseOptions(from options: Options) -> ParseOptions {
