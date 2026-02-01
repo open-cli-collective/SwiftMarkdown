@@ -140,7 +140,6 @@ struct ContentView: View {
         case .success(let urls):
             guard let url = urls.first else { return }
 
-            // Validate file type
             guard DocumentViewModel.isMarkdownFile(url) else {
                 viewModel.errorMessage = "Only markdown files (.md, .markdown) are supported"
                 return
@@ -171,7 +170,6 @@ struct ContentView: View {
     private func handleDrop(providers: [NSItemProvider]) -> Bool {
         guard let provider = providers.first else { return false }
 
-        // Check if provider has a file URL
         guard provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) else {
             return false
         }
@@ -186,7 +184,6 @@ struct ContentView: View {
                 return
             }
 
-            // Validate file type
             guard DocumentViewModel.isMarkdownFile(url) else {
                 Task { @MainActor in
                     viewModel.errorMessage = "Only markdown files (.md, .markdown) are supported"

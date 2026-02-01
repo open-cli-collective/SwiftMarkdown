@@ -17,7 +17,6 @@ struct NativeMarkdownView: NSViewRepresentable {
             return scrollView
         }
 
-        // Configure text view
         textView.isEditable = false
         textView.isSelectable = true
         textView.delegate = context.coordinator
@@ -25,14 +24,12 @@ struct NativeMarkdownView: NSViewRepresentable {
         textView.backgroundColor = .textBackgroundColor
         textView.isAutomaticLinkDetectionEnabled = false
 
-        // Set up text container for proper wrapping
         textView.textContainer?.widthTracksTextView = true
         textView.textContainer?.containerSize = NSSize(
             width: CGFloat.greatestFiniteMagnitude,
             height: CGFloat.greatestFiniteMagnitude
         )
 
-        // Add drop interceptor if we have a drop handler
         if onFileDrop != nil {
             let dropInterceptor = DropInterceptorView()
             dropInterceptor.onFileDrop = onFileDrop
@@ -53,13 +50,9 @@ struct NativeMarkdownView: NSViewRepresentable {
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
         guard let textView = scrollView.documentView as? NSTextView else { return }
 
-        // Update content
         textView.textStorage?.setAttributedString(attributedString)
-
-        // Update coordinator's callback
         context.coordinator.onLinkClick = onLinkClick
 
-        // Update drop handler
         for subview in scrollView.subviews {
             if let dropInterceptor = subview as? DropInterceptorView {
                 dropInterceptor.onFileDrop = onFileDrop

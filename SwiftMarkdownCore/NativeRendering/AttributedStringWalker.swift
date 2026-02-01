@@ -93,7 +93,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func visitHeading(_ heading: Heading) {
-        // Collect inline content as plain text for now
         // TODO: Support rich inline content in headings
         let text = collectInlineText(from: heading)
         let input = HeadingRenderer.Input(text: text, level: heading.level)
@@ -101,11 +100,9 @@ struct AttributedStringWalker {
     }
 
     private mutating func visitParagraph(_ paragraph: Paragraph) {
-        // Render inline content with formatting
         let inlineContent = renderInlineChildren(of: paragraph)
         result.append(inlineContent)
 
-        // Add paragraph newline
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = theme.paragraphSpacing
         result.append(NSAttributedString(string: "\n", attributes: [.paragraphStyle: paragraphStyle]))
@@ -117,7 +114,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func visitBlockQuote(_ blockQuote: BlockQuote) {
-        // Collect the block quote content
         let content = NSMutableAttributedString()
         for child in blockQuote.children {
             if let paragraph = child as? Paragraph {
@@ -149,7 +145,6 @@ struct AttributedStringWalker {
     }
 
     private func buildListItem(_ listItem: ListItem, isOrdered: Bool) -> MarkdownListItem {
-        // Get the content (usually a paragraph)
         let content = NSMutableAttributedString()
         var nestedItems: [MarkdownListItem]?
         var nestedOrdered = false
@@ -188,7 +183,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func visitTable(_ table: Table) {
-        // Render headers
         let headers: [NSAttributedString] = table.head.cells.map { cell in
             let content = NSMutableAttributedString()
             var tempWalker = self
@@ -198,7 +192,6 @@ struct AttributedStringWalker {
             return content
         }
 
-        // Render rows
         let rows: [[NSAttributedString]] = table.body.rows.map { row in
             row.cells.map { cell in
                 let content = NSMutableAttributedString()
@@ -210,7 +203,6 @@ struct AttributedStringWalker {
             }
         }
 
-        // Get alignments
         let alignments: [TableRenderer.Alignment] = table.columnAlignments.map { alignment in
             switch alignment {
             case .center:
@@ -227,7 +219,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func visitHTMLBlock(_ htmlBlock: HTMLBlock) {
-        // Render HTML blocks as plain text
         let attributes: [NSAttributedString.Key: Any] = [
             .font: theme.bodyFont,
             .foregroundColor: theme.textColor
@@ -246,11 +237,9 @@ struct AttributedStringWalker {
     }
 
     private mutating func renderInlineMarkup(_ markup: Markup) -> NSAttributedString {
-        // Try text formatting elements first
         if let result = renderTextFormatting(markup) {
             return result
         }
-        // Try other inline elements
         return renderOtherInline(markup)
     }
 
@@ -297,7 +286,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func renderEmphasis(_ emphasis: Emphasis) -> NSAttributedString {
-        // Check if children contain Strong for bold+italic
         var hasBoldItalic = false
         var innerContent = ""
 
@@ -318,7 +306,6 @@ struct AttributedStringWalker {
     }
 
     private mutating func renderStrong(_ strong: Strong) -> NSAttributedString {
-        // Check if children contain emphasis for bold+italic
         var hasBoldItalic = false
         var innerContent = ""
 
@@ -356,14 +343,13 @@ struct AttributedStringWalker {
     }
 
     private func renderImage(_ image: Image) -> NSAttributedString {
-        // For now, we don't load images from URLs during rendering
-        // The image source would need to be resolved externally
+        // Image sources need to be resolved externally before rendering
         let input = ImageRenderer.Input(image: nil, altText: image.plainText)
         return imageRenderer.render(input, theme: theme, context: context)
     }
 
+    /// Soft breaks (single newline in source) become spaces in output per CommonMark spec.
     private func renderSoftBreak(_: SoftBreak) -> NSAttributedString {
-        // Soft break = single newline in source = space in output
         let attributes: [NSAttributedString.Key: Any] = [
             .font: theme.bodyFont,
             .foregroundColor: theme.textColor
@@ -371,8 +357,8 @@ struct AttributedStringWalker {
         return NSAttributedString(string: " ", attributes: attributes)
     }
 
+    /// Hard breaks (two trailing spaces + newline) become actual line breaks.
     private func renderLineBreak(_: LineBreak) -> NSAttributedString {
-        // Hard break (two spaces + newline) = actual line break
         let attributes: [NSAttributedString.Key: Any] = [
             .font: theme.bodyFont,
             .foregroundColor: theme.textColor
