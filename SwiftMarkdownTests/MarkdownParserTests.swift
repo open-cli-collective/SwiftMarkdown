@@ -233,4 +233,100 @@ final class MarkdownParserTests: XCTestCase {
         let html = MarkdownParser.parse(markdown)
         XCTAssertTrue(html.contains("<br>") || html.contains("Line one") && html.contains("Line two"))
     }
+
+    // MARK: - Code Block Language Extraction
+
+    func testExtractCodeBlockLanguages_emptyDocument() {
+        let document = MarkdownParser.parseDocument("")
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertTrue(languages.isEmpty)
+    }
+
+    func testExtractCodeBlockLanguages_noCodeBlocks() {
+        let document = MarkdownParser.parseDocument("# Just a heading\n\nAnd a paragraph.")
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertTrue(languages.isEmpty)
+    }
+
+    func testExtractCodeBlockLanguages_singleCodeBlock() {
+        let markdown = """
+        ```swift
+        let x = 1
+        ```
+        """
+        let document = MarkdownParser.parseDocument(markdown)
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertEqual(languages, ["swift"])
+    }
+
+    func testExtractCodeBlockLanguages_multipleCodeBlocks() {
+        let markdown = """
+        ```swift
+        let x = 1
+        ```
+
+        Some text
+
+        ```python
+        x = 1
+        ```
+
+        ```javascript
+        const x = 1
+        ```
+        """
+        let document = MarkdownParser.parseDocument(markdown)
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertEqual(languages.count, 3)
+        XCTAssertTrue(languages.contains("swift"))
+        XCTAssertTrue(languages.contains("python"))
+        XCTAssertTrue(languages.contains("javascript"))
+    }
+
+    func testExtractCodeBlockLanguages_deduplicates() {
+        let markdown = """
+        ```swift
+        let x = 1
+        ```
+
+        ```swift
+        let y = 2
+        ```
+        """
+        let document = MarkdownParser.parseDocument(markdown)
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertEqual(languages, ["swift"])
+    }
+
+    func testExtractCodeBlockLanguages_lowercases() {
+        let markdown = """
+        ```SWIFT
+        let x = 1
+        ```
+
+        ```Python
+        x = 1
+        ```
+        """
+        let document = MarkdownParser.parseDocument(markdown)
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertEqual(languages.count, 2)
+        XCTAssertTrue(languages.contains("swift"))
+        XCTAssertTrue(languages.contains("python"))
+    }
+
+    func testExtractCodeBlockLanguages_ignoresNoLanguage() {
+        let markdown = """
+        ```
+        plain code
+        ```
+
+        ```swift
+        let x = 1
+        ```
+        """
+        let document = MarkdownParser.parseDocument(markdown)
+        let languages = MarkdownParser.extractCodeBlockLanguages(from: document)
+        XCTAssertEqual(languages, ["swift"])
+    }
 }
