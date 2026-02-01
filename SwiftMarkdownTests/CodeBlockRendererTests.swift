@@ -44,8 +44,13 @@ final class CodeBlockRendererTests: XCTestCase {
             context: RenderContext()
         )
 
-        let backgroundColor = result.attribute(.backgroundColor, at: 0, effectiveRange: nil) as? NSColor
-        XCTAssertNotNil(backgroundColor)
+        // Background is now on NSTextBlock, not as a text attribute
+        guard let style = result.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle,
+              let textBlock = style.textBlocks.first else {
+            XCTFail("Expected paragraph style with text block")
+            return
+        }
+        XCTAssertNotNil(textBlock.backgroundColor)
     }
 
     func test_codeBlock_backgroundSpansEntireCode() {
@@ -56,8 +61,9 @@ final class CodeBlockRendererTests: XCTestCase {
             context: RenderContext()
         )
 
+        // Background is now on NSTextBlock which spans the entire code block
         var range = NSRange(location: 0, length: 0)
-        _ = result.attribute(.backgroundColor, at: 0, effectiveRange: &range)
+        _ = result.attribute(.paragraphStyle, at: 0, effectiveRange: &range)
         XCTAssertEqual(range.length, result.length)
     }
 
