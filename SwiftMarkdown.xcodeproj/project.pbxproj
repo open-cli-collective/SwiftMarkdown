@@ -45,6 +45,7 @@
 		89384A0DDFE6F3B93B6E8983 /* SwiftMarkdownQuickLook.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89FEE35070D2A1C17AB6421A /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = F10350C361C31733946A2AFA /* Markdown */; };
 		8C3CC2C3BD9A2E3829924968 /* LanguagesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */; };
+		8CF9D42DB63E45B678E4906D /* ListRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7881BB5E9FA43669EE42703C /* ListRendererTests.swift */; };
 		8EC47975A4146FA9820BE9C6 /* GrammarManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAAFBA7E1B67A000AC2B618 /* GrammarManifest.swift */; };
 		8F28F142CAC5252C0731CA00 /* ParagraphRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5CD8FE780796690BC1B270 /* ParagraphRendererTests.swift */; };
 		90862EB3FB5D9F6BD580CB77 /* HorizontalRuleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53ABA83139D6B75A5FDF1B7 /* HorizontalRuleRenderer.swift */; };
@@ -70,10 +71,12 @@
 		C3B167FD38C733B112E277FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BB6B52D45ED0A11407D90A /* ContentView.swift */; };
 		C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */; };
 		C8D6F02A3351E4E830D4FFD8 /* BlockquoteRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0920FB855ABA9CC68A905F87 /* BlockquoteRendererTests.swift */; };
+		CA4A0CBF37FF75E96508EAC4 /* ListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCA2AD44D0DD56826C82B4B /* ListRenderer.swift */; };
 		CBEBB2FA9092AD797D0FF830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */; };
 		CE41789129144C3BD9A4413F /* GrammarLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F436562B096EB84F996FEC /* GrammarLoader.swift */; };
 		D35E9EA520E2F843B036FE55 /* SwiftMarkdownCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 95F447A42C55828BB50C30B5 /* SwiftMarkdownCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DCA77A3E20FB950CDEBA1EAE /* LanguagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E51AFAE35D9D543BD08E09 /* LanguagesViewModel.swift */; };
+		DE263787666E64C843CB36A3 /* MarkdownListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C3D8C0D2962414FC382970 /* MarkdownListItem.swift */; };
 		E7D3884E4639CDCC92F60336 /* TreeSitterTokenProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF604651588D4469963B07EA /* TreeSitterTokenProcessor.swift */; };
 		E7DC039E672A8522E18C7785 /* MarkdownElementRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813CBA11576B44D762E7DB /* MarkdownElementRenderer.swift */; };
 		EA230962EBA9CC4D80D931C7 /* HeadingRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EFEC18875BBF78E7B47009 /* HeadingRendererTests.swift */; };
@@ -169,6 +172,7 @@
 		09AA4F3A79326A0FCC93CA54 /* PlainTextRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextRenderer.swift; sourceTree = "<group>"; };
 		0A0A9589AEE5642AA8EDD742 /* LanguagesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesSettingsView.swift; sourceTree = "<group>"; };
 		0C813CBA11576B44D762E7DB /* MarkdownElementRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownElementRenderer.swift; sourceTree = "<group>"; };
+		0FCA2AD44D0DD56826C82B4B /* ListRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRenderer.swift; sourceTree = "<group>"; };
 		1950124C4309C0ACB7236CF3 /* LinkRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkRendererTests.swift; sourceTree = "<group>"; };
 		1D5E5838A8AEC4E0FDC523A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		308323B184C4405BE95A6BC0 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		3C24CF34A31CB46A0376CD64 /* StrikethroughRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrikethroughRenderer.swift; sourceTree = "<group>"; };
 		3E01F16278E86C893DE1324F /* ImageValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageValidator.swift; sourceTree = "<group>"; };
 		42761C721193A258C1ABC5E4 /* highlight.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = highlight.css; sourceTree = "<group>"; };
+		46C3D8C0D2962414FC382970 /* MarkdownListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownListItem.swift; sourceTree = "<group>"; };
 		5441AA30AEECE5EDC9A59126 /* GrammarError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarError.swift; sourceTree = "<group>"; };
 		586261D1054B4DCE992C88D3 /* SwiftMarkdownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftMarkdownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A5BCE3B3DF1F9E273618397 /* SyntaxThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyntaxThemeTests.swift; sourceTree = "<group>"; };
@@ -190,6 +195,7 @@
 		6567C09B42A4181208919050 /* SwiftMarkdownQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SwiftMarkdownQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7130A40117A04774C2B20CA6 /* InlineCodeRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineCodeRenderer.swift; sourceTree = "<group>"; };
 		7849291C823F0BF4608BF436 /* SwiftMarkdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftMarkdown.entitlements; sourceTree = "<group>"; };
+		7881BB5E9FA43669EE42703C /* ListRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRendererTests.swift; sourceTree = "<group>"; };
 		7896D51841ECD93C0A8119A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7954C82A1FB5381C3ABE0707 /* EmphasisRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmphasisRenderer.swift; sourceTree = "<group>"; };
 		7B063556DF68B1428DE338C6 /* GrammarManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarManagerTests.swift; sourceTree = "<group>"; };
@@ -318,7 +324,9 @@
 				D53ABA83139D6B75A5FDF1B7 /* HorizontalRuleRenderer.swift */,
 				7130A40117A04774C2B20CA6 /* InlineCodeRenderer.swift */,
 				C71DB50CDF53477DC2D121D2 /* LinkRenderer.swift */,
+				0FCA2AD44D0DD56826C82B4B /* ListRenderer.swift */,
 				0C813CBA11576B44D762E7DB /* MarkdownElementRenderer.swift */,
+				46C3D8C0D2962414FC382970 /* MarkdownListItem.swift */,
 				A1A8BA27FF96144B1141281F /* MarkdownTheme.swift */,
 				E1FA1DEF225F14B6475A9BD9 /* ParagraphRenderer.swift */,
 				DEAE279D0E3DDB19CE02E809 /* RenderContext.swift */,
@@ -448,6 +456,7 @@
 				9B786F7F67635FFA4DB2D52B /* Info.plist */,
 				8CC5212680E478B3FD2CFF8B /* InlineCodeRendererTests.swift */,
 				1950124C4309C0ACB7236CF3 /* LinkRendererTests.swift */,
+				7881BB5E9FA43669EE42703C /* ListRendererTests.swift */,
 				E5F05025F27037503C6846C5 /* MarkdownFileValidatorTests.swift */,
 				D89DC4E84AA6CB7A55815B7F /* MarkdownParserTests.swift */,
 				83FBF53FC258DD5C224DC030 /* MarkdownThemeTests.swift */,
@@ -646,6 +655,7 @@
 				4B765172AAD959C57FFDCB93 /* ImageValidatorTests.swift in Sources */,
 				7BD7CFD302515677C6911CDF /* InlineCodeRendererTests.swift in Sources */,
 				3D50457A90E8257576B1DCF9 /* LinkRendererTests.swift in Sources */,
+				8CF9D42DB63E45B678E4906D /* ListRendererTests.swift in Sources */,
 				664BD95A5D96DCD200287267 /* MarkdownFileValidatorTests.swift in Sources */,
 				C4F792554A8EB669109AD412 /* MarkdownParserTests.swift in Sources */,
 				07F1D34279D9B638D91B0AA7 /* MarkdownThemeTests.swift in Sources */,
@@ -683,8 +693,10 @@
 				6E42234A0F6832CAF8D21F35 /* InlineCodeRenderer.swift in Sources */,
 				64165C72A942F3412114805D /* LazyTreeSitterHighlighter.swift in Sources */,
 				76D53BDF39461E0F4D4C0425 /* LinkRenderer.swift in Sources */,
+				CA4A0CBF37FF75E96508EAC4 /* ListRenderer.swift in Sources */,
 				E7DC039E672A8522E18C7785 /* MarkdownElementRenderer.swift in Sources */,
 				B62DA1212D7023532FE54785 /* MarkdownFileValidator.swift in Sources */,
+				DE263787666E64C843CB36A3 /* MarkdownListItem.swift in Sources */,
 				9BC7D5E80962F3FB38E4A7FB /* MarkdownParser.swift in Sources */,
 				6F1693EF64350907439D32E1 /* MarkdownRenderer.swift in Sources */,
 				07B4AAA96569C4663CAE1A7F /* MarkdownTheme.swift in Sources */,
