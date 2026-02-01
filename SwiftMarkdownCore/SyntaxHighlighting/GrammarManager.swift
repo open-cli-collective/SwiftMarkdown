@@ -63,6 +63,9 @@ public actor GrammarManager {
     private let urlSession: URLSession
     private let overrideHomebrewURL: URL?
 
+    /// Thread-safe cache for installed grammars to avoid repeated file system scans.
+    private let installedCache = InstalledGrammarsCache()
+
     /// Returns the Homebrew grammars directory if it exists.
     /// Checks both Apple Silicon (/opt/homebrew) and Intel (/usr/local) prefixes.
     /// If an override URL was provided in the initializer, uses that instead.
@@ -181,9 +184,21 @@ public actor GrammarManager {
         loadingTasks.removeAll()
         manifest = nil
 
+        // Invalidate installed grammars cache
+        installedCache.invalidate()
+
         if FileManager.default.fileExists(atPath: cacheURL.path) {
             try FileManager.default.removeItem(at: cacheURL)
         }
+    }
+
+    /// Forces a refresh of the installed grammars cache.
+    ///
+    /// Call this after external changes to grammars (e.g., Homebrew install/uninstall).
+    public nonisolated func refreshInstalledGrammarsCache() {
+        installedCache.invalidate()
+        // Trigger a scan to repopulate
+        _ = installedGrammars()
     }
 
     /// Returns the cache directory URL.
@@ -204,9 +219,31 @@ public actor GrammarManager {
 
     /// Returns the list of installed grammar names from all sources (Homebrew + cache).
     ///
-    /// This is `nonisolated` because it only accesses immutable properties and the file system,
+    /// Results are cached to avoid repeated file system scans. Call `refreshInstalledGrammarsCache()`
+    /// to force a refresh after external changes.
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and a lock-protected cache,
     /// enabling synchronous calls from highlighters.
     public nonisolated func installedGrammars() -> [String] {
+        // Return cached result if available
+        if let cached = installedCache.getCachedGrammars() {
+            return cached.sorted()
+        }
+
+        // Compute and cache
+        let grammars = scanInstalledGrammars()
+        installedCache.setCachedGrammars(grammars)
+
+        // Also populate the source cache
+        for name in grammars where installedCache.getCachedSource(for: name) == nil {
+            installedCache.setCachedSource(computeGrammarSource(name), for: name)
+        }
+
+        return grammars.sorted()
+    }
+
+    /// Scans the file system for installed grammars (internal implementation).
+    private nonisolated func scanInstalledGrammars() -> Set<String> {
         var grammars = Set<String>()
 
         // Check Homebrew directory
@@ -231,7 +268,7 @@ public actor GrammarManager {
             }
         }
 
-        return grammars.sorted()
+        return grammars
     }
 
     /// Checks if a specific grammar is installed (in Homebrew or cache).
@@ -244,9 +281,24 @@ public actor GrammarManager {
 
     /// Returns the source of a grammar (Homebrew, cached, or not installed).
     ///
-    /// This is `nonisolated` because it only accesses immutable properties and the file system,
+    /// Results are cached to avoid repeated file system checks.
+    ///
+    /// This is `nonisolated` because it only accesses immutable properties and a lock-protected cache,
     /// enabling synchronous calls from highlighters.
     public nonisolated func grammarSource(_ name: String) -> GrammarSource {
+        // Check cache first
+        if let cached = installedCache.getCachedSource(for: name) {
+            return cached
+        }
+
+        // Compute and cache
+        let source = computeGrammarSource(name)
+        installedCache.setCachedSource(source, for: name)
+        return source
+    }
+
+    /// Computes the grammar source by checking the file system (internal implementation).
+    private nonisolated func computeGrammarSource(_ name: String) -> GrammarSource {
         // Check Homebrew first
         if let homebrewURL = homebrewGrammarsURL {
             let dylibPath = homebrewURL.appendingPathComponent(name).appendingPathComponent("\(name).dylib").path
@@ -405,6 +457,9 @@ public actor GrammarManager {
 
         // Clean up temp file
         try? FileManager.default.removeItem(at: tempURL)
+
+        // Invalidate installed grammars cache since we just added a new grammar
+        installedCache.invalidate()
     }
 
     private func loadFromDisk(name: String, dylibURL: URL, queriesURL: URL) throws -> LoadedGrammar {
