@@ -5,6 +5,13 @@ import SwiftMarkdownCore
 struct SwiftMarkdownApp: App {
     @StateObject private var settingsManager = SettingsManager()
 
+    init() {
+        // Pre-load common grammars in background to reduce first-render latency
+        Task.detached(priority: .utility) {
+            await GrammarManager.shared.preloadCommonGrammars()
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -25,28 +25,8 @@ public struct LoadedGrammar: Sendable {
 
 /// Manages downloading, caching, and loading tree-sitter grammars.
 ///
-/// Grammars are downloaded from GitHub releases on first use and cached
-/// permanently in `~/Library/Application Support/SwiftMarkdown/Grammars/`.
-///
-/// ## Error Handling
-///
-/// This class follows a consistent error handling strategy:
-///
-/// - **Query methods** (`supportsLanguage`, `supportedLanguages`, `getManifest`,
-///   `installedGrammars`, `isGrammarInstalled`, `cacheSize`) return optional values
-///   or empty collections on failure. They never throw, making them safe for UI code.
-///
-/// - **Action methods** (`grammar(for:)`, `downloadGrammarOnly`, `clearCache`)
-///   throw errors that callers should handle. These are used when the caller needs
-///   to know about and respond to failures.
-///
-/// ## Example
-/// ```swift
-/// let manager = GrammarManager.shared
-/// if let grammar = try await manager.grammar(for: "javascript") {
-///     // Use grammar.language with tree-sitter
-/// }
-/// ```
+/// Grammars are downloaded from GitHub releases on first use and cached permanently.
+/// Query methods return optional/empty on failure; action methods throw errors.
 public actor GrammarManager {
     /// Shared instance for the application.
     public static let shared = GrammarManager()
@@ -57,6 +37,12 @@ public actor GrammarManager {
         string: "https://github.com/open-cli-collective/apple-tree-sitter-grammars/releases/latest/download"
     )!
     // swiftlint:enable force_unwrapping
+
+    /// Common grammars to preload at app startup for faster first render.
+    public static let commonGrammars = [
+        "swift", "python", "javascript", "typescript",
+        "json", "yaml", "bash", "go", "rust", "java"
+    ]
 
     private let cacheURL: URL
     private let releaseBaseURL: URL
@@ -192,9 +178,18 @@ public actor GrammarManager {
         }
     }
 
+    /// Pre-loads commonly used grammars to eliminate `dlopen()` latency on first render.
+    /// Only loads installed grammars; failures are silently ignored.
+    public func preloadCommonGrammars(_ languages: [String] = GrammarManager.commonGrammars) {
+        let installed = installedGrammars()
+        for language in languages where installed.contains(language) && loadedGrammars[language] == nil {
+            if let grammar = GrammarLoader.loadGrammarSync(language, cacheURL: cacheURL) {
+                loadedGrammars[language] = grammar
+            }
+        }
+    }
+
     /// Forces a refresh of the installed grammars cache.
-    ///
-    /// Call this after external changes to grammars (e.g., Homebrew install/uninstall).
     public nonisolated func refreshInstalledGrammarsCache() {
         installedCache.invalidate()
         // Trigger a scan to repopulate
