@@ -51,11 +51,18 @@ public struct CodeBlockRenderer: MarkdownElementRenderer {
     public func render(_ input: Input, theme: MarkdownTheme, context: RenderContext) -> NSAttributedString {
         let code = input.code.isEmpty ? "" : input.code
 
+        // Create text block for full-width background with padding
+        let codeBlock = NSTextBlock()
+        codeBlock.backgroundColor = theme.codeBlockBackground
+        codeBlock.setContentWidth(100, type: .percentageValueType)
+        codeBlock.setWidth(theme.codeBlockPadding, type: .absoluteValueType, for: .padding)
+        codeBlock.setWidth(theme.paragraphSpacing, type: .absoluteValueType, for: .margin, edge: .maxY)
+
         let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.textBlocks = [codeBlock]
         paragraphStyle.lineSpacing = 0
+        paragraphStyle.lineHeightMultiple = 0.9
         paragraphStyle.paragraphSpacingBefore = theme.paragraphSpacing
-        paragraphStyle.firstLineHeadIndent = theme.blockquoteIndent
-        paragraphStyle.headIndent = theme.blockquoteIndent
 
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .font: theme.codeFont,

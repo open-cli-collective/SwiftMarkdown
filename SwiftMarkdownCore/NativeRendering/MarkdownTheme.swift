@@ -57,6 +57,9 @@ public struct MarkdownTheme: Sendable {
     /// Line spacing multiplier.
     public let lineSpacing: CGFloat
 
+    /// Padding inside code blocks.
+    public let codeBlockPadding: CGFloat
+
     // MARK: - Initialization
 
     public init(
@@ -80,7 +83,8 @@ public struct MarkdownTheme: Sendable {
         paragraphSpacing: CGFloat = 12,
         listIndent: CGFloat = 24,
         blockquoteIndent: CGFloat = 16,
-        lineSpacing: CGFloat = 4
+        lineSpacing: CGFloat = 4,
+        codeBlockPadding: CGFloat = 8
     ) {
         self.headingFontSizes = headingFontSizes
         self.bodyFontSize = bodyFontSize
@@ -95,6 +99,7 @@ public struct MarkdownTheme: Sendable {
         self.listIndent = listIndent
         self.blockquoteIndent = blockquoteIndent
         self.lineSpacing = lineSpacing
+        self.codeBlockPadding = codeBlockPadding
     }
 
     // MARK: - Default Theme
