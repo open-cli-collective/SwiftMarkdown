@@ -34,6 +34,11 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
     private var languageConfigs: [String: LanguageConfiguration] = [:]
     private let configLock = NSLock()
 
+    /// Cache of parsed tokens keyed by language + code hash.
+    /// Avoids re-parsing identical code blocks on file reload or theme changes.
+    private var tokenCache: [String: [HighlightToken]] = [:]
+    private let cacheLock = NSLock()
+
     /// Creates a new lazy highlighter.
     ///
     /// - Parameter grammarManager: The grammar manager to use. Defaults to shared instance.
@@ -57,10 +62,18 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
     public func highlight(code: String, language: String) -> [HighlightToken] {
         let langLower = language.lowercased()
 
-        // Only works for installed grammars
         guard grammarManager.isGrammarInstalled(langLower) else {
             return []
         }
+
+        let cacheKey = makeCacheKey(language: langLower, code: code)
+
+        cacheLock.lock()
+        if let cached = tokenCache[cacheKey] {
+            cacheLock.unlock()
+            return cached
+        }
+        cacheLock.unlock()
 
         configLock.lock()
         defer { configLock.unlock() }
@@ -80,7 +93,13 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
             return []
         }
 
-        return TreeSitterTokenProcessor.extractTokens(from: tree, code: code, query: query)
+        let tokens = TreeSitterTokenProcessor.extractTokens(from: tree, code: code, query: query)
+
+        cacheLock.lock()
+        tokenCache[cacheKey] = tokens
+        cacheLock.unlock()
+
+        return tokens
     }
 
     public func highlightToHTML(code: String, language: String) -> String {
@@ -138,7 +157,27 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
         return TreeSitterTokenProcessor.renderTokensToHTML(code: code, tokens: tokens)
     }
 
+    // MARK: - Cache Management
+
+    /// Clears the token cache. Call when grammars are updated or to free memory.
+    public func clearTokenCache() {
+        cacheLock.lock()
+        tokenCache.removeAll()
+        cacheLock.unlock()
+    }
+
+    /// Returns the number of cached token sets (for diagnostics).
+    public var tokenCacheCount: Int {
+        cacheLock.lock()
+        defer { cacheLock.unlock() }
+        return tokenCache.count
+    }
+
     // MARK: - Private Implementation
+
+    private func makeCacheKey(language: String, code: String) -> String {
+        "\(language):\(code.hashValue)"
+    }
 
     /// Synchronously loads a grammar configuration if the grammar is installed locally.
     private func getOrLoadConfig(for language: String) -> LanguageConfiguration? {
@@ -170,15 +209,22 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
     }
 
     private func highlightWithGrammar(code: String, grammar: LoadedGrammar) async -> [HighlightToken] {
+        let cacheKey = makeCacheKey(language: grammar.name, code: code)
+
+        cacheLock.lock()
+        if let cached = tokenCache[cacheKey] {
+            cacheLock.unlock()
+            return cached
+        }
+        cacheLock.unlock()
+
         configLock.lock()
         defer { configLock.unlock() }
 
-        // Get or create configuration
         let config: LanguageConfiguration
         if let cached = languageConfigs[grammar.name] {
             config = cached
         } else {
-            // Load highlights.scm
             guard FileManager.default.fileExists(atPath: grammar.queriesURL.path),
                   let querySource = try? String(contentsOf: grammar.queriesURL) else {
                 return []
@@ -208,6 +254,12 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
             return []
         }
 
-        return TreeSitterTokenProcessor.extractTokens(from: tree, code: code, query: query)
+        let tokens = TreeSitterTokenProcessor.extractTokens(from: tree, code: code, query: query)
+
+        cacheLock.lock()
+        tokenCache[cacheKey] = tokens
+        cacheLock.unlock()
+
+        return tokens
     }
 }
