@@ -27,10 +27,12 @@ public struct DocumentRenderer {
     private let strikethroughRenderer: StrikethroughRenderer
 
     /// Creates a document renderer with default element renderers.
-    public init() {
+    ///
+    /// - Parameter syntaxHighlighter: Optional syntax highlighter for code blocks.
+    public init(syntaxHighlighter: (any SyntaxHighlighter)? = nil) {
         self.headingRenderer = HeadingRenderer()
         self.paragraphRenderer = ParagraphRenderer()
-        self.codeBlockRenderer = CodeBlockRenderer()
+        self.codeBlockRenderer = CodeBlockRenderer(highlighter: syntaxHighlighter)
         self.blockquoteRenderer = BlockquoteRenderer()
         self.listRenderer = ListRenderer()
         self.horizontalRuleRenderer = HorizontalRuleRenderer()

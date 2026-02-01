@@ -67,7 +67,7 @@ final class DocumentViewModel: ObservableObject {
     /// Render markdown content to an attributed string using native rendering.
     private func renderMarkdown(_ content: String) -> NSAttributedString {
         let document = MarkdownParser.parseDocument(content)
-        let renderer = DocumentRenderer()
+        let renderer = DocumentRenderer(syntaxHighlighter: LazyTreeSitterHighlighter.shared)
         let theme = MarkdownTheme.default
         let context = RenderContext()
         return renderer.render(document, theme: theme, context: context)

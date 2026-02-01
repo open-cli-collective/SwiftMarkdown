@@ -26,7 +26,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             let content = try String(contentsOf: url, encoding: .utf8)
 
             let document = MarkdownParser.parseDocument(content)
-            let renderer = DocumentRenderer()
+            let renderer = DocumentRenderer(syntaxHighlighter: LazyTreeSitterHighlighter.shared)
             let theme = MarkdownTheme.default
             let context = RenderContext()
             let attributedString = renderer.render(document, theme: theme, context: context)
