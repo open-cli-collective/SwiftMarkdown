@@ -14,6 +14,9 @@ final class DocumentViewModel: ObservableObject {
     /// Current render task, used for cancellation when a new file is loaded.
     private var renderTask: Task<Void, Never>?
 
+    /// Cached renderer to avoid repeated allocation on every render.
+    private let renderer = DocumentRenderer(syntaxHighlighter: LazyTreeSitterHighlighter.shared)
+
     /// The file name to display in the title bar.
     var fileName: String {
         fileURL?.lastPathComponent ?? "SwiftMarkdown"
@@ -67,7 +70,6 @@ final class DocumentViewModel: ObservableObject {
     /// Render markdown content to an attributed string using native rendering.
     private func renderMarkdown(_ content: String) -> NSAttributedString {
         let document = MarkdownParser.parseDocument(content)
-        let renderer = DocumentRenderer(syntaxHighlighter: LazyTreeSitterHighlighter.shared)
         let theme = MarkdownTheme.default
         let context = RenderContext()
         return renderer.render(document, theme: theme, context: context)
