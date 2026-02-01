@@ -159,8 +159,9 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
             guard let queryData = querySource.data(using: .utf8) else {
                 return nil
             }
-            _ = try Query(language: grammar.language, data: queryData)
-            let config = try LanguageConfiguration(grammar.language, name: grammar.name)
+            let query = try Query(language: grammar.language, data: queryData)
+            let queries: [Query.Definition: Query] = [.highlights: query]
+            let config = LanguageConfiguration(grammar.language, name: grammar.name, queries: queries)
             languageConfigs[language] = config
             return config
         } catch {
@@ -187,8 +188,9 @@ public final class LazyTreeSitterHighlighter: HTMLSyntaxHighlighter, @unchecked 
                 guard let queryData = querySource.data(using: .utf8) else {
                     return []
                 }
-                _ = try Query(language: grammar.language, data: queryData)
-                config = try LanguageConfiguration(grammar.language, name: grammar.name)
+                let query = try Query(language: grammar.language, data: queryData)
+                let queries: [Query.Definition: Query] = [.highlights: query]
+                config = LanguageConfiguration(grammar.language, name: grammar.name, queries: queries)
                 languageConfigs[grammar.name] = config
             } catch {
                 return []
