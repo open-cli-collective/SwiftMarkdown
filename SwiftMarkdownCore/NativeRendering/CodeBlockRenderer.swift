@@ -53,6 +53,9 @@ public struct CodeBlockRenderer: MarkdownElementRenderer {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 0
+        paragraphStyle.paragraphSpacingBefore = theme.paragraphSpacing
+        paragraphStyle.firstLineHeadIndent = theme.blockquoteIndent
+        paragraphStyle.headIndent = theme.blockquoteIndent
 
         let baseAttributes: [NSAttributedString.Key: Any] = [
             .font: theme.codeFont,

@@ -80,7 +80,7 @@ public struct MarkdownTheme: Sendable {
         paragraphSpacing: CGFloat = 12,
         listIndent: CGFloat = 24,
         blockquoteIndent: CGFloat = 16,
-        lineSpacing: CGFloat = 1.4
+        lineSpacing: CGFloat = 4
     ) {
         self.headingFontSizes = headingFontSizes
         self.bodyFontSize = bodyFontSize
